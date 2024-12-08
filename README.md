@@ -44,13 +44,3 @@ In a different terminal:
 ```bash
 rasa shell
 ```
-
-### 5. Start the chatbot with a GUI
-```bash
-rasa x
-```
-
-### 6. Start the chatbot with a REST API
-```bash
-rasa run -m models --enable-api --cors "*" --debug
-```
