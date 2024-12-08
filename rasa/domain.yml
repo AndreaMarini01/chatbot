@@ -1,0 +1,58 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - cerca_film_titolo
+  - cerca_film_genere
+  - info_film
+  - film_appena_usciti
+  - dove_guardare
+
+entities:
+  - titolo_film
+  - genere
+  - attore
+  - anno
+
+slots:
+  titolo_film:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: titolo_film
+  genere:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: genere
+  attore:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: attore
+  anno:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: anno
+
+responses:
+  utter_greet:
+    - text: "Ciao! Sono la tua guida cinematografica. Come posso aiutarti oggi?"
+  utter_goodbye:
+    - text: "A presto!"
+  utter_ask_titolo_film:
+    - text: "Su quale film vorresti informazioni?"
+  utter_no_results:
+    - text: "Non ho trovato nulla che corrisponda alla tua richiesta."
+
+actions:
+  - action_movie_details
+  - action_search_by_genre
+  - action_recent_releases
+  - action_where_to_watch

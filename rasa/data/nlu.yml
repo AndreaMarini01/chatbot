@@ -1,0 +1,50 @@
+version: "3.1"
+nlu:
+  - intent: greet
+    examples: |
+      - Ciao
+      - Salve
+      - Ehilà
+      - Buongiorno
+
+  - intent: goodbye
+    examples: |
+      - Ciao, a presto
+      - Devo andare, grazie
+      - Grazie, ci sentiamo dopo
+      - Arrivederci
+
+  - intent: cerca_film_titolo
+    examples: |
+      - Voglio info su [Inception](titolo_film)
+      - Dammi dettagli sul film [Matrix](titolo_film)
+      - Vorrei sapere la trama di [Titanic](titolo_film)
+      - Parlami di [Interstellar](titolo_film)
+      - Cosa mi dici di [Fight Club](titolo_film)
+
+  - intent: cerca_film_genere
+    examples: |
+      - Consigliami un film di [azione](genere)
+      - Mi serve un bel film [horror](genere)
+      - Vorrei un film di [commedia](genere)
+      - Sai consigliarmi qualcosa di [fantascienza](genere)?
+
+  - intent: info_film
+    examples: |
+      - Vorrei più info su quel film
+      - Raccontami la trama di quel film
+      - Che attori ci sono in quel film?
+      - Puoi dirmi di più su questo film?
+
+  - intent: film_appena_usciti
+    examples: |
+      - Quali film sono appena usciti?
+      - Dammi i nuovi arrivi al cinema
+      - Film recenti?
+
+  - intent: dove_guardare
+    examples: |
+      - Dove posso vedere questo film in streaming?
+      - È su Netflix?
+      - Posso guardarlo online?
+      - Dove è disponibile?
