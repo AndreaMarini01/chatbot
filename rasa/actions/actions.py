@@ -50,32 +50,64 @@ class ActionMovieDetails(Action):
             dispatcher.utter_message(text="Manca la chiave API. Non posso recuperare i dettagli del film.")
             return []
 
-        # DEBUG: Stampa la chiave API (fai attenzione a non lasciare questa print in produzione)
-        print(f"DEBUG: API Key: {api_key}")
-
+        # Prima chiamata: ricerca del film per titolo
         url_search = f"{base_url}/search/movie?api_key={api_key}&query={titolo}&language=it-IT"
-        r = requests.get(url_search)
+        r_search = requests.get(url_search)
 
-        # DEBUG: Stampa lo status code della richiesta
-        print(f"DEBUG: Status code ricerca film: {r.status_code}")
+        # DEBUG: Stampa lo status code della ricerca
+        print(f"DEBUG: Status code ricerca film: {r_search.status_code}")
 
-        if r.status_code != 200:
-            dispatcher.utter_message(text="Si è verificato un errore nella chiamata all'API TMDb.")
+        if r_search.status_code != 200:
+            dispatcher.utter_message(text="Si è verificato un errore nella chiamata all'API TMDb per la ricerca.")
             return []
 
-        data = r.json()
+        search_data = r_search.json()
 
-        # DEBUG: Stampa la risposta JSON completa
-        print(f"DEBUG: Risultati ricerca: {data}")
+        # DEBUG: Stampa la risposta della ricerca
+        print(f"DEBUG: Risultati ricerca: {search_data}")
 
-        if data.get("results"):
-            movie = data["results"][0]
-            overview = movie.get("overview", "Nessuna trama disponibile")
-            title = movie.get("title", "Titolo non disponibile")
-            dispatcher.utter_message(text=f"Ecco i dettagli su {title}:\nTrama: {overview}")
-        else:
+        if not search_data.get("results"):
             dispatcher.utter_message(text="Non ho trovato nessun film con questo titolo.")
+            return []
+
+        # Ottieni l'ID del primo film trovato
+        movie = search_data["results"][0]
+        movie_id = movie.get("id")
+
+        if not movie_id:
+            dispatcher.utter_message(text="Non sono riuscito a recuperare l'ID del film.")
+            return []
+
+        # DEBUG: Stampa l'ID del film trovato
+        print(f"DEBUG: ID del film trovato: {movie_id}")
+
+        # Seconda chiamata: dettagli del film tramite ID
+        url_details = f"{base_url}/movie/{movie_id}?api_key={api_key}&language=it-IT"
+        r_details = requests.get(url_details)
+
+        # DEBUG: Stampa lo status code della chiamata ai dettagli
+        print(f"DEBUG: Status code dettagli film: {r_details.status_code}")
+
+        if r_details.status_code != 200:
+            dispatcher.utter_message(text="Si è verificato un errore nella chiamata all'API TMDb per i dettagli del film.")
+            return []
+
+        details_data = r_details.json()
+
+        # DEBUG: Stampa la risposta dei dettagli
+        print(f"DEBUG: Dettagli film: {details_data}")
+
+        # Recupera le informazioni dai dettagli
+        title = details_data.get("title", "Titolo non disponibile")
+        overview = details_data.get("overview", "Nessuna trama disponibile")
+        release_date = details_data.get("release_date", "Data di uscita non disponibile")
+
+        # Risposta finale
+        dispatcher.utter_message(
+            text=f"Ecco i dettagli su {title}:\nTrama: {overview}\nData di uscita: {release_date}"
+        )
         return []
+
 
 
 class ActionRecentReleases(Action):

@@ -18,3 +18,8 @@ stories:
     steps:
       - intent: film_appena_usciti
       - action: action_recent_releases
+
+  - story: info_film
+    steps:
+        - intent: cerca_film_titolo
+        - action: action_movie_details
