@@ -57,4 +57,60 @@ nlu:
   - intent: popolarità_film
     examples: |
       - Quali sono i film più popolari?
+      - Film più visti
+      - Film più amati
+      - Film più gettonati
+
+      
+      
+
+# Intents for TV series
+
+  - intent: SerieTV_recenti
+    examples: |
+      - Quali serie TV sono uscite di recente
+      - Serie TV recenti?
+      - Serie TV nuove
+      - Serie TV appena uscite?
+      - Novità serie TV?
+      - Nuove serie TV
+      - Dimmi alcune delle serie tv appena uscite?
+      - Quali sono le serie tv più recenti
+
+  - intent: cerca_serieTV_titolo
+    examples: |
+      - Voglio info su [casa di carta](titolo_serieTV)
+      - Dammi dettagli sulla serie TV [Breaking Bad](titolo_serieTV) ?
+      - Vorrei sapere la trama di [Game of Thrones](titolo_serieTV)
+      - Parlami di [Stranger Things](titolo_serieTV)
+      - Cosa mi dici di [The Crown](titolo_serieTV)
+      - Informazioni su [The Mandalorian](titolo_serieTV) ?
+      - Raccontami di [The Witcher](titolo_serieTV)
+      - Dimmi di [Peaky Blinders](titolo_serieTV) ?
+  
+
+  - intent: recensioni_utenti_serieTV
+    examples: |
+      - Cosa ne pensano gli utenti di quella serie TV
+      - Quali sono le recensioni di quella serie TV ?
+      - Recensioni serie TV
+      - Recensioni utenti serie TV ?
+
+  - intent: popolarità_serieTV
+    examples: |
+      - Quali sono le serie TV più popolari?
+      - Serie TV più viste
+      - Serie TV più amate?
+      - Serie TV più gettonate
+      - Serie TV più popolari?
+      - Serie TV più famose
+
+  - intent: cerca_serieTV_genere
+    examples: |
+      - Consigliami una serie TV di [azione](genere)
+      - Mi serve una bella serie TV [horror](genere) ?
+      - Vorrei una serie TV di [commedia](genere)
+      - Sai consigliarmi qualcosa di [fantascienza](genere)?
+
+    
     

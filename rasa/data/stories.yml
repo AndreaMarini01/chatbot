@@ -39,4 +39,29 @@ stories:
         - intent: cerca_film_genere
         - action: movies_by_genre
 
+#Story for serietv
 
+  - story: recent_releases_serieTV
+    steps:
+      - intent: SerieTV_recenti
+      - action: action_recent_releases_TV
+
+  - story: info_serieTV
+    steps:
+        - intent: cerca_serieTV_titolo
+        - action: action_TV_details
+
+  - story: recensione_serieTV
+    steps:
+        - intent: recensioni_utenti_serieTV
+        - action: TV_reviews
+
+  - story: SerieTV_popolari
+    steps:
+      - intent: popolarità_serieTV
+      - action: popular_TV
+
+  - story: genere_serieTV
+    steps:
+        - intent: cerca_serieTV_genere
+        - action: TV_by_genre

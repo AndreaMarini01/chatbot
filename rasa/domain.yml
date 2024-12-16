@@ -10,12 +10,18 @@ intents:
   - dove_guardare
   - recensioni_utenti
   - popolarità_film
+  - SerieTV_recenti
+  - cerca_serieTV_titolo
+  - recensioni_utenti_serieTV
+  - popolarità_serieTV
+  - cerca_serieTV_genere
 
 entities:
   - titolo_film
   - genere
   - attore
   - anno
+  - titolo_serieTV
 
 slots:
   titolo_film:
@@ -24,6 +30,12 @@ slots:
     mappings:
       - type: from_entity
         entity: titolo_film
+  serieTV:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: titolo_serieTV
   genere:
     type: text
     influence_conversation: true
@@ -61,3 +73,8 @@ actions:
   - movie_reviews
   - popular_movies
   - movies_by_genre
+  - action_recent_releases_TV
+  - action_TV_details
+  - TV_reviews
+  - popular_TV
+  - popolarità_serieTV
