@@ -26,25 +26,25 @@ class ActionMovieDetails(Action):
         title = tracker.get_slot("titolo_film")
 
         if not title:
-            dispatcher.utter_message(text="Non ho capito il titolo del film, puoi ripetere?")
+            dispatcher.utter_message(text="_Non ho capito il titolo del film, puoi ripetere?_")
             return []
 
         if not api_key:
-            dispatcher.utter_message(text="Manca la chiave API. Non posso recuperare i dettagli del film.")
+            dispatcher.utter_message(text="_Manca la chiave API. Non posso recuperare i dettagli del film._")
             return []
 
         search_data = search_movie_by_title(title)
 
         results = search_data.get("results", [])
         if not results:
-            dispatcher.utter_message(text="Non ho trovato nessun film con questo titolo.")
+            dispatcher.utter_message(text=f"_Non ho trovato nessun film con questo titolo: *{title}*._")
             return []
 
         movie = results[0]
         movie_id = movie.get("id")
 
         if not movie_id:
-            dispatcher.utter_message(text="Non sono riuscito a recuperare l'ID del film.")
+            dispatcher.utter_message(text="_Non sono riuscito a recuperare l'ID del film._")
             return []
 
         details_data = get_movie_details(movie_id)
@@ -52,9 +52,16 @@ class ActionMovieDetails(Action):
         overview = details_data.get("overview", "Nessuna trama disponibile")
         release_date = details_data.get("release_date", "Data di uscita non disponibile")
 
-        dispatcher.utter_message(
-            text=f"Ecco i dettagli su {movie_title}:\nTrama: {overview}\nData di uscita: {release_date}"
+        # Formattiamo la trama con una lunghezza ragionevole (se è troppo lunga)
+        truncated_overview = overview[:500] + "..." if len(overview) > 500 else overview
+
+        message = (
+            f"🎬 *{movie_title}*\n\n"
+            f"📅 _Data di uscita:_ {release_date}\n\n"
+            f"📝 *Trama:*\n{truncated_overview}"
         )
+
+        dispatcher.utter_message(text=message)
         return []
 
 
@@ -73,15 +80,24 @@ class ActionRecentReleases(Action):
         results = data.get("results", [])
 
         if not results:
-            dispatcher.utter_message(text="Non ho trovato film recentemente usciti.")
+            dispatcher.utter_message(text="_Non ho trovato film recentemente usciti._")
             return []
 
-        messaggio = "Ecco alcuni film attualmente in sala:\n"
+        # Titolo del messaggio
+        messaggio = "🎬 *Film recentemente in sala:*\n"
         for movie in results[:5]:
             title = movie.get("title", "Titolo non disponibile")
             release_date = movie.get("release_date", "Data non disponibile")
             overview = movie.get("overview", "Trama non disponibile")
-            messaggio += f"\n• {title} (uscito il {release_date})\n{overview}\n"
+
+            # Truncare l'overview se troppo lunga
+            truncated_overview = overview[:300] + "..." if len(overview) > 300 else overview
+
+            messaggio += (
+                f"\n• *{title}*"
+                f"\n📅 Uscita: {release_date}"
+                f"\n📝 {truncated_overview}\n"
+            )
 
         dispatcher.utter_message(text=messaggio)
         return []
@@ -100,26 +116,32 @@ class ActionSearchByGenre(Action):
 
         genere = tracker.get_slot("genere")
         if not genere:
-            dispatcher.utter_message(text="Non ho capito il genere che cerchi.")
+            dispatcher.utter_message(text="_Non ho capito il genere che cerchi. Puoi ripetere?_")
             return []
 
         genre_id = MOVIES_GENRE_MAP.get(genere.lower())
         if not genre_id:
-            dispatcher.utter_message(text=f"Non conosco il genere {genere}, prova con un altro.")
+            dispatcher.utter_message(text=f"_Non conosco il genere *{genere}*, prova con un altro._")
             return []
 
         data = get_movies_by_genre(genre_id)
         results = data.get("results", [])
 
         if not results:
-            dispatcher.utter_message(text=f"Non ho trovato film del genere {genere}.")
+            dispatcher.utter_message(text=f"_Non ho trovato film del genere *{genere}*._")
             return []
 
-        messaggio = f"Ecco alcuni film del genere {genere}:\n"
+        messaggio = f"🎬 *Ecco alcuni film del genere {genere}:*\n"
         for movie in results[:5]:
             title = movie.get("title", "Titolo non disponibile")
             overview = movie.get("overview", "Trama non disponibile")
-            messaggio += f"\n• {title}\n{overview}\n"
+
+            truncated_overview = overview[:300] + "..." if len(overview) > 300 else overview
+
+            messaggio += (
+                f"\n• *{title}*\n"
+                f"📝 {truncated_overview}\n"
+            )
 
         dispatcher.utter_message(text=messaggio)
         return []
@@ -136,9 +158,9 @@ class ActionWhereToWatch(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        # Qui potresti implementare una chiamata a TMDb per watch providers
-        # Per ora uso un placeholder
-        dispatcher.utter_message(text="Questo film è disponibile su Netflix")
+        # Placeholder: qui potresti chiamare TMDb per i provider di streaming.
+        # Per ora mettiamo un messaggio statico.
+        dispatcher.utter_message(text="📺 Questo film è disponibile su *Netflix*")
         return []
 
 
@@ -146,6 +168,7 @@ class MovieReviews(Action):
     """
     Azione per ottenere le recensioni di un film.
     """
+
     def name(self) -> Text:
         return "movie_reviews"
 
@@ -156,40 +179,50 @@ class MovieReviews(Action):
         titolo = tracker.get_slot("titolo_film")
 
         if not titolo:
-            dispatcher.utter_message(text="Non ho capito il titolo del film, puoi ripetere?")
+            dispatcher.utter_message(text="_Non ho capito il titolo del film, puoi ripetere?_")
             return []
 
         if not api_key:
-            dispatcher.utter_message(text="Manca la chiave API. Non posso recuperare i dettagli del film.")
+            dispatcher.utter_message(text="_Manca la chiave API. Non posso recuperare le recensioni._")
             return []
 
         search_data = search_movie_by_title(titolo)
-
         results = search_data.get("results", [])
         if not results:
-            dispatcher.utter_message(text="Non ho trovato nessun film con questo titolo.")
+            dispatcher.utter_message(text=f"_Non ho trovato alcun film con il titolo *{titolo}*._")
             return []
 
         movie = results[0]
         movie_id = movie.get("id")
 
         if not movie_id:
-            dispatcher.utter_message(text="Non sono riuscito a recuperare l'ID del film.")
+            dispatcher.utter_message(text="_Non sono riuscito a recuperare l'ID del film._")
             return []
 
         reviews_data = get_movie_reviews(movie_id)
         reviews = reviews_data.get("results", [])
 
         if reviews:
+            # Titolo del messaggio
+            dispatcher.utter_message(text=f"🎬 *Recensioni per {movie.get('title', 'il film')}*:")
+
+            # Mostriamo fino a 5 recensioni
             for review in reviews[:5]:
                 author = review.get("author", "Autore sconosciuto")
                 content = review.get("content", "Recensione non disponibile")
-                truncated_content = content[:500]
-                dispatcher.utter_message(
-                    text=f"Autore: {author}\nRecensione: {truncated_content}"
+                truncated_content = content[:500].strip()
+
+                # Aggiungere i puntini di sospensione se la recensione è stata troncata
+                if len(content) > 500:
+                    truncated_content += "..."
+
+                message = (
+                    f"\n👤 *Autore:* {author}\n"
+                    f"📝 *Recensione:*\n{truncated_content}\n"
                 )
+                dispatcher.utter_message(text=message)
         else:
-            dispatcher.utter_message(text="Non sono disponibili recensioni per questo film.")
+            dispatcher.utter_message(text="_Non sono disponibili recensioni per questo film._")
 
         return []
 
@@ -198,6 +231,7 @@ class PopularMovies(Action):
     """
     Azione per ottenere i film più popolari.
     """
+
     def name(self) -> Text:
         return "popular_movies"
 
@@ -205,21 +239,19 @@ class PopularMovies(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        # Esempio di come usare direttamente tmdb_utils
-        # Se preferisci, puoi creare una funzione "get_popular_movies()" in tmdb_utils.
         from tmdb_utils import make_tmdb_request
         popular_data = make_tmdb_request("/movie/popular", {"language": "it-IT"})
         movies = popular_data.get("results", [])
 
         if not movies:
-            dispatcher.utter_message(text="Non ho trovato film popolari al momento.")
+            dispatcher.utter_message(text="_Non ho trovato film popolari al momento._")
             return []
 
-        response = "Ecco i film più popolari:\n"
+        response = "🎬 *Ecco i film più popolari:*\n"
         for idx, movie in enumerate(movies[:5], start=1):
             title = movie.get("title", "Titolo non disponibile")
             release_date = movie.get("release_date", "Data di uscita non disponibile")
-            response += f"{idx}. {title} (Data di uscita: {release_date})\n"
+            response += f"\n{idx}. *{title}*\n📅 Uscita: {release_date}\n"
 
         dispatcher.utter_message(text=response)
 
