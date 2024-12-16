@@ -40,7 +40,6 @@ rasa train
 ### 4. Start the action server
 ```bash
 cd rasa
-cd actions
 rasa run actions
 ```
 
