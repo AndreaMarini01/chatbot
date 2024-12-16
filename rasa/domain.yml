@@ -30,7 +30,7 @@ slots:
     mappings:
       - type: from_entity
         entity: titolo_film
-  serieTV:
+  titolo_serieTV:
     type: text
     influence_conversation: true
     mappings:

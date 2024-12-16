@@ -79,12 +79,12 @@ nlu:
 
   - intent: cerca_serieTV_titolo
     examples: |
-      - Voglio info su [casa di carta](titolo_serieTV)
+      - Voglio info sulla serie della [casa di carta](titolo_serieTV)
       - Dammi dettagli sulla serie TV [Breaking Bad](titolo_serieTV) ?
-      - Vorrei sapere la trama di [Game of Thrones](titolo_serieTV)
+      - Vorrei sapere la trama degli episodi di [Game of Thrones](titolo_serieTV)
       - Parlami di [Stranger Things](titolo_serieTV)
-      - Cosa mi dici di [The Crown](titolo_serieTV)
-      - Informazioni su [The Mandalorian](titolo_serieTV) ?
+      - Cosa mi dici sulla serie di  [The Crown](titolo_serieTV)
+      - Informazioni sulle stagioni di  [The Mandalorian](titolo_serieTV) ?
       - Raccontami di [The Witcher](titolo_serieTV)
       - Dimmi di [Peaky Blinders](titolo_serieTV) ?
   

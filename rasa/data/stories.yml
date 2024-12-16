@@ -61,7 +61,7 @@ stories:
       - intent: popolarità_serieTV
       - action: popular_TV
 
-  - story: genere_serieTV
-    steps:
-        - intent: cerca_serieTV_genere
-        - action: TV_by_genre
+#  - story: genere_serieTV
+#    steps:
+#        - intent: cerca_serieTV_genere
+#        - action: TV_by_genre

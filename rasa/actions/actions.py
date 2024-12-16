@@ -2,13 +2,15 @@ from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 
-from constants import MOVIES_GENRE_MAP, api_key
-from tmdb_utils import (
+from .constants import MOVIES_GENRE_MAP, api_key
+from .tmdb_utils import (
     search_movie_by_title,
     get_movie_details,
     get_now_playing_movies,
     get_movies_by_genre,
-    get_movie_reviews
+    get_movie_reviews,
+    get_TV_details,
+    search_TV_by_title
 )
 
 
@@ -256,3 +258,62 @@ class PopularMovies(Action):
         dispatcher.utter_message(text=response)
 
         return []
+
+
+
+"""
+action for series TV
+"""
+
+
+class action_TV_details(Action):
+    """
+    Azione per recuperare i dettagli di una serieTV dato il titolo.
+    """
+    def name(self) -> Text:
+        return "action_TV_details"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        title = tracker.get_slot("titolo_serieTV")
+
+        if not title:
+            dispatcher.utter_message(text="_Non ho capito il titolo della serie tv, puoi ripetere?_")
+            return []
+
+        if not api_key:
+            dispatcher.utter_message(text="_Manca la chiave API. Non posso recuperare i dettagli del film._")
+            return []
+
+        search_data = search_TV_by_title(title)
+
+        results = search_data.get("results", [])
+        if not results:
+            dispatcher.utter_message(text=f"_Non ho trovato nessuna serie TV con questo titolo: *{title}*._")
+            return []
+
+        serie_tv = results[0]
+        series_id = serie_tv.get("id")
+
+        if not series_id:
+            dispatcher.utter_message(text="_Non sono riuscito a recuperare l'ID della SerieTV._")
+            return []
+
+        details_data = get_TV_details(series_id)
+        serie_tv_title = details_data.get("name", "Titolo non disponibile")
+        overview = details_data.get("overview", "Nessuna trama disponibile")
+        release_date = details_data.get("first_air_date", "Data di uscita non disponibile")
+        # Formattiamo la trama con una lunghezza ragionevole (se è troppo lunga)
+        truncated_overview = overview[:500] + "..." if len(overview) > 500 else overview
+
+        message = (
+            f"🎬 *{serie_tv_title}*\n\n"
+            f"📅 _Data di uscita:_ {release_date}\n\n"
+            f"📝 *Trama:*\n{truncated_overview}"
+        )
+
+        dispatcher.utter_message(text=message)
+        return []
+

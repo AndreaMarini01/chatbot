@@ -1,6 +1,6 @@
 import requests
 from typing import Optional, Dict
-from constants import api_key, base_url
+from .constants import api_key, base_url
 
 def make_tmdb_request(endpoint: str, params: Optional[Dict] = None) -> dict:
     """
@@ -69,4 +69,24 @@ def get_movie_reviews(movie_id: int) -> dict:
     :return: Il dizionario con i dati delle recensioni del film
     """
     data = make_tmdb_request(f"/movie/{movie_id}/reviews", {"page": 1})
+    return data
+
+def get_TV_details(series_id: int) -> dict:
+    """
+    Funzione per ottenere i dettagli di un film.
+
+    :param series_id: L'ID della serie di cui ottenere i dettagli
+    :return: Il dizionario con i dettagli del film
+    """
+    data = make_tmdb_request(f"/tv/{series_id}")
+    return data
+
+def search_TV_by_title(title: str) -> dict:
+    """
+    Funzione per cercare un film per titolo.
+
+    :param title: Il titolo del film da cercare
+    :return: Il dizionario con i dati del film cercato
+    """
+    data = make_tmdb_request("/search/tv", {"query": title})
     return data
