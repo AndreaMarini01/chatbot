@@ -28,3 +28,15 @@ stories:
     steps:
         - intent: recensioni_utenti
         - action: movie_reviews
+
+  - story: film_popolari
+    steps:
+      - intent: popolarità_film
+      - action: popular_movies
+
+  - story: genere_film
+    steps:
+        - intent: cerca_film_genere
+        - action: movies_by_genre
+
+

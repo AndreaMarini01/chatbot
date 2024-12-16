@@ -53,3 +53,8 @@ nlu:
     examples: |
       - Cosa ne pensano gli utenti di quel film
       - Quali sono le recensioni di quel film
+
+  - intent: popolarità_film
+    examples: |
+      - Quali sono i film più popolari?
+    

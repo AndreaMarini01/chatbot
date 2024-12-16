@@ -314,9 +314,6 @@ class MovieReviews(Action):
             dispatcher.utter_message(text="Non ho capito il titolo del film, puoi ripetere?")
             return []
 
-        # DEBUG: Stampa il titolo estratto
-        print(f"DEBUG: Titolo estratto: {titolo}")
-
         if not api_key:
             dispatcher.utter_message(text="Manca la chiave API. Non posso recuperare i dettagli del film.")
             return []
@@ -325,17 +322,11 @@ class MovieReviews(Action):
         url_search = f"{base_url}/search/movie?api_key={api_key}&query={titolo}&language=it-IT"
         r_search = requests.get(url_search)
 
-        # DEBUG: Stampa lo status code della ricerca
-        print(f"DEBUG: Status code ricerca film: {r_search.status_code}")
-
         if r_search.status_code != 200:
             dispatcher.utter_message(text="Si è verificato un errore nella chiamata all'API TMDb per la ricerca.")
             return []
 
         search_data = r_search.json()
-
-        # DEBUG: Stampa la risposta della ricerca
-        print(f"DEBUG: Risultati ricerca: {search_data}")
 
         if not search_data.get("results"):
             dispatcher.utter_message(text="Non ho trovato nessun film con questo titolo.")
@@ -349,8 +340,6 @@ class MovieReviews(Action):
             dispatcher.utter_message(text="Non sono riuscito a recuperare l'ID del film.")
             return []
 
-        # DEBUG: Stampa l'ID del film trovato
-        print(f"DEBUG: ID del film trovato: {movie_id}")
 
         # Seconda chiamata: dettagli del film tramite ID
         url_details = f"{base_url}/movie/{movie_id}?api_key={api_key}&language=it-IT"
@@ -399,4 +388,111 @@ class MovieReviews(Action):
 
         return []
 
-# Esempi film di un genere specificato
+
+class PopularMovies(Action):
+    def name(self) -> Text:
+        return "popular_movies"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        url_popular = f"{base_url}/movie/popular?api_key={api_key}&language=en-US&page=1"
+
+        # Effettua la chiamata API per ottenere i film popolari
+        r_popular = requests.get(url_popular)
+
+        if r_popular.status_code != 200:
+            dispatcher.utter_message(
+                text="Si è verificato un errore nella chiamata all'API TMDb per i film più popolari."
+            )
+            return []
+
+        popular_data = r_popular.json()
+        movies = popular_data.get("results", [])
+
+        if not movies:
+            dispatcher.utter_message(text="Non ho trovato film popolari al momento.")
+            return []
+
+        # Recupera e mostra i primi 5 film popolari
+        response = "Ecco i film più popolari:\n"
+        for idx, movie in enumerate(movies[:5], start=1):
+            title = movie.get("title", "Titolo non disponibile")
+            release_date = movie.get("release_date", "Data di uscita non disponibile")
+            response += f"{idx}. {title} (Data di uscita: {release_date})\n"
+
+        dispatcher.utter_message(text=response)
+
+        return []
+
+
+class MoviesByGenre(Action):
+    def name(self) -> Text:
+        return "movies_by_genre"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        # Estrarre il genere dall'input dell'utente
+        genre_input = tracker.get_slot("genere")
+        if not genre_input:
+            dispatcher.utter_message(text="Non ho capito il genere. Puoi ripetere?")
+            return []
+
+        # Recuperare la lista di generi disponibili dall'API
+        url_genres = f"{base_url}/genre/movie/list?api_key={api_key}&language=it-IT"
+        r_genres = requests.get(url_genres)
+
+        if r_genres.status_code != 200:
+            dispatcher.utter_message(
+                text="Si è verificato un errore nella chiamata all'API TMDb per la lista dei generi."
+            )
+            return []
+
+        genres_data = r_genres.json()
+        genres_list = genres_data.get("genres", [])
+
+        # Mappare l'input dell'utente con l'ID del genere
+        genre_id = None
+        for genre in genres_list:
+            if genre_input.lower() == genre["name"].lower():
+                genre_id = genre["id"]
+                break
+
+        if not genre_id:
+            dispatcher.utter_message(
+                text=f"Non ho trovato il genere '{genre_input}'. Prova con un altro genere."
+            )
+            return []
+
+        # Effettuare la chiamata per i film basati sul genere
+        url_movies = f"{base_url}/discover/movie?api_key={api_key}&with_genres={genre_id}&language=en-US&page=1"
+        r_movies = requests.get(url_movies)
+
+        if r_movies.status_code != 200:
+            dispatcher.utter_message(
+                text="Si è verificato un errore nella chiamata all'API TMDb per i film."
+            )
+            return []
+
+        movies_data = r_movies.json()
+        movies = movies_data.get("results", [])
+
+        if not movies:
+            dispatcher.utter_message(
+                text=f"Non ho trovato film per il genere '{genre_input}'."
+            )
+            return []
+
+        # Preparare la risposta con i titoli dei film
+        response = f"Ecco alcuni film del genere '{genre_input}':\n"
+        for idx, movie in enumerate(movies[:10], start=1):  # Mostra solo i primi 10 film
+            title = movie.get("title", "Titolo non disponibile")
+            # popularity = movie.get("popularity", "N/A")
+            # response += f"{idx}. {title} (Popolarità: {popularity})\n"
+
+        dispatcher.utter_message(text=response)
+
+        return []

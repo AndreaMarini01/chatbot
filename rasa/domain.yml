@@ -9,6 +9,7 @@ intents:
   - film_appena_usciti
   - dove_guardare
   - recensioni_utenti
+  - popolarità_film
 
 entities:
   - titolo_film
@@ -58,3 +59,5 @@ actions:
   - action_recent_releases
   - action_where_to_watch
   - movie_reviews
+  - popular_movies
+  - movies_by_genre
