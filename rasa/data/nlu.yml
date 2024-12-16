@@ -48,3 +48,8 @@ nlu:
       - È su Netflix?
       - Posso guardarlo online?
       - Dove è disponibile?
+
+  - intent: recensioni_utenti
+    examples: |
+      - Cosa ne pensano gli utenti di quel film
+      - Quali sono le recensioni di quel film

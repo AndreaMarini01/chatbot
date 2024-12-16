@@ -23,3 +23,8 @@ stories:
     steps:
         - intent: cerca_film_titolo
         - action: action_movie_details
+
+  - story: recensione_film
+    steps:
+        - intent: recensioni_utenti
+        - action: movie_reviews

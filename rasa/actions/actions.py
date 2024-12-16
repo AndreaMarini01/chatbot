@@ -2,7 +2,9 @@ from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 import os, requests
+# from dotenv import Dammload_dotenv
 from dotenv import load_dotenv
+
 
 load_dotenv()
 api_key = os.getenv("TMDB_API_KEY")
@@ -192,3 +194,209 @@ class ActionWhereToWatch(Action):
         watch_provider = "Netflix"
         dispatcher.utter_message(text=f"Questo film è disponibile su {watch_provider}")
         return []
+
+'''
+
+class MovieReviews(Action):
+    def name(self) -> Text:
+        return "movie_reviews"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        titolo = tracker.get_slot("titolo_film")
+
+        if not titolo:
+            dispatcher.utter_message(text="Non ho capito il titolo del film, puoi ripetere?")
+            return []
+
+        # DEBUG: Stampa il titolo estratto
+        print(f"DEBUG: Titolo estratto: {titolo}")
+
+        if not api_key:
+            dispatcher.utter_message(text="Manca la chiave API. Non posso recuperare i dettagli del film.")
+            return []
+
+        # Prima chiamata: ricerca del film per titolo
+        url_search = f"{base_url}/search/movie?api_key={api_key}&query={titolo}&language=it-IT"
+        r_search = requests.get(url_search)
+
+        # DEBUG: Stampa lo status code della ricerca
+        print(f"DEBUG: Status code ricerca film: {r_search.status_code}")
+
+        if r_search.status_code != 200:
+            dispatcher.utter_message(text="Si è verificato un errore nella chiamata all'API TMDb per la ricerca.")
+            return []
+
+        search_data = r_search.json()
+
+        # DEBUG: Stampa la risposta della ricerca
+        print(f"DEBUG: Risultati ricerca: {search_data}")
+
+        if not search_data.get("results"):
+            dispatcher.utter_message(text="Non ho trovato nessun film con questo titolo.")
+            return []
+
+        # Ottieni l'ID del primo film trovato
+        movie = search_data["results"][0]
+        movie_id = movie.get("id")
+
+        if not movie_id:
+            dispatcher.utter_message(text="Non sono riuscito a recuperare l'ID del film.")
+            return []
+
+        # DEBUG: Stampa l'ID del film trovato
+        print(f"DEBUG: ID del film trovato: {movie_id}")
+
+        # Seconda chiamata: dettagli del film tramite ID
+        url_details = f"{base_url}/movie/{movie_id}?api_key={api_key}&language=it-IT"
+        r_details = requests.get(url_details)
+
+        # DEBUG: Stampa lo status code della chiamata ai dettagli
+        print(f"DEBUG: Status code dettagli film: {r_details.status_code}")
+
+        if r_details.status_code != 200:
+            dispatcher.utter_message(
+                text="Si è verificato un errore nella chiamata all'API TMDb per i dettagli del film.")
+            return []
+
+        details_data = r_details.json()
+
+        # DEBUG: Stampa la risposta dei dettagli
+        print(f"DEBUG: Dettagli film: {details_data}")
+
+        # TRecupero delle recensioni
+        url_reviews = f"{base_url}/movie/{movie_id}/reviews?api_key={api_key}&language=it-IT&page=1"
+        r_reviews = requests.get(url_reviews)
+
+        # DEBUG: Stampa lo status code della chiamata alle recensioni
+        print(f"DEBUG: Status code recensioni: {r_reviews.status_code}")
+
+        if r_reviews.status_code != 200:
+            dispatcher.utter_message(text="Si è verificato un errore nella chiamata all'API TMDb per le recensioni.")
+            return []
+
+        reviews_data = r_reviews.json()
+
+        # DEBUG: Stampa la risposta delle recensioni
+        print(f"DEBUG: Risultati recensioni: {reviews_data}")
+
+        reviews = reviews_data.get("results", [])
+
+        # Recupera le prime 5 recensioni (se disponibili) e limita la lunghezza a 500 caratteri
+        if reviews:
+            for review in reviews[:5]:
+                author = review.get("author", "Autore sconosciuto")
+                content = review.get("content", "Recensione non disponibile")
+                # Limita ogni recensione a un massimo di 500 caratteri
+                truncated_content = content[:500]
+                dispatcher.utter_message(
+                    text=f"Autore: {author}\nRecensione: {truncated_content}"
+                )
+        else:
+            dispatcher.utter_message(text="Non sono disponibili recensioni per questo film.")
+
+        return []
+    '''
+
+class MovieReviews(Action):
+    def name(self) -> Text:
+        return "movie_reviews"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        titolo = tracker.get_slot("titolo_film")
+
+        if not titolo:
+            dispatcher.utter_message(text="Non ho capito il titolo del film, puoi ripetere?")
+            return []
+
+        # DEBUG: Stampa il titolo estratto
+        print(f"DEBUG: Titolo estratto: {titolo}")
+
+        if not api_key:
+            dispatcher.utter_message(text="Manca la chiave API. Non posso recuperare i dettagli del film.")
+            return []
+
+        # Prima chiamata: ricerca del film per titolo
+        url_search = f"{base_url}/search/movie?api_key={api_key}&query={titolo}&language=it-IT"
+        r_search = requests.get(url_search)
+
+        # DEBUG: Stampa lo status code della ricerca
+        print(f"DEBUG: Status code ricerca film: {r_search.status_code}")
+
+        if r_search.status_code != 200:
+            dispatcher.utter_message(text="Si è verificato un errore nella chiamata all'API TMDb per la ricerca.")
+            return []
+
+        search_data = r_search.json()
+
+        # DEBUG: Stampa la risposta della ricerca
+        print(f"DEBUG: Risultati ricerca: {search_data}")
+
+        if not search_data.get("results"):
+            dispatcher.utter_message(text="Non ho trovato nessun film con questo titolo.")
+            return []
+
+        # Ottieni l'ID del primo film trovato
+        movie = search_data["results"][0]
+        movie_id = movie.get("id")
+
+        if not movie_id:
+            dispatcher.utter_message(text="Non sono riuscito a recuperare l'ID del film.")
+            return []
+
+        # DEBUG: Stampa l'ID del film trovato
+        print(f"DEBUG: ID del film trovato: {movie_id}")
+
+        # Seconda chiamata: dettagli del film tramite ID
+        url_details = f"{base_url}/movie/{movie_id}?api_key={api_key}&language=it-IT"
+        r_details = requests.get(url_details)
+
+        # DEBUG: Stampa lo status code della chiamata ai dettagli
+        print(f"DEBUG: Status code dettagli film: {r_details.status_code}")
+
+        if r_details.status_code != 200:
+            dispatcher.utter_message(
+                text="Si è verificato un errore nella chiamata all'API TMDb per i dettagli del film.")
+            return []
+
+        details_data = r_details.json()
+
+        # DEBUG: Stampa la risposta dei dettagli
+        print(f"DEBUG: Dettagli film: {details_data}")
+
+        # Recupero delle recensioni
+        url_reviews = f"{base_url}/movie/{movie_id}/reviews?api_key={api_key}&language=it-IT&page=1"
+        r_reviews = requests.get(url_reviews)
+
+        # DEBUG: Stampa lo status code della chiamata alle recensioni
+        print(f"DEBUG: Status code recensioni: {r_reviews.status_code}")
+
+        if r_reviews.status_code != 200:
+            dispatcher.utter_message(text="Si è verificato un errore nella chiamata all'API TMDb per le recensioni.")
+            return []
+
+        reviews_data = r_reviews.json()
+
+        reviews = reviews_data.get("results", [])
+
+        # Recupera e invia le prime 5 recensioni
+        if reviews:
+            for idx, review in enumerate(reviews[:5], start=1):
+                author = review.get("author", "Autore sconosciuto")
+                content = review.get("content", "Recensione non disponibile")
+                truncated_content = content[:500]
+                dispatcher.utter_message(
+                    text=f"Autore: {author}\n"
+                         f"Recensione: {truncated_content}"
+                )
+        else:
+            dispatcher.utter_message(text="Non sono disponibili recensioni per questo film.")
+
+        return []
+
+# Esempi film di un genere specificato
