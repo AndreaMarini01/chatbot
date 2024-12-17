@@ -60,11 +60,11 @@ nlu:
       - Film più visti
       - Film più amati
       - Film più gettonati
+  
+  
+  
 
-      
-      
-
-# Intents for TV series
+  # Intents for TV series
 
   - intent: SerieTV_recenti
     examples: |
@@ -87,7 +87,7 @@ nlu:
       - Informazioni sulle stagioni di  [The Mandalorian](titolo_serieTV) ?
       - Raccontami di [The Witcher](titolo_serieTV)
       - Dimmi di [Peaky Blinders](titolo_serieTV) ?
-  
+
 
   - intent: recensioni_utenti_serieTV
     examples: |
@@ -112,5 +112,24 @@ nlu:
       - Vorrei una serie TV di [commedia](genere)
       - Sai consigliarmi qualcosa di [fantascienza](genere)?
 
-    
-    
+
+  - intent: inform_film
+    examples: |
+      - È un film
+      - Parlo di un film
+      - Film
+      - Film al cinema
+      - Film in uscita
+      - Si tratta di un film
+
+  - intent: inform_serie
+    examples: |
+      - È una serie
+      - Parlo di una serie
+      - Serie
+      - Serie TV
+      - TV
+      - È una serie tv
+      - Si tratta di una serie
+  
+

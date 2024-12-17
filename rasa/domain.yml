@@ -22,6 +22,8 @@ entities:
   - attore
   - anno
   - titolo_serieTV
+  - inform_film
+  - inform_serie
 
 slots:
   titolo_film:
@@ -54,6 +56,16 @@ slots:
     mappings:
       - type: from_entity
         entity: anno
+  context_ricerca:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_text
+  tipo_contenuto:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_text
 
 responses:
   utter_greet:
@@ -64,6 +76,12 @@ responses:
     - text: "Su quale film vorresti informazioni?"
   utter_no_results:
     - text: "Non ho trovato nulla che corrisponda alla tua richiesta."
+  utter_chiedi_film_o_serie:
+    - text: "Non ho capito se parli di un film o di una serie. Puoi specificare?"
+  utter_confermato_film:
+    - text: "Ok, quindi parli di un film. Dimmi il titolo."
+  utter_confermato_serie:
+    - text: "Ok, quindi parli di una serie TV. Dimmi il titolo."
 
 actions:
   - action_movie_details
@@ -78,3 +96,5 @@ actions:
   - TV_reviews
   - popular_TV
   - popolarità_serieTV
+  - action_set_context_title
+  - action_ask_movie_or_series

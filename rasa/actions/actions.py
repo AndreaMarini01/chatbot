@@ -1,6 +1,7 @@
 from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
+from rasa_sdk.events import SlotSet
 
 from .constants import MOVIES_GENRE_MAP, api_key
 from .tmdb_utils import (
@@ -317,3 +318,24 @@ class action_TV_details(Action):
         dispatcher.utter_message(text=message)
         return []
 
+
+# actions.py
+class ActionSetContextTitle(Action):
+    def name(self) -> Text:
+        return "action_set_context_title"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        return [SlotSet("context_ricerca", "title")]
+
+
+class ActionAskMovieOrSeries(Action):
+    def name(self) -> Text:
+        return "action_ask_movie_or_series"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        dispatcher.utter_message(response="utter_chiedi_film_o_serie")
+        return []

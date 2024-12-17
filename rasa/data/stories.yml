@@ -5,6 +5,7 @@ stories:
       - intent: greet
       - action: utter_greet
       - intent: cerca_film_titolo
+      - action: action_set_context_title
       - action: action_movie_details
 
   - story: genre_suggestion
@@ -21,13 +22,14 @@ stories:
 
   - story: info_film
     steps:
-        - intent: cerca_film_titolo
-        - action: action_movie_details
+      - intent: cerca_film_titolo
+      - action: action_set_context_title
+      - action: action_movie_details
 
   - story: recensione_film
     steps:
-        - intent: recensioni_utenti
-        - action: movie_reviews
+      - intent: recensioni_utenti
+      - action: movie_reviews
 
   - story: film_popolari
     steps:
@@ -36,10 +38,10 @@ stories:
 
   - story: genere_film
     steps:
-        - intent: cerca_film_genere
-        - action: movies_by_genre
+      - intent: cerca_film_genere
+      - action: movies_by_genre
 
-#Story for serietv
+  #Story for serietv
 
   - story: recent_releases_serieTV
     steps:
@@ -48,13 +50,14 @@ stories:
 
   - story: info_serieTV
     steps:
-        - intent: cerca_serieTV_titolo
-        - action: action_TV_details
+      - intent: cerca_serieTV_titolo
+      - action: action_set_context_title
+      - action: action_TV_details
 
   - story: recensione_serieTV
     steps:
-        - intent: recensioni_utenti_serieTV
-        - action: TV_reviews
+      - intent: recensioni_utenti_serieTV
+      - action: TV_reviews
 
   - story: SerieTV_popolari
     steps:

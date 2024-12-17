@@ -4,3 +4,45 @@ rules:
     steps:
       - intent: goodbye
       - action: utter_goodbye
+
+  - rule: Imposta contesto ricerca per film
+    steps:
+      - intent: cerca_film_titolo
+      - action: action_set_context_title
+      - action: action_movie_details
+
+  - rule: Imposta contesto ricerca per serie
+    steps:
+      - intent: cerca_serieTV_titolo
+      - action: action_set_context_title
+      - action: action_TV_details
+
+  - rule: Fallback solo se in contesto titolo
+    condition:
+      - slot_was_set:
+          - context_ricerca: "title"
+    steps:
+      - intent: nlu_fallback
+      - action: action_ask_movie_or_series
+
+#  - rule: Utente dice che è un film
+#    steps:
+#      - intent: inform_film
+#      - slot_was_set:
+#          - tipo_contenuto: "film"
+#      - action: utter_confermato_film
+
+  - rule: Utente dice che è una serie
+    steps:
+      - intent: inform_serie
+      - slot_was_set:
+          - tipo_contenuto: "serie"
+      - action: utter_confermato_serie
+
+  - rule: Utente dice che è un film
+    steps:
+      - intent: inform_film
+      - slot_was_set:
+          - tipo_contenuto: "film"
+      - action: utter_confermato_film
+      - action: action_movie_details  # se già abbiamo titolo_film
