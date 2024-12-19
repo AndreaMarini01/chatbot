@@ -16,11 +16,37 @@ nlu:
 
   - intent: cerca_film_titolo
     examples: |
+      - Dammi informazioni su [Titanic](titolo_film)
       - Voglio info su [Inception](titolo_film)
-      - Dammi dettagli sul film [Matrix](titolo_film)
-      - Vorrei sapere la trama di [Titanic](titolo_film)
-      - Parlami di [Interstellar](titolo_film)
-      - Cosa mi dici di [Fight Club](titolo_film)
+      - Vorrei sapere la trama di [Il signore degli anelli: Le due torri](titolo_film)
+      - Parlami di [Harry Potter e la pietra filosofale](titolo_film)
+      - Cosa mi dici di [Pirates of the Caribbean: La maledizione della prima luna](titolo_film)
+      - Dammi dettagli sul film [Forrest Gump](titolo_film)
+      - Vorrei info su [Star Wars: L'impero colpisce ancora](titolo_film)
+      - Mi parli di [The Matrix](titolo_film)
+      - Raccontami di [Il buono, il brutto, il cattivo](titolo_film)
+      - Ho sentito parlare di [La vita è bella](titolo_film)
+      - Dammi informazioni su [Interstellar](titolo_film)
+      - Parlami di [Joker](titolo_film)
+      - Vorrei sapere la trama di [Avengers: Age of Ultron](titolo_film)
+      - Mi racconti di [La città incantata](titolo_film)
+      - Dammi dettagli sul film [Il gladiatore](titolo_film)
+      - Voglio info su [L'alba del pianeta delle scimmie](titolo_film)
+      - Cosa mi dici di [Shutter Island](titolo_film)
+      - Parlami di [Il Padrino](titolo_film)
+      - Vorrei info su [Ritorno al futuro](titolo_film)
+      - Dimmi qualcosa su [Blade Runner 2049](titolo_film)
+      - Ho bisogno di dettagli su [Fight Club](titolo_film)
+      - Cerco informazioni su [Saving Private Ryan](titolo_film)
+      - Cosa puoi dirmi di [Il Cavaliere Oscuro](titolo_film)
+      - Vorrei la trama di [Avatar](titolo_film)
+      - Dammi informazioni su [La forma dell'acqua](titolo_film)
+      - Parlami di [La La Land](titolo_film)
+      - Mi interessa sapere di [C'era una volta in America](titolo_film)
+      - Raccontami di [Guardiani della Galassia Vol. 2](titolo_film)
+      - Ho sentito di [Il nome della rosa](titolo_film)
+      - Potresti dirmi di [Il favoloso mondo di Amélie](titolo_film)
+  
 
   - intent: cerca_film_genere
     examples: |
@@ -79,15 +105,38 @@ nlu:
 
   - intent: cerca_serieTV_titolo
     examples: |
-      - Voglio info sulla serie della [casa di carta](titolo_serieTV)
-      - Dammi dettagli sulla serie TV [Breaking Bad](titolo_serieTV) ?
-      - Vorrei sapere la trama degli episodi di [Game of Thrones](titolo_serieTV)
-      - Parlami di [Stranger Things](titolo_serieTV)
-      - Cosa mi dici sulla serie di  [The Crown](titolo_serieTV)
-      - Informazioni sulle stagioni di  [The Mandalorian](titolo_serieTV) ?
-      - Raccontami di [The Witcher](titolo_serieTV)
-      - Dimmi di [Peaky Blinders](titolo_serieTV) ?
-
+      - Dammi dettagli sulla serie [Breaking Bad](titolo_serieTV)
+      - Voglio info sulla serie [Game of Thrones](titolo_serieTV)
+      - Vorrei sapere la trama degli episodi di [Stranger Things](titolo_serieTV)
+      - Parlami di [La casa di carta](titolo_serieTV)
+      - Cosa mi dici sulla serie [The Crown](titolo_serieTV)
+      - Informazioni sulla serie [The Mandalorian](titolo_serieTV)
+      - Raccontami di [Westworld](titolo_serieTV)
+      - Dammi informazioni su [Dark](titolo_serieTV)
+      - Vorrei info su [Peaky Blinders](titolo_serieTV)
+      - Parlami di [The Witcher](titolo_serieTV)
+      - Cosa mi dici di [Better Call Saul](titolo_serieTV)
+      - Vorrei sapere la trama di [House of Cards](titolo_serieTV)
+      - Dammi dettagli sulla serie [The Handmaid's Tale](titolo_serieTV)
+      - Mi parli di [Vikings](titolo_serieTV)
+      - Voglio info sulla serie [Loki](titolo_serieTV)
+      - Vorrei informazioni su [Il Trono di Spade](titolo_serieTV)
+      - Raccontami di [Chernobyl](titolo_serieTV)
+      - Ho sentito parlare di [Black Mirror](titolo_serieTV)
+      - Dammi informazioni su [Mindhunter](titolo_serieTV)
+      - Parlami di [The Boys](titolo_serieTV)
+      - Vorrei sapere la trama di [Ozark](titolo_serieTV)
+      - Mi racconti di [Fargo](titolo_serieTV)
+      - Cosa puoi dirmi di [Lucifer](titolo_serieTV)
+      - Cerco informazioni su [The Expanse](titolo_serieTV)
+      - Dammi dettagli sulla serie [Narcos](titolo_serieTV)
+      - Parlami di [Sense8](titolo_serieTV)
+      - Vorrei info su [Orange Is the New Black](titolo_serieTV)
+      - Dimmi qualcosa su [Hannibal](titolo_serieTV)
+      - Potresti dirmi di [Mr. Robot](titolo_serieTV)
+      - Raccontami di [Penny Dreadful](titolo_serieTV)
+  
+  
 
   - intent: recensioni_utenti_serieTV
     examples: |
