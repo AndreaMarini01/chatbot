@@ -106,12 +106,12 @@ class ActionRecentReleases(Action):
         return []
 
 
-class ActionSearchByGenre(Action):
+class ActionMoviesByGenre(Action):
     """
     Azione per ottenere film di un certo genere.
     """
     def name(self) -> Text:
-        return "action_search_by_genre"
+        return "movies_by_genre"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
@@ -267,8 +267,7 @@ class PopularMovies(Action):
 action for series TV
 """
 
-
-class action_TV_details(Action):
+class ActionTvDetails(Action):
     """
     Azione per recuperare i dettagli di una serieTV dato il titolo.
     """
