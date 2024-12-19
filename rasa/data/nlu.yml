@@ -41,6 +41,7 @@ nlu:
       - Quali film sono appena usciti?
       - Dammi i nuovi arrivi al cinema
       - Film recenti?
+      - Che film sono appena usciti?
 
   - intent: dove_guardare
     examples: |
@@ -60,6 +61,7 @@ nlu:
       - Film più visti
       - Film più amati
       - Film più gettonati
+      - Film più popolari
   
   
   

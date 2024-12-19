@@ -11,7 +11,7 @@ from .tmdb_utils import (
     get_movies_by_genre,
     get_movie_reviews,
     get_TV_details,
-    search_TV_by_title
+    search_TV_by_title, get_favourite
 )
 
 
@@ -242,9 +242,10 @@ class PopularMovies(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        from tmdb_utils import make_tmdb_request
-        popular_data = make_tmdb_request("/movie/popular", {"language": "it-IT"})
+
+        popular_data = get_favourite()
         movies = popular_data.get("results", [])
+        print(movies)
 
         if not movies:
             dispatcher.utter_message(text="_Non ho trovato film popolari al momento._")
