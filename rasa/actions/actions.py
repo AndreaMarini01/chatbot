@@ -11,7 +11,9 @@ from .tmdb_utils import (
     get_movies_by_genre,
     get_movie_reviews,
     get_TV_details,
-    search_TV_by_title, get_favourite
+    search_TV_by_title,
+    get_favourite,
+    search_TV_latest
 )
 
 
@@ -318,6 +320,43 @@ class ActionTvDetails(Action):
         dispatcher.utter_message(text=message)
         return []
 
+
+class ActionTVRecentReleases(Action):
+    """
+    Azione per ottenere le serie tv appena uscite.
+    """
+    def name(self) -> Text:
+        return "action_recent_releases_TV"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        data = search_TV_latest()
+        results = data.get("results", [])
+
+        if not results:
+            dispatcher.utter_message(text="_Non ho nessuna serie tv uscita di  recentemente")
+            return []
+
+        # Titolo del messaggio
+        messaggio = "🎬 *Serie tv recente*\n"
+        for serie in results[:5]:
+            title = serie.get("name", "Titolo non disponibile")
+            release_date = serie.get("first_air_date", "Data non disponibile")
+            overview = serie.get("overview", "Trama non disponibile")
+
+            # Truncare l'overview se troppo lunga
+            truncated_overview = overview[:300] + "..." if len(overview) > 300 else overview
+
+            messaggio += (
+                f"\n• *{title}*"
+                f"\n📅 Uscita: {release_date}"
+                f"\n📝 {truncated_overview}\n"
+            )
+
+        dispatcher.utter_message(text=messaggio)
+        return []
 
 # actions.py
 class ActionSetContextTitle(Action):

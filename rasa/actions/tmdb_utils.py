@@ -102,3 +102,13 @@ def search_TV_by_title(title: str) -> dict:
     """
     data = make_tmdb_request("/search/tv", {"query": title})
     return data
+
+def search_TV_latest() -> dict:
+    """
+    Funzione per cercare le ultime serie tv aggiungte.
+
+    :param nessuno
+    :return: Il dizionario con i dati delle ultime serie tv aggiunte
+    """
+    data = make_tmdb_request("/tv/on_the_air")
+    return data
