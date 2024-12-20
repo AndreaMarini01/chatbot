@@ -11,6 +11,7 @@ from .tmdb_utils import (
     get_movies_by_genre,
     get_movie_reviews,
     get_TV_details,
+    get_series_reviews,
     search_TV_by_title,
     get_favourite,
     search_TV_latest
@@ -377,4 +378,62 @@ class ActionAskMovieOrSeries(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         dispatcher.utter_message(response="utter_chiedi_film_o_serie")
+        return []
+    
+class ActionAskRewiewsSeries(Action):
+    def name(self) -> Text:
+        return "TV_reviews"
+    
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        titolo = tracker.get_slot("titolo_serieTV")
+
+        if not titolo:
+            dispatcher.utter_message(text="_Non ho capito il titolo della serie tv, puoi ripetere?_")
+            return []
+        
+        if not api_key:
+            dispatcher.utter_message(text="_Manca la chiave API. Non posso recuperare le recensioni._")
+            return []
+        
+        search_data = search_TV_by_title(titolo)
+        results = search_data.get("results", [])
+        if not results:
+            dispatcher.utter_message(text=f"_Non ho trovato alcuna serie tv con il titolo *{titolo}*._")
+            return []
+        
+        serie_tv = results[0]
+        series_id = serie_tv.get("id")
+
+        if not series_id:
+            dispatcher.utter_message(text="_Non sono riuscito a recuperare l'ID della serie tv._")
+            return []
+        
+        reviews_data = get_series_reviews(series_id)
+        reviews = reviews_data.get("results", [])
+
+        if reviews:
+            # Titolo del messaggio
+            dispatcher.utter_message(text=f"🎬 *Recensioni per {serie_tv.get('name', 'la serie tv')}*:")
+
+            # Mostriamo fino a 5 recensioni
+            for review in reviews[:5]:
+                author = review.get("author", "Autore sconosciuto")
+                content = review.get("content", "Recensione non disponibile")
+                truncated_content = content[:600].strip()
+
+                # Aggiungere i puntini di sospensione se la recensione è stata troncata
+                if len(content) > 600:
+                    truncated_content += "..."
+
+                message = (
+                    f"\n👤 *Autore:* {author}\n"
+                    f"📝 *Recensione:*\n{truncated_content}\n"
+                )
+                dispatcher.utter_message(text=message)
+        else:   
+            dispatcher.utter_message(text="_Non sono disponibili recensioni per questa serie tv._")
+
         return []

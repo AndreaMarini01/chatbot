@@ -103,11 +103,8 @@ nlu:
       - Film più amati
       - Film più gettonati
       - Film più popolari
-  
-  
-  
 
-  # Intents for TV series
+# Intents for TV series
 
   - intent: SerieTV_recenti
     examples: |
@@ -152,15 +149,40 @@ nlu:
       - Dimmi qualcosa su [Hannibal](titolo_serieTV)
       - Potresti dirmi di [Mr. Robot](titolo_serieTV)
       - Raccontami di [Penny Dreadful](titolo_serieTV)
-  
-  
 
   - intent: recensioni_utenti_serieTV
     examples: |
-      - Cosa ne pensano gli utenti di quella serie TV
-      - Quali sono le recensioni di quella serie TV ?
-      - Recensioni serie TV
-      - Recensioni utenti serie TV ?
+      - Cosa ne pensano gli utenti di [Breaking Bad](titolo_serieTV)?
+      - Quali sono le recensioni di [Game of Thrones](titolo_serieTV)?
+      - Che opinioni hanno gli utenti su [Stranger Things](titolo_serieTV)?
+      - Cosa dicono gli utenti su [The Crown](titolo_serieTV)?
+      - Recensioni degli spettatori per [La casa di carta](titolo_serieTV)
+      - Come valutano gli utenti [The Mandalorian](titolo_serieTV)?
+      - Che cosa pensano gli utenti di [Westworld](titolo_serieTV)?
+      - Le recensioni degli utenti per [Dark](titolo_serieTV)?
+      - Opinioni degli utenti su [Peaky Blinders](titolo_serieTV)?
+      - Cosa ne pensano le persone di [The Witcher](titolo_serieTV)?
+      - Quali sono le recensioni su [Better Call Saul](titolo_serieTV)?
+      - Cosa pensano gli utenti di [House of Cards](titolo_serieTV)?
+      - Quali recensioni ci sono per [The Handmaid's Tale](titolo_serieTV)?
+      - Opinioni degli spettatori su [Vikings](titolo_serieTV)?
+      - Recensioni di [Loki](titolo_serieTV)?
+      - Che cosa pensano gli utenti di [Il Trono di Spade](titolo_serieTV)?
+      - Cosa ne pensano gli utenti su [Chernobyl](titolo_serieTV)?
+      - Quali sono le recensioni su [Black Mirror](titolo_serieTV)?
+      - Opinioni degli utenti su [Mindhunter](titolo_serieTV)?
+      - Che dicono gli utenti su [The Boys](titolo_serieTV)?
+      - Cosa pensano gli utenti di [Ozark](titolo_serieTV)?
+      - Recensioni di [Fargo](titolo_serieTV)?
+      - Opinioni degli utenti su [Lucifer](titolo_serieTV)?
+      - Cosa ne pensano gli spettatori di [The Expanse](titolo_serieTV)?
+      - Le recensioni su [Narcos](titolo_serieTV)?
+      - Cosa pensano gli utenti di [Sense8](titolo_serieTV)?
+      - Recensioni degli utenti su [Orange Is the New Black](titolo_serieTV)?
+      - Che opinioni hanno gli utenti su [Hannibal](titolo_serieTV)?
+      - Come valutano gli utenti [Mr. Robot](titolo_serieTV)?
+      - Opinioni degli utenti su [Penny Dreadful](titolo_serieTV)?
+
 
   - intent: popolarità_serieTV
     examples: |
@@ -179,7 +201,7 @@ nlu:
       - Sai consigliarmi qualcosa di [fantascienza](genere)?
 
     
-- intent: inform_film
+  - intent: inform_film
     examples: |
       - È un film
       - Parlo di un film
@@ -197,5 +219,3 @@ nlu:
       - TV
       - È una serie tv
       - Si tratta di una serie
-  
-    

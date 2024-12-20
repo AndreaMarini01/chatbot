@@ -112,3 +112,13 @@ def search_TV_latest() -> dict:
     """
     data = make_tmdb_request("/tv/on_the_air")
     return data
+
+def get_series_reviews(series_id: int) -> dict:
+    """
+    Funzione per ottenere le recensioni di un film.
+
+    :param movie_id: L'ID del film di cui ottenere le recensioni
+    :return: Il dizionario con i dati delle recensioni del film
+    """
+    data = make_tmdb_request(f"/tv/{series_id}/reviews", {"page": 1})
+    return data

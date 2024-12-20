@@ -17,7 +17,7 @@ intents:
   - cerca_serieTV_genere
   - inform_film
   - inform_serie
-  - looking_for_actors
+  #- looking_for_actors
 
 entities:
   - titolo_film
@@ -27,7 +27,7 @@ entities:
   - titolo_serieTV
   - inform_film
   - inform_serie
-  - nome_attore
+  #- nome_attore
 
 slots:
   titolo_film:
@@ -74,12 +74,12 @@ slots:
     influence_conversation: false
     mappings:
       - type: from_text
-  nome_attore:
-    type: text
-    influence_conversation: true
-    mappings:
-      - type: from_entity
-        entity: nome_attore
+  #nome_attore:
+  #  type: text
+  #  influence_conversation: true
+  #  mappings:
+  #    - type: from_entity
+  #      entity: nome_attore
 
 responses:
   utter_greet:
@@ -112,4 +112,4 @@ actions:
   - popolarità_serieTV
   - action_set_context_title
   - action_ask_movie_or_series
-  - actor_details
+  #- actor_details
