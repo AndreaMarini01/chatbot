@@ -25,24 +25,16 @@ rules:
       - intent: nlu_fallback
       - action: action_ask_movie_or_series
 
-#  - rule: Utente dice che è un film
-#    steps:
-#      - intent: inform_film
-#      - slot_was_set:
-#          - tipo_contenuto: "film"
-#      - action: utter_confermato_film
-
   - rule: Utente dice che è una serie
     steps:
       - intent: inform_serie
       - slot_was_set:
           - tipo_contenuto: "serie"
-      - action: utter_confermato_serie
+      - action: action_TV_details  # se già abbiamo titolo_s
 
   - rule: Utente dice che è un film
     steps:
       - intent: inform_film
       - slot_was_set:
           - tipo_contenuto: "film"
-      - action: utter_confermato_film
       - action: action_movie_details  # se già abbiamo titolo_film
