@@ -68,3 +68,10 @@ stories:
 #    steps:
 #        - intent: cerca_serieTV_genere
 #        - action: TV_by_genre
+
+# Stories for actors
+
+  - story: actor_info
+    steps:
+        - intent: looking_for_actors
+        - action: actor_details

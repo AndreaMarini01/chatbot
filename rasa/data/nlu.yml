@@ -178,8 +178,8 @@ nlu:
       - Vorrei una serie TV di [commedia](genere)
       - Sai consigliarmi qualcosa di [fantascienza](genere)?
 
-
-  - intent: inform_film
+    
+- intent: inform_film
     examples: |
       - È un film
       - Parlo di un film
@@ -198,4 +198,4 @@ nlu:
       - È una serie tv
       - Si tratta di una serie
   
-
+    
