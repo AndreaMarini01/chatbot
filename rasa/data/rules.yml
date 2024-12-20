@@ -24,6 +24,11 @@ rules:
     steps:
       - intent: nlu_fallback
       - action: action_ask_movie_or_series
+  - rule: Regola per serie TV popolari
+    steps:
+      - intent: popolarità_serieTV
+      - action: popular_TV
+
 
   - rule: Utente dice che è una serie
     steps:
@@ -38,3 +43,10 @@ rules:
       - slot_was_set:
           - tipo_contenuto: "film"
       - action: action_movie_details  # se già abbiamo titolo_film
+
+#  - rule: Cerca serie TV per genere
+#    steps:
+#      - intent: cerca_serieTV_genere
+#      - slot_was_set:
+#          - tipo_contenuto: "serie"
+#      - action: TV_by_genre

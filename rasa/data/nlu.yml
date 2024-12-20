@@ -246,9 +246,25 @@ nlu:
   - intent: cerca_serieTV_genere
     examples: |
       - Consigliami una serie TV di [azione](genere)
-      - Mi serve una bella serie TV [horror](genere) ?
       - Vorrei una serie TV di [commedia](genere)
       - Sai consigliarmi qualcosa di [fantascienza](genere)?
+      - Hai qualche suggerimento per una serie TV di [thriller](genere)?
+      - Mi consigli una serie TV [drammatica](genere)?
+      - Qual è una buona serie TV di [fantasy](genere)?
+      - Voglio iniziare una serie TV di [romantico](genere), cosa mi suggerisci?
+      - Una serie TV di [azione](genere), per favore
+      - Mi puoi consigliare una serie TV di [commedia](genere)?
+      - Sai dirmi una bella serie TV di [fantascienza](genere)?
+      - Ho voglia di vedere una serie TV di [giallo](genere), cosa mi consigli?
+      - Voglio una serie TV di [storico](genere), hai suggerimenti?
+      - Mi serve una serie TV [avventura](genere), puoi aiutarmi?
+      - Qual è una bella serie TV di [documentario](genere)?
+      - Cerco una serie TV di [horror](genere), quale mi consigli?
+      - Hai qualche serie TV [musical](genere) da suggerirmi?
+      - Mi piacerebbe guardare una serie TV di [fantasy](genere)
+      - Consigli per una serie TV [animazione](genere)?
+      - Dammi una bella serie TV di [azione](genere)
+      - Sai suggerirmi una serie TV di [guerra](genere)?
 
 
   - intent: inform_film

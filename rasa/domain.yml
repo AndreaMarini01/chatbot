@@ -104,3 +104,4 @@ actions:
   - popolarità_serieTV
   - action_set_context_title
   - action_ask_movie_or_series
+  - TV_by_genre

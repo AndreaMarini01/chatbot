@@ -3,7 +3,7 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
 
-from .constants import MOVIES_GENRE_MAP, api_key
+from .constants import MOVIES_GENRE_MAP, api_key, TV_GENRE_MAP
 from .tmdb_utils import (
     search_movie_by_title,
     get_movie_details,
@@ -14,7 +14,7 @@ from .tmdb_utils import (
     get_TV_details,
     search_TV_by_title,
     get_favourite,
-    search_TV_latest, get_favourite_tv
+    search_TV_latest, get_favourite_tv, get_tv_by_genre
 )
 
 
@@ -450,6 +450,49 @@ class ActionPopularTv(Action):
 
         return []
 
+class ActionTvByGenre(Action):
+    """
+    Azione per ottenere le serie tv di un certo genere.
+    """
+
+    def name(self) -> Text:
+        return "TV_by_genre"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        genere = tracker.get_slot("genere")
+        if not genere:
+            dispatcher.utter_message(text="_Non ho capito il genere che cerchi. Puoi ripetere?_")
+            return []
+
+        genre_id = TV_GENRE_MAP.get(genere.lower())
+        if not genre_id:
+            dispatcher.utter_message(text=f"_Non conosco il genere *{genere}*, prova con un altro._")
+            return []
+
+        data = get_tv_by_genre(genre_id)
+        results = data.get("results", [])
+
+        if not results:
+            dispatcher.utter_message(text=f"_Non ho trovato serie del genere *{genere}*._")
+            return []
+
+        messaggio = f"🎬 *Ecco alcune serie  del genere {genere}:*\n"
+        for movie in results[:5]:
+            title = movie.get("name", "Titolo non disponibile")
+            overview = movie.get("first_air_date", "Trama non disponibile")
+
+            truncated_overview = overview[:300] + "..." if len(overview) > 300 else overview
+
+            messaggio += (
+                f"\n• *{title}*\n"
+                f"📝 {truncated_overview}\n"
+            )
+
+        dispatcher.utter_message(text=messaggio)
+        return []
 
 # actions.py
 class ActionSetContextTitle(Action):

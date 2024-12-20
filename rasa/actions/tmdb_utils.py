@@ -71,6 +71,16 @@ def get_movie_reviews(movie_id: int) -> dict:
     data = make_tmdb_request(f"/movie/{movie_id}/reviews", {"page": 1})
     return data
 
+def get_tv_by_genre(genre_id: int) -> dict:
+    """
+    Funzione per ottenere i film di un determinato genere.
+
+    :param genre_id: L'ID del genere di cui ottenere i film
+    :return: Il dizionario con i dati dei film del genere specificato
+    """
+    data = make_tmdb_request("/discover/tv", {"with_genres": genre_id})
+    return data
+
 def get_favourite() -> dict:
     """
     Funzione per ottenere i dettagli dei film preferiti.
