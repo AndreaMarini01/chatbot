@@ -81,6 +81,16 @@ def get_favourite() -> dict:
     data = make_tmdb_request(f"/movie/popular")
     return data
 
+def get_favourite_tv() -> dict:
+    """
+    Funzione per ottenere i dettagli delle serie tv preferite.
+
+    :param nessuno
+    :return: Il dizionario con i dettagli dei film preferiti
+    """
+    data = make_tmdb_request(f"/tv/popular")
+    return data
+
 def get_TV_details(series_id: int) -> dict:
     """
     Funzione per ottenere i dettagli di un film.

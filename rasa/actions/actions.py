@@ -14,7 +14,7 @@ from .tmdb_utils import (
     get_TV_details,
     search_TV_by_title,
     get_favourite,
-    search_TV_latest
+    search_TV_latest, get_favourite_tv
 )
 
 
@@ -418,6 +418,38 @@ class ActionTVRecentReleases(Action):
 
         dispatcher.utter_message(text=messaggio)
         return []
+
+
+class ActionPopularTv(Action):
+    """
+    Azione per ottenere le serie tv più popolari.
+    """
+
+    def name(self) -> Text:
+        return "popular_TV"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+
+        popular_data = get_favourite_tv()
+        series = popular_data.get("results", [])
+
+        if not series:
+            dispatcher.utter_message(text="_Non ho trovato serie tv popolari al momento._")
+            return []
+
+        response = "🎬 *Ecco le serie tv più popolari:*\n"
+        for idx, movie in enumerate(series[:5], start=1):
+            title = movie.get("name", "Titolo non disponibile")
+            release_date = movie.get("first_air_date", "Data di uscita non disponibile")
+            response += f"\n{idx}. *{title}*\n📅 Uscita: {release_date}\n"
+
+        dispatcher.utter_message(text=response)
+
+        return []
+
 
 # actions.py
 class ActionSetContextTitle(Action):

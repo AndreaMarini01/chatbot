@@ -227,8 +227,21 @@ nlu:
       - Serie TV più viste
       - Serie TV più amate?
       - Serie TV più gettonate
-      - Serie TV più popolari?
       - Serie TV più famose
+      - Quali sono le serie TV più seguite?
+      - Mi puoi dire quali serie TV sono più popolari?
+      - Quali sono le serie TV più guardate del momento?
+      - Hai una lista delle serie TV più popolari?
+      - Le serie TV più in voga
+      - Quali serie TV sono sulla bocca di tutti?
+      - Mi dici quali sono le serie TV più seguite?
+      - Quali sono le serie TV più di tendenza?
+      - Quali serie TV stanno andando forte adesso?
+      - Dammi un elenco delle serie TV più famose
+      - Serie TV popolari di questo periodo
+      - Le serie TV che stanno avendo più successo
+      - Quali sono le serie TV che tutti guardano?
+      - Quali sono le serie TV del momento?
 
   - intent: cerca_serieTV_genere
     examples: |
