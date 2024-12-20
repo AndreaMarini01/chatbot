@@ -54,13 +54,16 @@ nlu:
       - Mi serve un bel film [horror](genere)
       - Vorrei un film di [commedia](genere)
       - Sai consigliarmi qualcosa di [fantascienza](genere)?
-
-  - intent: info_film
-    examples: |
-      - Vorrei più info su quel film
-      - Raccontami la trama di quel film
-      - Che attori ci sono in quel film?
-      - Puoi dirmi di più su questo film?
+      - Che film di [drammatico](genere) mi consigli?
+      - Suggeriscimi un film [romantico](genere)
+      - Sto cercando un bel film di [thriller](genere)
+      - Mi consiglieresti un film di [animazione](genere)?
+      - Vorrei guardare un film di [guerra](genere), hai suggerimenti?
+      - Hai film interessanti di genere [documentario](genere)?
+      - Sto cercando un film [storico](genere)
+      - Un film di [fantasy](genere), per favore
+      - Vorrei qualcosa di [western](genere), sai aiutarmi?
+      - Mi consiglieresti un bel film [musical](genere)?
 
   - intent: film_appena_usciti
     examples: |
@@ -68,6 +71,16 @@ nlu:
       - Dammi i nuovi arrivi al cinema
       - Film recenti?
       - Che film sono appena usciti?
+      - Quali sono le ultime uscite al cinema?
+      - Hai un elenco dei film appena arrivati in sala?
+      - Che cosa c'è di nuovo al cinema?
+      - Vorrei sapere gli ultimi film usciti
+      - Quali sono i film più recenti?
+      - Mostrami le nuove uscite cinematografiche
+      - Ci sono novità interessanti al cinema?
+      - Mi puoi dire quali film sono usciti da poco?
+      - Dammi una lista dei film recenti
+
 
   - intent: dove_guardare
     examples: |
