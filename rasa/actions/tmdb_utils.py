@@ -71,6 +71,16 @@ def get_movie_reviews(movie_id: int) -> dict:
     data = make_tmdb_request(f"/movie/{movie_id}/reviews", {"page": 1})
     return data
 
+def get_tv_by_genre(genre_id: int) -> dict:
+    """
+    Funzione per ottenere i film di un determinato genere.
+
+    :param genre_id: L'ID del genere di cui ottenere i film
+    :return: Il dizionario con i dati dei film del genere specificato
+    """
+    data = make_tmdb_request("/discover/tv", {"with_genres": genre_id})
+    return data
+
 def get_favourite() -> dict:
     """
     Funzione per ottenere i dettagli dei film preferiti.
@@ -79,6 +89,16 @@ def get_favourite() -> dict:
     :return: Il dizionario con i dettagli dei film preferiti
     """
     data = make_tmdb_request(f"/movie/popular")
+    return data
+
+def get_favourite_tv() -> dict:
+    """
+    Funzione per ottenere i dettagli delle serie tv preferite.
+
+    :param nessuno
+    :return: Il dizionario con i dettagli dei film preferiti
+    """
+    data = make_tmdb_request(f"/tv/popular")
     return data
 
 def get_TV_details(series_id: int) -> dict:
@@ -101,6 +121,16 @@ def search_TV_by_title(title: str) -> dict:
     :return: Il dizionario con i dati del film cercato
     """
     data = make_tmdb_request("/search/tv", {"query": title})
+    return data
+
+def get_movie_watch_providers(movie_id: int) -> dict:
+    """
+    Funzione per ottenere i dettagli di un film.
+
+    :param movie_id: L'ID del film di cui ottenere i dettagli
+    :return: Il dizionario con i dettagli del film
+    """
+    data = make_tmdb_request(f"/movie/{movie_id}/watch/providers")
     return data
 
 def search_TV_latest() -> dict:

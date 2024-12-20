@@ -3,18 +3,19 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
 
-from .constants import MOVIES_GENRE_MAP, api_key
+from .constants import MOVIES_GENRE_MAP, api_key, TV_GENRE_MAP
 from .tmdb_utils import (
     search_movie_by_title,
     get_movie_details,
     get_now_playing_movies,
     get_movies_by_genre,
     get_movie_reviews,
+    get_movie_watch_providers,
     get_TV_details,
     get_series_reviews,
     search_TV_by_title,
     get_favourite,
-    search_TV_latest
+    search_TV_latest, get_favourite_tv, get_tv_by_genre
 )
 
 
@@ -22,6 +23,7 @@ class ActionMovieDetails(Action):
     """
     Azione per recuperare i dettagli di un film dato il titolo.
     """
+
     def name(self) -> Text:
         return "action_movie_details"
 
@@ -75,6 +77,7 @@ class ActionRecentReleases(Action):
     """
     Azione per ottenere i film appena usciti.
     """
+
     def name(self) -> Text:
         return "action_recent_releases"
 
@@ -113,6 +116,7 @@ class ActionMoviesByGenre(Action):
     """
     Azione per ottenere film di un certo genere.
     """
+
     def name(self) -> Text:
         return "movies_by_genre"
 
@@ -155,8 +159,9 @@ class ActionMoviesByGenre(Action):
 
 class ActionWhereToWatch(Action):
     """
-    Azione placeholder per indicare dove guardare un film.
+    Azione per indicare dove guardare un film.
     """
+
     def name(self) -> Text:
         return "action_where_to_watch"
 
@@ -164,10 +169,66 @@ class ActionWhereToWatch(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        # Placeholder: qui potresti chiamare TMDb per i provider di streaming.
-        # Per ora mettiamo un messaggio statico.
-        dispatcher.utter_message(text="📺 Questo film è disponibile su *Netflix*")
-        return []
+        title = tracker.get_slot("titolo_film")
+
+        if not title:
+            dispatcher.utter_message(text="_Non ho capito il titolo del film, puoi ripetere?_")
+            return []
+
+        if not api_key:
+            dispatcher.utter_message(text="_Manca la chiave API. Non posso recuperare i dettagli del film._")
+            return []
+
+        search_data = search_movie_by_title(title)
+
+        results = search_data.get("results", [])
+        if not results:
+            dispatcher.utter_message(text=f"_Non ho trovato nessun film con questo titolo: *{title}*._")
+            return []
+
+        movie = results[0]
+        movie_id = movie.get("id")
+
+        if not movie_id:
+            dispatcher.utter_message(text="_Non sono riuscito a recuperare l'ID del film._")
+            return []
+
+        providers_data = get_movie_watch_providers(movie_id)
+        providers = providers_data.get("results", {}).get("IT", dict())
+
+        if not providers:
+            dispatcher.utter_message(text="_Non ho trovato informazioni sui provider per questo film._")
+            return []
+
+        flatrate_providers = providers.get("flatrate", [])
+        rent_providers = providers.get("rent", [])
+        buy_providers = providers.get("buy", [])
+
+        if not flatrate_providers and not rent_providers and not buy_providers:
+            dispatcher.utter_message(text="_Non ho trovato informazioni sui provider per questo film._")
+            return []
+
+        messaggio = f"🎬 *🇮🇹 Dove guardare {movie.get('title', 'il film')}*:\n"
+
+        if flatrate_providers:
+            messaggio += "\n📺 *Incluso in abbonamento:*"
+            for provider in flatrate_providers:
+                provider_name = provider.get("provider_name", "Provider sconosciuto")
+                messaggio += f"\n• {provider_name}"
+
+        if rent_providers:
+            messaggio += "\n\n📺 *In noleggio:*"
+            for provider in rent_providers:
+                provider_name = provider.get("provider_name", "Provider sconosciuto")
+                messaggio += f"\n• {provider_name}"
+
+        if buy_providers:
+            messaggio += "\n\n📺 *In vendita:*"
+            for provider in buy_providers:
+                provider_name = provider.get("provider_name", "Provider sconosciuto")
+                messaggio += f"\n• {provider_name}"
+
+        dispatcher.utter_message(text=messaggio)
 
 
 class MovieReviews(Action):
@@ -265,7 +326,6 @@ class PopularMovies(Action):
         return []
 
 
-
 """
 action for series TV
 """
@@ -274,6 +334,7 @@ class ActionTvDetails(Action):
     """
     Azione per recuperare i dettagli di una serieTV dato il titolo.
     """
+
     def name(self) -> Text:
         return "action_TV_details"
 
@@ -354,6 +415,81 @@ class ActionTVRecentReleases(Action):
                 f"\n• *{title}*"
                 f"\n📅 Uscita: {release_date}"
                 f"\n📝 {truncated_overview}\n"
+            )
+
+        dispatcher.utter_message(text=messaggio)
+        return []
+
+
+class ActionPopularTv(Action):
+    """
+    Azione per ottenere le serie tv più popolari.
+    """
+
+    def name(self) -> Text:
+        return "popular_TV"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+
+        popular_data = get_favourite_tv()
+        series = popular_data.get("results", [])
+
+        if not series:
+            dispatcher.utter_message(text="_Non ho trovato serie tv popolari al momento._")
+            return []
+
+        response = "🎬 *Ecco le serie tv più popolari:*\n"
+        for idx, movie in enumerate(series[:5], start=1):
+            title = movie.get("name", "Titolo non disponibile")
+            release_date = movie.get("first_air_date", "Data di uscita non disponibile")
+            response += f"\n{idx}. *{title}*\n📅 Uscita: {release_date}\n"
+
+        dispatcher.utter_message(text=response)
+
+        return []
+
+class ActionTvByGenre(Action):
+    """
+    Azione per ottenere le serie tv di un certo genere.
+    """
+
+    def name(self) -> Text:
+        return "TV_by_genre"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        genere = tracker.get_slot("genere")
+        if not genere:
+            dispatcher.utter_message(text="_Non ho capito il genere che cerchi. Puoi ripetere?_")
+            return []
+
+        genre_id = TV_GENRE_MAP.get(genere.lower())
+        if not genre_id:
+            dispatcher.utter_message(text=f"_Non conosco il genere *{genere}*, prova con un altro._")
+            return []
+
+        data = get_tv_by_genre(genre_id)
+        results = data.get("results", [])
+
+        if not results:
+            dispatcher.utter_message(text=f"_Non ho trovato serie del genere *{genere}*._")
+            return []
+
+        messaggio = f"🎬 *Ecco alcune serie  del genere {genere}:*\n"
+        for movie in results[:5]:
+            title = movie.get("name", "Titolo non disponibile")
+            overview = movie.get("first_air_date", "Trama non disponibile")
+
+            truncated_overview = overview[:300] + "..." if len(overview) > 300 else overview
+
+            messaggio += (
+                f"\n• *{title}*\n"
+                f"📝 {truncated_overview}\n"
             )
 
         dispatcher.utter_message(text=messaggio)
