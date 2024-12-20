@@ -215,10 +215,10 @@ class MovieReviews(Action):
             for review in reviews[:5]:
                 author = review.get("author", "Autore sconosciuto")
                 content = review.get("content", "Recensione non disponibile")
-                truncated_content = content[:500].strip()
+                truncated_content = content[:600].strip()
 
                 # Aggiungere i puntini di sospensione se la recensione è stata troncata
-                if len(content) > 500:
+                if len(content) > 600:
                     truncated_content += "..."
 
                 message = (

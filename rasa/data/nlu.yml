@@ -78,8 +78,23 @@ nlu:
 
   - intent: recensioni_utenti
     examples: |
-      - Cosa ne pensano gli utenti di quel film
+      - Cosa ne pensano gli utenti del film [Inception](titolo_film)
+      - Quali sono le recensioni di quel film? [Titanic](titolo_film)
       - Quali sono le recensioni di quel film
+      - Mi dici cosa ne pensano di [Avatar](titolo_film)?
+      - Recensioni su [La vita è bella](titolo_film)
+      - Opinioni su [L'attimo fuggente](titolo_film)
+      - Qual è il feedback sul film [È solo la fine del mondo](titolo_film)?
+      - Dimmi cosa pensano gli altri di [Pulp Fiction](titolo_film)
+      - Cosa dice il pubblico di [I soliti ignoti](titolo_film)?
+      - Mi puoi dare qualche recensione su [Se mi lasci ti cancello](titolo_film)?
+      - Come è stato accolto [La leggenda del pianista sull'oceano](titolo_film)?
+      - Qual è il giudizio su [Il favoloso mondo di Amélie](titolo_film)?
+      - Cosa ne pensano gli spettatori di [Il buono, il brutto, il cattivo](titolo_film)?
+      - Parlami delle recensioni di [A qualcuno piace caldo](titolo_film)
+      - Ci sono opinioni su [L'uomo che sussurrava ai cavalli](titolo_film)?
+      - Che dicono di [Coco](titolo_film)?
+      - Hai informazioni sul gradimento di [Non ci resta che piangere](titolo_film)?
 
   - intent: popolarità_film
     examples: |
