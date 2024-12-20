@@ -41,6 +41,11 @@ stories:
       - intent: cerca_film_genere
       - action: movies_by_genre
 
+  - story: dove_guardare
+    steps:
+      - intent: dove_guardare
+      - action: action_where_to_watch
+
   #Story for serietv
 
   - story: recent_releases_serieTV

@@ -103,6 +103,16 @@ def search_TV_by_title(title: str) -> dict:
     data = make_tmdb_request("/search/tv", {"query": title})
     return data
 
+def get_movie_watch_providers(movie_id: int) -> dict:
+    """
+    Funzione per ottenere i dettagli di un film.
+
+    :param movie_id: L'ID del film di cui ottenere i dettagli
+    :return: Il dizionario con i dettagli del film
+    """
+    data = make_tmdb_request(f"/movie/{movie_id}/watch/providers")
+    return data
+
 def search_TV_latest() -> dict:
     """
     Funzione per cercare le ultime serie tv aggiungte.
