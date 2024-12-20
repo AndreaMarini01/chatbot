@@ -88,6 +88,52 @@ nlu:
       - È su Netflix?
       - Posso guardarlo online?
       - Dove è disponibile?
+      - Su quale piattaforma posso trovarlo?
+      - È presente su Amazon Prime Video?
+      - È in catalogo su Disney+?
+      - Posso noleggiarlo su qualche servizio online?
+      - Lo trovo su Apple TV+?
+      - È disponibile gratuitamente da qualche parte?
+      - C'è modo di vederlo su YouTube?
+      - È a noleggio su Google Play Movies?
+      - È in streaming su Hulu?
+      - Lo trovo su qualche piattaforma di streaming italiana?
+      - Posso vederlo sul mio abbonamento Sky o NOW TV?
+      - Su quale servizio di streaming posso guardarlo?
+      - Esiste un sito dove posso trovarlo in italiano?
+      - È disponibile in qualche servizio on-demand?
+      - Devo pagare per vederlo online o è incluso in qualche abbonamento?
+      - Posso trovarlo su TIMvision?
+      - Lo trovo su Rakuten TV?
+      - È in streaming su Paramount+?
+      - Riesci a dirmi se è su qualche piattaforma come MUBI o CHILI?
+      - Lo posso vedere direttamente sul sito del distributore?
+      - È disponibile su Infinity+?
+      - Si può guardare sul web senza scaricare nulla?
+      - Mi sapresti dire in che modo posso vederlo in streaming legale?
+      - Devo acquistarlo separatamente o è incluso nella mia sottoscrizione streaming?
+      - È disponibile in qualche catalogo di film on-demand?
+      - Dove posso vedere [Inception](titolo_film) in streaming?
+      - È su Netflix [Il Signore degli Anelli: La Compagnia dell'Anello](titolo_film)?
+      - Posso guardare [Matrix](titolo_film) online da qualche parte?
+      - Dove è disponibile [La vita è bella](titolo_film)?
+      - Su quale piattaforma trovo [Forrest Gump](titolo_film)?
+      - È presente su Amazon Prime Video [Joker](titolo_film)?
+      - È in catalogo su Disney+ [Avengers: Endgame](titolo_film)?
+      - Posso noleggiare [Il Gladiatore](titolo_film) da qualche servizio online?
+      - [Interstellar](titolo_film) è disponibile gratuitamente in streaming?
+      - [Fight Club](titolo_film) lo trovo su Apple TV+?
+      - Sai se [Blade Runner 2049](titolo_film) è su qualche piattaforma di streaming?
+      - Su quale servizio di streaming posso guardare [Star Wars: Una Nuova Speranza](titolo_film)?
+      - È disponibile in qualche catalogo on-demand [Shutter Island](titolo_film)?
+      - Si può vedere [La La Land](titolo_film) su Infinity+?
+      - [C'era una volta in America](titolo_film) è su qualche piattaforma tipo CHILI o Rakuten?
+      - Lo posso vedere su TIMvision [Il nome della rosa](titolo_film)?
+      - [Guardiani della Galassia Vol. 2](titolo_film) è incluso in qualche abbonamento streaming?
+      - Devo pagare per vedere [Avatar](titolo_film) online o è incluso in qualche servizio?
+      - È in streaming legale da qualche parte [Harry Potter e la pietra filosofale](titolo_film)?
+      - Dove posso trovare [Il Padrino](titolo_film) in streaming legale?
+  
 
   - intent: recensioni_utenti
     examples: |
