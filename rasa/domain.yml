@@ -63,8 +63,9 @@ slots:
     type: text
     influence_conversation: true
     mappings:
-    - type: from_entity
-      entity: anno
+    - type: from_text
+      intent: affirm
+
   context_ricerca:
     type: text
     influence_conversation: false
@@ -122,4 +123,4 @@ actions:
 - validate_form_film
 - utter_submit
 - utter_film_form
-- utter_film_slot
+- action_provide_film_details

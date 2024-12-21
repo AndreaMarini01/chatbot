@@ -44,22 +44,23 @@ rules:
           - tipo_contenuto: "film"
       - action: action_movie_details  # se già abbiamo titolo_film
 
-  - rule : Attivazione Form film
+  - rule: Attivazione Form film
     steps:
-      - intent : cerca_film_titolo2
-      - action : form_film
-      - active_loop : form_film
+      - intent: cerca_film_titolo2
+      - action: form_film
+      - active_loop: form_film
 
-  - rule : Invio Form film
+  - rule: Fine form film
     condition:
-      - active_loop: validate_form_film
+      # Questa condizione si attiva: quando la form form_film si disattiva
+      - active_loop: form_film
     steps:
-      - action: validate_form_film
+      # passaggio 1: la form fa la validazione finale
+      - action: form_film
+      # passaggio 2: chiudi la form
       - active_loop: null
-#      - slot_was_set:
-#          - request_slot : null
-      - action: utter_submit
-      - action: utter_film_slot
+      # passaggio 3: esegui l'azione di "submit"
+      - action: action_provide_film_details
 
 #  - rule: Cerca serie TV per genere
 #    steps:

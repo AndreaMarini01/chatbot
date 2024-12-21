@@ -1,7 +1,7 @@
 from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet, FormValidation
+from rasa_sdk.events import SlotSet, FormValidation, EventType
 from rasa_sdk.types import DomainDict
 
 from .constants import MOVIES_GENRE_MAP, api_key, TV_GENRE_MAP
@@ -616,3 +616,57 @@ class ValidateFormFilm(FormValidationAction):
             return {"anno": None}
 
         return {"anno": slot_value}
+
+
+class ActionProvideFilmDetails(Action):
+    def name(self) -> Text:
+        return "action_provide_film_details"
+
+    async def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]
+    ) -> List[EventType]:
+
+        titolo = tracker.get_slot("titolo_film")
+        anno_choice = tracker.get_slot(
+            "anno")  # può essere "Sì", None, o un numero se in futuro l'utente inserisce un anno
+
+
+        # Per esempio:
+        search_data = search_movie_by_title(titolo)
+
+        results = search_data.get("results", [])
+        if not results:
+            dispatcher.utter_message(text=f"_Non ho trovato nessun film con questo titolo: *{titolo}*._")
+            return []
+
+        movie = results[0]
+        movie_id = movie.get("id")
+
+        if not movie_id:
+            dispatcher.utter_message(text="_Non sono riuscito a recuperare l'ID del film._")
+            return []
+
+        details_data = get_movie_details(movie_id)
+
+
+        trama = details_data.get("overview", "Nessuna trama trovata.")
+        anno_uscita = details_data.get("release_date", "sconosciuto")
+
+        # Se anno_choice == "Sì", allora includi l'anno. Altrimenti no.
+        # O, se un giorno 'anno' fosse un numero, lo gestisci qui.
+
+        if anno_choice == "Sì":
+            # L'utente vuole l'anno
+            dispatcher.utter_message(
+                text=f"Ecco i dettagli per '{titolo}':\nTrama: {trama}\nAnno di uscita: {anno_uscita}"
+            )
+        else:
+            # L'utente NON vuole l'anno
+            dispatcher.utter_message(
+                text=f"Ecco i dettagli per '{titolo}':\nTrama: {trama}"
+            )
+
+        return []
