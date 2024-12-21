@@ -107,10 +107,8 @@ responses:
     - text: "ok ecco le informazioni"
   utter_ask_continue:
     - text: "Vuoi sapere altro?"
-  utter_film_age:
+  utter_ask_anno:
     - text: "Vuoi sapere anche l'anno di uscita?"
-  utter_film_film:
-    - text: "Dimmi il titolo del film"
   utter_film_form:
     - text: "eccoti le informazioni {titolo_film}, {anno}"
 

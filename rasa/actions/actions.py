@@ -574,9 +574,9 @@ class ActionAskRewiewsSeries(Action):
 
         return []
 
-class ActionValidateFilmForm(FormValidationAction):
+class ValidateFormFilm(FormValidationAction):
     def name(self) -> Text:
-        return "validate_film_form"
+        return "validate_form_film"
 
     def validate_titolo_film(
         self,
