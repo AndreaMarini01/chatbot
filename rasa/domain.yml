@@ -17,6 +17,9 @@ intents:
   - cerca_serieTV_genere
   - inform_film
   - inform_serie
+  - inform
+  - cerca_film_titolo2
+  - Richiesta_film_form
   #- looking_for_actors
 
 entities:
@@ -74,12 +77,16 @@ slots:
     influence_conversation: false
     mappings:
       - type: from_text
-  #nome_attore:
-  #  type: text
-  #  influence_conversation: true
-  #  mappings:
-  #    - type: from_entity
-  #      entity: nome_attore
+#  slots:
+#    request_slot:
+#      type: text
+
+forms:
+  form_film:
+    required_slots:
+      - titolo_film
+      - anno
+
 
 responses:
   utter_greet:
@@ -96,6 +103,17 @@ responses:
     - text: "Ok, quindi parli di un film. Dimmi il titolo."
   utter_confermato_serie:
     - text: "Ok, quindi parli di una serie TV. Dimmi il titolo."
+  utter_submit:
+    - text: "ok ecco le informazioni"
+  utter_ask_continue:
+    - text: "Vuoi sapere altro?"
+  utter_film_age:
+    - text: "Vuoi sapere anche l'anno di uscita?"
+  utter_film_film:
+    - text: "Dimmi il titolo del film"
+  utter_film_form:
+    - text: "eccoti le informazioni {titolo_film}, {anno}"
+
 
 actions:
   - action_movie_details
@@ -113,3 +131,7 @@ actions:
   - action_set_context_title
   - action_ask_movie_or_series
   - TV_by_genre
+  - validate_form_film
+  - utter_submit
+  - utter_film_form
+  - utter_film_slot

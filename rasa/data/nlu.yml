@@ -14,38 +14,38 @@ nlu:
       - Grazie, ci sentiamo dopo
       - Arrivederci
 
-  - intent: cerca_film_titolo
-    examples: |
-      - Dammi informazioni su [Titanic](titolo_film)
-      - Voglio info su [Inception](titolo_film)
-      - Vorrei sapere la trama di [Il signore degli anelli: Le due torri](titolo_film)
-      - Parlami di [Harry Potter e la pietra filosofale](titolo_film)
-      - Cosa mi dici di [Pirates of the Caribbean: La maledizione della prima luna](titolo_film)
-      - Dammi dettagli sul film [Forrest Gump](titolo_film)
-      - Vorrei info su [Star Wars: L'impero colpisce ancora](titolo_film)
-      - Mi parli di [The Matrix](titolo_film)
-      - Raccontami di [Il buono, il brutto, il cattivo](titolo_film)
-      - Ho sentito parlare di [La vita è bella](titolo_film)
-      - Dammi informazioni su [Interstellar](titolo_film)
-      - Parlami di [Joker](titolo_film)
-      - Vorrei sapere la trama di [Avengers: Age of Ultron](titolo_film)
-      - Mi racconti di [La città incantata](titolo_film)
-      - Dammi dettagli sul film [Il gladiatore](titolo_film)
-      - Voglio info su [L'alba del pianeta delle scimmie](titolo_film)
-      - Cosa mi dici di [Shutter Island](titolo_film)
-      - Parlami di [Il Padrino](titolo_film)
-      - Vorrei info su [Ritorno al futuro](titolo_film)
-      - Dimmi qualcosa su [Blade Runner 2049](titolo_film)
-      - Ho bisogno di dettagli su [Fight Club](titolo_film)
-      - Cerco informazioni su [Saving Private Ryan](titolo_film)
-      - Cosa puoi dirmi di [Il Cavaliere Oscuro](titolo_film)
-      - Vorrei la trama di [Avatar](titolo_film)
-      - Dammi informazioni su [La forma dell'acqua](titolo_film)
-      - Parlami di [La La Land](titolo_film)
-      - Mi interessa sapere di [C'era una volta in America](titolo_film)
-      - Raccontami di [Guardiani della Galassia Vol. 2](titolo_film)
-      - Ho sentito di [Il nome della rosa](titolo_film)
-      - Potresti dirmi di [Il favoloso mondo di Amélie](titolo_film)
+#  - intent: cerca_film_titolo
+#    examples: |
+#      - Dammi informazioni su [Titanic](titolo_film)
+#      - Voglio info su [Inception](titolo_film)
+#      - Vorrei sapere la trama di [Il signore degli anelli: Le due torri](titolo_film)
+#      - Parlami di [Harry Potter e la pietra filosofale](titolo_film)
+#      - Cosa mi dici di [Pirates of the Caribbean: La maledizione della prima luna](titolo_film)
+#      - Dammi dettagli sul film [Forrest Gump](titolo_film)
+#      - Vorrei info su [Star Wars: L'impero colpisce ancora](titolo_film)
+#      - Mi parli di [The Matrix](titolo_film)
+#      - Raccontami di [Il buono, il brutto, il cattivo](titolo_film)
+#      - Ho sentito parlare di [La vita è bella](titolo_film)
+#      - Dammi informazioni su [Interstellar](titolo_film)
+#      - Parlami di [Joker](titolo_film)
+#      - Vorrei sapere la trama di [Avengers: Age of Ultron](titolo_film)
+#      - Mi racconti di [La città incantata](titolo_film)
+#      - Dammi dettagli sul film [Il gladiatore](titolo_film)
+#      - Voglio info su [L'alba del pianeta delle scimmie](titolo_film)
+#      - Cosa mi dici di [Shutter Island](titolo_film)
+#      - Parlami di [Il Padrino](titolo_film)
+#      - Vorrei info su [Ritorno al futuro](titolo_film)
+#      - Dimmi qualcosa su [Blade Runner 2049](titolo_film)
+#      - Ho bisogno di dettagli su [Fight Club](titolo_film)
+#      - Cerco informazioni su [Saving Private Ryan](titolo_film)
+#      - Cosa puoi dirmi di [Il Cavaliere Oscuro](titolo_film)
+#      - Vorrei la trama di [Avatar](titolo_film)
+#      - Dammi informazioni su [La forma dell'acqua](titolo_film)
+#      - Parlami di [La La Land](titolo_film)
+#      - Mi interessa sapere di [C'era una volta in America](titolo_film)
+#      - Raccontami di [Guardiani della Galassia Vol. 2](titolo_film)
+#      - Ho sentito di [Il nome della rosa](titolo_film)
+#      - Potresti dirmi di [Il favoloso mondo di Amélie](titolo_film)
   
 
   - intent: cerca_film_genere
@@ -307,3 +307,23 @@ nlu:
       - TV
       - È una serie tv
       - Si tratta di una serie
+
+  - intent: cerca_film_titolo2
+    examples: |
+      - Vorrei alcune informazioni su un film 
+      - Dammi dettagli su un film 
+      - Informazioni su un film
+
+  - intent : inform
+    examples: |
+      - vorrei info su [titanic](titolo_film)
+      - dammi dettagli su [inception](titolo_film)
+      - [Re Leone](titolo_film)
+      - [Il Padrino](titolo_film)
+
+#  - intent : Richiesta_film_form
+#    examples: |
+#      - vorrei info su [titanic](titolo_film)
+#      - dammi dettagli su [inception](titolo_film)
+#      - [Re Leone](titolo_film)
+#      - [Il Padrino](titolo_film)

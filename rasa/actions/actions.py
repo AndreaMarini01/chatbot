@@ -1,7 +1,7 @@
 from typing import Any, Text, Dict, List
-from rasa_sdk import Action, Tracker
+from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet
+from rasa_sdk.events import SlotSet, FormValidation
 
 from .constants import MOVIES_GENRE_MAP, api_key, TV_GENRE_MAP
 from .tmdb_utils import (
@@ -573,3 +573,31 @@ class ActionAskRewiewsSeries(Action):
             dispatcher.utter_message(text="_Non sono disponibili recensioni per questa serie tv._")
 
         return []
+
+class ActionValidateFilmForm(FormValidationAction):
+    def name(self) -> Text:
+        return "validate_film_form"
+
+    def validate_titolo_film(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        if not slot_value:
+            dispatcher.utter_message(text="_Non ho capito il titolo del film, puoi ripetere?_")
+            return {"titolo_film": None}
+        return {"titolo_film": slot_value}
+
+    def anno_film(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        if not slot_value:
+            dispatcher.utter_message(text="_Non ho capito se vuoi sapere l'anno del film, puoi ripetere?_")
+            return {"anno": None}
+        return {"anno": slot_value}
