@@ -2,6 +2,7 @@ from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet, FormValidation
+from rasa_sdk.types import DomainDict
 
 from .constants import MOVIES_GENRE_MAP, api_key, TV_GENRE_MAP
 from .tmdb_utils import (
@@ -583,21 +584,35 @@ class ValidateFormFilm(FormValidationAction):
         slot_value: Any,
         dispatcher: CollectingDispatcher,
         tracker: Tracker,
-        domain: Dict[Text, Any],
+        domain: DomainDict
     ) -> Dict[Text, Any]:
         if not slot_value:
-            dispatcher.utter_message(text="_Non ho capito il titolo del film, puoi ripetere?_")
+            dispatcher.utter_message(text="Non ho capito il titolo del film, puoi ripetere?")
             return {"titolo_film": None}
         return {"titolo_film": slot_value}
 
-    def anno_film(
-        self,
-        slot_value: Any,
-        dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: Dict[Text, Any],
+    def validate_anno(
+            self,
+            slot_value: Any,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
-        if not slot_value:
-            dispatcher.utter_message(text="_Non ho capito se vuoi sapere l'anno del film, puoi ripetere?_")
+        # Controlla l’intent dell’ultimo messaggio
+        last_intent = tracker.latest_message.get("intent", {}).get("name")
+        dispatcher.utter_message(text=f"[DEBUG] L'intent è: {last_intent}. Slot_value: {slot_value}")
+
+        if last_intent == "affirm":
+            dispatcher.utter_message(text="Ok, mostrerò anche l'anno di uscita.")
+            return {"anno": "Sì"}
+
+        if last_intent == "deny":
+            dispatcher.utter_message(text="Ok, niente anno.")
             return {"anno": None}
+
+        # Se qui arrivi, vuol dire che l'utente non ha detto né 'sì' né 'no'
+        if not slot_value:
+            dispatcher.utter_message(text="Non ho capito se vuoi sapere l'anno, puoi ripetere?")
+            return {"anno": None}
+
         return {"anno": slot_value}

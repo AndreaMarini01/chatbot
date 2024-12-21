@@ -1,135 +1,125 @@
-version: "3.1"
-
+version: '3.1'
 intents:
-  - greet
-  - goodbye
-  - cerca_film_titolo
-  - cerca_film_genere
-  - info_film
-  - film_appena_usciti
-  - dove_guardare
-  - recensioni_utenti
-  - popolarità_film
-  - SerieTV_recenti
-  - cerca_serieTV_titolo
-  - recensioni_utenti_serieTV
-  - popolarità_serieTV
-  - cerca_serieTV_genere
-  - inform_film
-  - inform_serie
-  - inform
-  - cerca_film_titolo2
-  - Richiesta_film_form
-  #- looking_for_actors
-
+- Richiesta_film_form
+- SerieTV_recenti
+- cerca_film_genere
+- cerca_film_titolo
+- cerca_film_titolo2
+- cerca_serieTV_genere
+- cerca_serieTV_titolo
+- dove_guardare
+- film_appena_usciti
+- goodbye
+- greet
+- info_film
+- inform
+- inform_film
+- inform_serie
+- nlu_fallback
+- popolarità_film
+- popolarità_serieTV
+- recensioni_utenti
+- recensioni_utenti_serieTV
+- affirm
+- deny
 entities:
-  - titolo_film
-  - genere
-  - attore
-  - anno
-  - titolo_serieTV
-  - inform_film
-  - inform_serie
-  #- nome_attore
-
+- titolo_film
+- genere
+- attore
+- anno
+- titolo_serieTV
+- inform_film
+- inform_serie
 slots:
   titolo_film:
     type: text
     influence_conversation: true
     mappings:
-      - type: from_entity
-        entity: titolo_film
-      - type: from_entity
-        entity: titolo_serieTV
+    - type: from_entity
+      entity: titolo_film
+    - type: from_entity
+      entity: titolo_serieTV
   titolo_serieTV:
     type: text
     influence_conversation: true
     mappings:
-      - type: from_entity
-        entity: titolo_serieTV
-      - type: from_entity
-        entity: titolo_film
+    - type: from_entity
+      entity: titolo_serieTV
+    - type: from_entity
+      entity: titolo_film
   genere:
     type: text
     influence_conversation: true
     mappings:
-      - type: from_entity
-        entity: genere
+    - type: from_entity
+      entity: genere
   attore:
     type: text
     influence_conversation: true
     mappings:
-      - type: from_entity
-        entity: attore
+    - type: from_entity
+      entity: attore
   anno:
     type: text
     influence_conversation: true
     mappings:
-      - type: from_entity
-        entity: anno
+    - type: from_entity
+      entity: anno
   context_ricerca:
     type: text
     influence_conversation: false
     mappings:
-      - type: from_text
+    - type: from_text
   tipo_contenuto:
     type: text
     influence_conversation: false
     mappings:
-      - type: from_text
-#  slots:
-#    request_slot:
-#      type: text
-
+    - type: from_text
 forms:
   form_film:
     required_slots:
-      - titolo_film
-      - anno
-
-
+    - titolo_film
+    - anno
 responses:
   utter_greet:
-    - text: "Ciao! Sono la tua guida cinematografica. Come posso aiutarti oggi?"
+  - text: Ciao! Sono la tua guida cinematografica. Come posso aiutarti oggi?
   utter_goodbye:
-    - text: "A presto!"
+  - text: A presto!
   utter_ask_titolo_film:
-    - text: "Su quale film vorresti informazioni?"
+  - text: Su quale film vorresti informazioni?
   utter_no_results:
-    - text: "Non ho trovato nulla che corrisponda alla tua richiesta."
+  - text: Non ho trovato nulla che corrisponda alla tua richiesta.
   utter_chiedi_film_o_serie:
-    - text: "Non ho capito se parli di un film o di una serie. Puoi specificare?"
+  - text: Non ho capito se parli di un film o di una serie. Puoi specificare?
   utter_confermato_film:
-    - text: "Ok, quindi parli di un film. Dimmi il titolo."
+  - text: Ok, quindi parli di un film. Dimmi il titolo.
   utter_confermato_serie:
-    - text: "Ok, quindi parli di una serie TV. Dimmi il titolo."
+  - text: Ok, quindi parli di una serie TV. Dimmi il titolo.
   utter_submit:
-    - text: "ok ecco le informazioni"
+  - text: ok ecco le informazioni
   utter_ask_continue:
-    - text: "Vuoi sapere altro?"
+  - text: Vuoi sapere altro?
   utter_ask_anno:
-    - text: "Vuoi sapere anche l'anno di uscita?"
+  - text: Vuoi sapere anche l'anno di uscita?
   utter_film_form:
-    - text: "eccoti le informazioni {titolo_film}, {anno}"
-
-
+  - text: eccoti le informazioni {titolo_film}, {anno}
 actions:
-  - action_movie_details
-  - action_search_by_genre
-  - action_recent_releases
-  - action_where_to_watch
-  - movie_reviews
-  - popular_movies
-  - movies_by_genre
-  - action_recent_releases_TV
-  - action_TV_details
-  - TV_reviews
-  - popular_TV
-  - popolarità_serieTV
-  - action_set_context_title
-  - action_ask_movie_or_series
-  - TV_by_genre
-  - validate_form_film
-  - utter_submit
-  - utter_film_form
-  - utter_film_slot
+- action_movie_details
+- action_search_by_genre
+- action_recent_releases
+- action_where_to_watch
+- movie_reviews
+- popular_movies
+- movies_by_genre
+- action_recent_releases_TV
+- action_TV_details
+- TV_reviews
+- popular_TV
+- popolarità_serieTV
+- action_set_context_title
+- action_ask_movie_or_series
+- TV_by_genre
+- validate_form_film
+- utter_submit
+- utter_film_form
+- utter_film_slot
