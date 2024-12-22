@@ -30,6 +30,7 @@ entities:
 - titolo_serieTV
 - inform_film
 - inform_serie
+- genere_form
 slots:
   titolo_film:
     type: text
@@ -53,6 +54,14 @@ slots:
     mappings:
     - type: from_entity
       entity: genere
+  genere_form:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: form_film
+            requested_slot: genere_form
   attore:
     type: text
     influence_conversation: true
@@ -76,11 +85,14 @@ slots:
     influence_conversation: false
     mappings:
     - type: from_text
+
 forms:
   form_film:
     required_slots:
     - titolo_film
     - anno
+    - genere_form
+
 responses:
   utter_greet:
   - text: Ciao! Sono la tua guida cinematografica. Come posso aiutarti oggi?
@@ -102,8 +114,12 @@ responses:
   - text: Vuoi sapere altro?
   utter_ask_anno:
   - text: Vuoi sapere anche l'anno di uscita?
+  utter_ask_genere_form:
+  - text: Vuoi sapere anche il genere del film?
   utter_film_form:
   - text: eccoti le informazioni {titolo_film}, {anno}
+
+
 actions:
 - action_movie_details
 - action_search_by_genre

@@ -617,6 +617,32 @@ class ValidateFormFilm(FormValidationAction):
 
         return {"anno": slot_value}
 
+    def validate_genere_form(
+            self,
+            slot_value: Any,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        # Controlla l’intent dell’ultimo messaggio
+        last_intent = tracker.latest_message.get("intent", {}).get("name")
+        dispatcher.utter_message(text=f"[DEBUG] L'intent è: {last_intent}. Slot_value: {slot_value}")
+
+        if last_intent == "affirm":
+            dispatcher.utter_message(text="Ok, mostrerò anche il genere.")
+            return {"genere": "Sì"}
+
+        if last_intent == "deny":
+            dispatcher.utter_message(text="Ok, niente genere.")
+            return {"genere": None}
+
+        # Se qui arrivi, vuol dire che l'utente non ha detto né 'sì' né 'no'
+        if not slot_value:
+            dispatcher.utter_message(text="Non ho capito se vuoi sapere l'anno, puoi ripetere?")
+            return {"genere": None}
+
+        return {"genere": slot_value}
+
 
 class ActionProvideFilmDetails(Action):
     def name(self) -> Text:
@@ -632,7 +658,7 @@ class ActionProvideFilmDetails(Action):
         titolo = tracker.get_slot("titolo_film")
         anno_choice = tracker.get_slot(
             "anno")  # può essere "Sì", None, o un numero se in futuro l'utente inserisce un anno
-
+        genere_coiche = tracker.get_slot("genere")
 
         # Per esempio:
         search_data = search_movie_by_title(titolo)
@@ -654,14 +680,27 @@ class ActionProvideFilmDetails(Action):
 
         trama = details_data.get("overview", "Nessuna trama trovata.")
         anno_uscita = details_data.get("release_date", "sconosciuto")
+        genere=details_data.get("genres", "sconosciuto")
 
+        # genere è una lista di dizionari, quindi per ottenere il nome del genere, possiamo usare una list comprehension
+        genere = ", ".join([g["name"] for g in genere])
         # Se anno_choice == "Sì", allora includi l'anno. Altrimenti no.
         # O, se un giorno 'anno' fosse un numero, lo gestisci qui.
 
-        if anno_choice == "Sì":
+        if anno_choice == "Sì" and genere_coiche == "Sì" :
+            # L'utente vuole l'anno
+            dispatcher.utter_message(
+                text=f"Ecco i dettagli per '{titolo}':\nTrama: {trama}\nAnno di uscita: {anno_uscita} \nGenere: {genere}"
+            )
+        if anno_choice == "Sì" and genere_coiche == None:
             # L'utente vuole l'anno
             dispatcher.utter_message(
                 text=f"Ecco i dettagli per '{titolo}':\nTrama: {trama}\nAnno di uscita: {anno_uscita}"
+            )
+        if anno_choice == None and genere_coiche == "Sì":
+            # L'utente vuole l'anno
+            dispatcher.utter_message(
+                text=f"Ecco i dettagli per '{titolo}':\nTrama: {trama}\nGenere: {genere}"
             )
         else:
             # L'utente NON vuole l'anno
