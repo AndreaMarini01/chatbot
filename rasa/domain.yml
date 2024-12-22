@@ -140,3 +140,4 @@ actions:
 - utter_submit
 - utter_film_form
 - action_provide_film_details
+- action_reset_slots

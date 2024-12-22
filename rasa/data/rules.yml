@@ -49,7 +49,7 @@ rules:
       - intent: cerca_film_titolo2
       - action: form_film
       - active_loop: form_film
-
+#Regola per la fine del form ,aggiungere pulizia dello slot
   - rule: Fine form film
     condition:
       # Questa condizione si attiva: quando la form form_film si disattiva
@@ -61,6 +61,8 @@ rules:
       - active_loop: null
       # passaggio 3: esegui l'azione di "submit"
       - action: action_provide_film_details
+      - action: action_reset_slots
+
 
 #  - rule: Cerca serie TV per genere
 #    steps:

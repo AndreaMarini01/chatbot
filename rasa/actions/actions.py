@@ -692,12 +692,12 @@ class ActionProvideFilmDetails(Action):
             dispatcher.utter_message(
                 text=f"Ecco i dettagli per '{titolo}':\nTrama: {trama}\nAnno di uscita: {anno_uscita} \nGenere: {genere}"
             )
-        if anno_choice == "Sì" and genere_coiche == None:
+        elif anno_choice == "Sì" and genere_coiche == None:
             # L'utente vuole l'anno
             dispatcher.utter_message(
                 text=f"Ecco i dettagli per '{titolo}':\nTrama: {trama}\nAnno di uscita: {anno_uscita}"
             )
-        if anno_choice == None and genere_coiche == "Sì":
+        elif anno_choice == None and genere_coiche == "Sì":
             # L'utente vuole l'anno
             dispatcher.utter_message(
                 text=f"Ecco i dettagli per '{titolo}':\nTrama: {trama}\nGenere: {genere}"
@@ -709,3 +709,24 @@ class ActionProvideFilmDetails(Action):
             )
 
         return []
+
+
+class ActionResetSlots(Action):
+    def name(self) -> str:
+        return "action_reset_slots"
+
+    def run(self, dispatcher, tracker, domain):
+        # Slot da resettare
+        slots_to_reset = [
+            "titolo_film",
+            "titolo_serieTV",
+            "genere",
+            "genere_form",
+            "attore",
+            "anno",
+            "context_ricerca",
+            "tipo_contenuto",
+        ]
+
+        # Resetta ogni slot
+        return [SlotSet(slot, None) for slot in slots_to_reset]
