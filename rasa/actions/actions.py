@@ -578,19 +578,21 @@ class ActionAskRewiewsSeries(Action):
 class ValidateFormFilm(FormValidationAction):
     def name(self) -> Text:
         return "validate_form_film"
-
-    def validate_titolo_film(
+    # validate il titolo del film con l'intent titolo_film_form  dall'entità titolo_film_form
+    def validate_titolo_film_form(
         self,
         slot_value: Any,
         dispatcher: CollectingDispatcher,
         tracker: Tracker,
         domain: DomainDict
     ) -> Dict[Text, Any]:
-        if not slot_value:
+        # Verifica se l'utente ha fornito un titolo
+        if not slot_value or len(slot_value.strip()) == 0:
             dispatcher.utter_message(text="Non ho capito il titolo del film, puoi ripetere?")
-            return {"titolo_film": None}
-        return {"titolo_film": slot_value}
+            return {"titolo_film_form": None}
 
+        # Se il valore è valido, lo restituisci
+        return {"titolo_film_form": slot_value}
     def validate_anno_form(
             self,
             slot_value: Any,
@@ -612,10 +614,8 @@ class ValidateFormFilm(FormValidationAction):
 
         # Se qui arrivi, vuol dire che l'utente non ha detto né 'sì' né 'no'
         if not slot_value:
-            dispatcher.utter_message(text="Non ho capito se vuoi l' anno, puoi ripetere?")
-            return {"anno_form": "NO"}
-
-        return {"anno_form": slot_value}
+            dispatcher.utter_message(text="Devi specificare se vuoi l'anno. Scrivi 'sì' se lo vuoi, 'no' se non lo vuoi.")
+            return {"anno_form": None}
 
     def validate_genere_form(
             self,
@@ -638,8 +638,9 @@ class ValidateFormFilm(FormValidationAction):
 
         # Se qui arrivi, vuol dire che l'utente non ha detto né 'sì' né 'no'
         if not slot_value:
-            dispatcher.utter_message(text="Non ho capito se vuoi il genere, puoi ripetere?")
-            return {"genere_form": "NO"}
+            dispatcher.utter_message(
+                text="Devi specificare se vuoi il genere. Scrivi 'sì' se lo vuoi, 'no' se non lo vuoi.")
+            return {"genere_form": None}
 
         return {"genere_form": slot_value}
 
@@ -655,7 +656,7 @@ class ActionProvideFilmDetails(Action):
             domain: Dict[Text, Any]
     ) -> List[EventType]:
 
-        titolo = tracker.get_slot("titolo_film")
+        titolo = tracker.get_slot("titolo_film_form")
         anno_choice = tracker.get_slot(
             "anno_form")  # può essere "Sì", None, o un numero se in futuro l'utente inserisce un anno
         genere_coiche = tracker.get_slot("genere_form")
@@ -719,6 +720,7 @@ class ActionResetSlots(Action):
         # Slot da resettare
         slots_to_reset = [
             "titolo_film",
+            "titolo_film_form",
             "titolo_serieTV",
             "genere",
             "genere_form",

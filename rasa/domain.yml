@@ -22,6 +22,7 @@ intents:
 - recensioni_utenti_serieTV
 - affirm
 - deny
+- titolo_film_form
 entities:
 - titolo_film
 - genere
@@ -32,6 +33,7 @@ entities:
 - inform_serie
 - genere_form
 - anno_form
+- titolo_film_form
 slots:
   titolo_film:
     type: text
@@ -41,6 +43,17 @@ slots:
       entity: titolo_film
     - type: from_entity
       entity: titolo_serieTV
+
+  titolo_film_form:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: titolo_film_form
+        conditions:
+          - active_loop: form_film
+            requested_slot: titolo_film_form
+
   titolo_serieTV:
     type: text
     influence_conversation: true
@@ -97,7 +110,7 @@ slots:
 forms:
   form_film:
     required_slots:
-    - titolo_film
+    - titolo_film_form
     - anno_form
     - genere_form
 
@@ -106,7 +119,7 @@ responses:
   - text: Ciao! Sono la tua guida cinematografica. Come posso aiutarti oggi?
   utter_goodbye:
   - text: A presto!
-  utter_ask_titolo_film:
+  utter_ask_titolo_film_form:
   - text: Su quale film vorresti informazioni?
   utter_no_results:
   - text: Non ho trovato nulla che corrisponda alla tua richiesta.
