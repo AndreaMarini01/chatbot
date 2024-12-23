@@ -442,17 +442,15 @@ nlu:
     - [Interstellar](titolo_film_form)
     - [Joker](titolo_film_form)
     - [Forrest Gump](titolo_film_form)
-    - [The Dark Knight](titolo_film_form)
     - [La La Land](titolo_film_form)
     - [Pulp Fiction](titolo_film_form)
-    - [Gladiator](titolo_film_form)
+    - [Gladiatore](titolo_film_form)
     - [The Matrix](titolo_film_form)
     - [Avatar](titolo_film_form)
     - [Schindler's List](titolo_film_form)
     - [Star Wars: A New Hope](titolo_film_form)
     - [The Shawshank Redemption](titolo_film_form)
     - [Fight Club](titolo_film_form)
-    - [The Godfather Part II](titolo_film_form)
     - [The Silence of the Lambs](titolo_film_form)
     - [The Lion King](titolo_film_form)
     - [Back to the Future](titolo_film_form)
@@ -460,14 +458,9 @@ nlu:
     - [The Hobbit: An Unexpected Journey](titolo_film_form)
     - [Jurassic Park](titolo_film_form)
     - [Terminator 2: Judgment Day](titolo_film_form)
-    - [Inglourious Basterds](titolo_film_form)
     - [Eternal Sunshine of the Spotless Mind](titolo_film_form)
     - [The Wolf of Wall Street](titolo_film_form)
-    - [Mad Max: Fury Road](titolo_film_form)
-    - [Django Unchained](titolo_film_form)
-    - [The Revenant](titolo_film_form)
     - [The Social Network](titolo_film_form)
-    - [12 Angry Men](titolo_film_form)
     - [The Princess Bride](titolo_film_form)
     - [Moonlight](titolo_film_form)
     - [Her](titolo_film_form)
@@ -482,33 +475,12 @@ nlu:
     - [Guardians of the Galaxy](titolo_film_form)
     - [Spider-Man: No Way Home](titolo_film_form)
     - [The Conjuring](titolo_film_form)
-    - [A Quiet Place](titolo_film_form)
     - [Gone Girl](titolo_film_form)
     - [The Incredibles](titolo_film_form)
-    - [Scream](titolo_film_form)
-    - [The Exorcist](titolo_film_form)
     - [The Shining](titolo_film_form)
     - [Psycho](titolo_film_form)
-    - [Hereditary](titolo_film_form)
-    - [It](titolo_film_form)
-    - [The Ring](titolo_film_form)
-    - [Get Out](titolo_film_form)
-    - [Annihilation](titolo_film_form)
-    - [The Witch](titolo_film_form)
-    - [Parasite](titolo_film_form)
-    - [The Farewell](titolo_film_form)
-    - [Knives Out](titolo_film_form)
-    - [Shutter Island](titolo_film_form)
-    - [Drive](titolo_film_form)
-    - [Blade Runner 2049](titolo_film_form)
-    - [Mad Max: Fury Road](titolo_film_form)
-    - [Birdman](titolo_film_form)
-    - [Whiplash](titolo_film_form)
-    - [The Big Lebowski](titolo_film_form)
-    - [Goodfellas](titolo_film_form)
     - [Reservoir Dogs](titolo_film_form)
     - [The Truman Show](titolo_film_form)
-    - [Memento](titolo_film_form)
     - [Casino Royale](titolo_film_form)
     - [Skyfall](titolo_film_form)
     - [Spectre](titolo_film_form)
@@ -520,5 +492,33 @@ nlu:
     - [The Transporter](titolo_film_form)
     - [Sherlock Holmes](titolo_film_form)
     - [The Equalizer](titolo_film_form)
-    - [Taken](titolo_film_form)
+    - [io vi troverò](titolo_film_form)
     - [re leone](titolo_film_form)
+
+
+- intent: out_of_scope
+  examples: |
+    - fhdksjhfdsjk
+    - asf234f234
+    - jnsogfndfuige
+    - wibble wobble
+    - iewhuewruherwuhewhuewehwuhre
+    - non sto capendo puoi ripetere?
+    - jdlkfj
+    - prrrrr
+    - fhdui fhdui 
+    - xoxo
+    - j3k2k3
+    - 3j3j3j
+    - 3j3j3j3j
+    - hi0hiewjiewijewihjoewijoerwjierwjiekjijewrje
+    - puoi spiegare meglio???
+    - ???????????????????????????
+    - sofoearfwefiwenriwnrienriwonreiwornewiornowe
+    - nnnnnnnnnnnn
+    - non capisco niente
+    - non capisco
+    - aijfrweoihjrtiwoehriweriowejhrewo
+    - 4848783924089342083924839420839420382490382490234890
+    - 7849533uieowfhjdbsh230u9erfhjuih0u9hpuewq
+    - hewhui4843hfwnewfr8hy254r82hnjofpwrenfkewoq

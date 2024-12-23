@@ -34,6 +34,8 @@ entities:
 - genere_form
 - anno_form
 - titolo_film_form
+- out_of_scope
+
 slots:
   titolo_film:
     type: text
@@ -53,6 +55,7 @@ slots:
         conditions:
           - active_loop: form_film
             requested_slot: titolo_film_form
+
 
   titolo_serieTV:
     type: text
@@ -141,6 +144,13 @@ responses:
   - text: Vuoi sapere anche il genere del film?
   utter_film_form:
   - text: eccoti le informazioni sul film
+  utter_default:
+    - text: "Non sono sicuro di aver capito. Puoi ripetere o spiegare meglio la tua richiesta?"
+  utter_fallback:
+    - text: "Mi dispiace, non ho capito. Puoi ripetere la tua richiesta?"
+    - text: "Scusa, non ho capito. Puoi riformulare la tua domanda?"
+  utter_out_of_scope:
+    - text: "Non ho capito cosa intendi. Potresti ripetere? sono nell'out of scope"
 
 
 actions:
@@ -164,3 +174,4 @@ actions:
 - utter_film_form
 - action_provide_film_details
 - action_reset_slots
+- action_fallback

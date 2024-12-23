@@ -733,3 +733,13 @@ class ActionResetSlots(Action):
 
         # Resetta ogni slot
         return [SlotSet(slot, None) for slot in slots_to_reset]
+
+
+
+class ActionFallback(Action):
+    def name(self) -> str:
+        return "action_fallback"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker, domain):
+        dispatcher.utter_message(text="Mi dispiace, non sono riuscito a capire la tua richiesta. Per favore riprova.")
+        return []

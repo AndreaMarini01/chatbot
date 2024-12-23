@@ -14,7 +14,7 @@ pipeline:
 - name: ResponseSelector
   epochs: 100
 - name: FallbackClassifier
-  threshold: 0.3
+  threshold: 0.3    # La soglia per attivare il fallback, se la probabilità è bassa
 
 policies:
 - name: RulePolicy
@@ -22,4 +22,4 @@ policies:
 - name: TEDPolicy
   max_history: 5
   epochs: 100
-assistant_id: 20241208-181213-dark-slate
+assistant_id: 20241223-194821-meek-box
