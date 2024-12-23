@@ -371,3 +371,20 @@ nlu:
     - NO
     - no, grazie
     - no, non credo
+
+- intent: image
+  examples: |
+    - Vorrei vedere la locandina di un film
+    - Mostrami l'immagine del film
+    - Hai una foto del film [titolo del film]?
+    - Voglio vedere il poster di [titolo del film]
+    - Puoi mostrarmi l'immagine di questo film?
+    - Mostrami il poster di [titolo del film]
+    - Mi puoi mandare l'immagine del film [titolo del film]?
+    - Vorrei vedere l'immagine del film chiamato [titolo del film]
+    - Mostrami l'immagine o il poster di [titolo del film]
+    - Puoi cercare l'immagine del film [titolo del film]?
+    - Mandami il poster del film [titolo del film]
+    - Puoi inviarmi la locandina di [titolo del film]?
+    - Voglio vedere il poster o la locandina di [titolo del film]
+    - Mostrami il film e la sua immagine

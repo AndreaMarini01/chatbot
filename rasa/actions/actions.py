@@ -731,3 +731,42 @@ class ActionResetSlots(Action):
 
         # Resetta ogni slot
         return [SlotSet(slot, None) for slot in slots_to_reset]
+
+class ActionGetImageFilm(Action):
+    def name(self) -> Text:
+        return "action_get_film_image"
+    
+    def run(self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]
+    ) -> List[EventType]:
+        
+        titolo = tracker.get_slot("titolo_film")
+        
+        # Se il titolo non è stato fornito
+        if not titolo:
+            dispatcher.utter_message(text="Per favore, fornisci un titolo di film.")
+            return []
+        
+        # Effettua la ricerca del film
+        search_data = search_movie_by_title(titolo)
+        results = search_data.get("results", [])
+        
+        if not results:
+            dispatcher.utter_message(text=f"_Non ho trovato nessun film con questo titolo: *{titolo}*._")
+            return []
+        
+        # Ottieni il primo risultato
+        movie = results[0]
+        poster_path = movie.get("poster_path")
+        
+        if poster_path:
+            # Costruisci l'URL completo per l'immagine
+            image_url = f"https://image.tmdb.org/t/p/w500{poster_path}"
+            # Invia l'immagine tramite Telegram
+            dispatcher.utter_message(image=image_url)
+            return []
+        else:
+            dispatcher.utter_message(text="Non ho trovato l'immagine del film.")
+            return []

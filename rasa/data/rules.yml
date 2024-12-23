@@ -66,3 +66,19 @@ rules:
       # passaggio 3: esegui l'azione di "submit"
       - action: action_provide_film_details
       - action: action_reset_slots
+# Regola locandina film
+  - rule: Attivazione Form immagine
+    steps:
+      - intent: image  # Quando l'utente fa una richiesta di immagine
+      - action: action_reset_slots  # Resetta gli slot prima di iniziare il form
+      - action: form_immagine  # Avvia il form immagine
+      - active_loop: form_immagine  # Il form rimane attivo
+
+  - rule: Fine form immagine
+    condition:
+      - active_loop: form_immagine  # La condizione è che il form è attivo
+    steps:
+      - action: form_immagine  # Verifica i dati finali nel form
+      - active_loop: null  # Termina il form
+      - action: action_get_film_image  # Esegui l'azione per ottenere l'immagine del film
+      - action: action_reset_slots  # Resetta gli slot dopo il completamento

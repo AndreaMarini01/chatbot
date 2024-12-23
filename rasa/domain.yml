@@ -22,6 +22,8 @@ intents:
 - recensioni_utenti_serieTV
 - affirm
 - deny
+- image
+
 entities:
 - titolo_film
 - genere
@@ -32,6 +34,7 @@ entities:
 - inform_serie
 - genere_form
 - anno_form
+- image_form
 slots:
   titolo_film:
     type: text
@@ -83,16 +86,26 @@ slots:
         conditions:
           - active_loop: form_film
             requested_slot: anno_form
+
   context_ricerca:
     type: text
     influence_conversation: false
     mappings:
     - type: from_text
+
   tipo_contenuto:
     type: text
     influence_conversation: false
     mappings:
     - type: from_text
+
+  image_form:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: form_immagine
 
 forms:
   form_film:
@@ -100,6 +113,11 @@ forms:
     - titolo_film
     - anno_form
     - genere_form
+
+form:
+  form_immagine:
+    required_slots:
+    - titolo_film
 
 responses:
   utter_greet:
@@ -128,7 +146,10 @@ responses:
   - text: Vuoi sapere anche il genere del film?
   utter_film_form:
   - text: eccoti le informazioni sul film
-
+  utter_ask_film_immagine:
+  - text: Vuoi vedere l'immagine del film?
+  utter_submit_film_immagine:
+  - text: ecco l'immagine del film
 
 actions:
 - action_movie_details
@@ -151,3 +172,5 @@ actions:
 - utter_film_form
 - action_provide_film_details
 - action_reset_slots
+- action_get_film_image
+- form_immagine
