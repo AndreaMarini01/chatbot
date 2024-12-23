@@ -11,11 +11,13 @@ rules:
       - action: action_set_context_title
       - action: action_movie_details
 
+
   - rule: Imposta contesto ricerca per serie
     steps:
       - intent: cerca_serieTV_titolo
       - action: action_set_context_title
       - action: action_TV_details
+
 
   - rule: Fallback solo se in contesto titolo
     condition:
@@ -28,6 +30,7 @@ rules:
     steps:
       - intent: popolarità_serieTV
       - action: popular_TV
+
 
 
   - rule: Utente dice che è una serie
@@ -47,6 +50,7 @@ rules:
   - rule: Attivazione Form film
     steps:
       - intent: cerca_film_titolo2
+      - action: action_reset_slots
       - action: form_film
       - active_loop: form_film
 #Regola per la fine del form ,aggiungere pulizia dello slot
@@ -62,11 +66,3 @@ rules:
       # passaggio 3: esegui l'azione di "submit"
       - action: action_provide_film_details
       - action: action_reset_slots
-
-
-#  - rule: Cerca serie TV per genere
-#    steps:
-#      - intent: cerca_serieTV_genere
-#      - slot_was_set:
-#          - tipo_contenuto: "serie"
-#      - action: TV_by_genre

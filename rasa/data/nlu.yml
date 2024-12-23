@@ -14,38 +14,38 @@ nlu:
     - Arrivederci
     
 
-#  - intent: cerca_film_titolo
-#    examples: |
-#      - Dammi informazioni su [Titanic](titolo_film)
-#      - Voglio info su [Inception](titolo_film)
-#      - Vorrei sapere la trama di [Il signore degli anelli: Le due torri](titolo_film)
-#      - Parlami di [Harry Potter e la pietra filosofale](titolo_film)
-#      - Cosa mi dici di [Pirates of the Caribbean: La maledizione della prima luna](titolo_film)
-#      - Dammi dettagli sul film [Forrest Gump](titolo_film)
-#      - Vorrei info su [Star Wars: L'impero colpisce ancora](titolo_film)
-#      - Mi parli di [The Matrix](titolo_film)
-#      - Raccontami di [Il buono, il brutto, il cattivo](titolo_film)
-#      - Ho sentito parlare di [La vita è bella](titolo_film)
-#      - Dammi informazioni su [Interstellar](titolo_film)
-#      - Parlami di [Joker](titolo_film)
-#      - Vorrei sapere la trama di [Avengers: Age of Ultron](titolo_film)
-#      - Mi racconti di [La città incantata](titolo_film)
-#      - Dammi dettagli sul film [Il gladiatore](titolo_film)
-#      - Voglio info su [L'alba del pianeta delle scimmie](titolo_film)
-#      - Cosa mi dici di [Shutter Island](titolo_film)
-#      - Parlami di [Il Padrino](titolo_film)
-#      - Vorrei info su [Ritorno al futuro](titolo_film)
-#      - Dimmi qualcosa su [Blade Runner 2049](titolo_film)
-#      - Ho bisogno di dettagli su [Fight Club](titolo_film)
-#      - Cerco informazioni su [Saving Private Ryan](titolo_film)
-#      - Cosa puoi dirmi di [Il Cavaliere Oscuro](titolo_film)
-#      - Vorrei la trama di [Avatar](titolo_film)
-#      - Dammi informazioni su [La forma dell'acqua](titolo_film)
-#      - Parlami di [La La Land](titolo_film)
-#      - Mi interessa sapere di [C'era una volta in America](titolo_film)
-#      - Raccontami di [Guardiani della Galassia Vol. 2](titolo_film)
-#      - Ho sentito di [Il nome della rosa](titolo_film)
-#      - Potresti dirmi di [Il favoloso mondo di Amélie](titolo_film)
+- intent: cerca_film_titolo
+  examples: |
+    - Dammi informazioni su [Titanic](titolo_film)
+    - Voglio info su [Inception](titolo_film)
+    - Vorrei sapere la trama di [Il signore degli anelli: Le due torri](titolo_film)
+    - Parlami di [Harry Potter e la pietra filosofale](titolo_film)
+    - Cosa mi dici di [Pirates of the Caribbean: La maledizione della prima luna](titolo_film)
+    - Dammi dettagli sul film [Forrest Gump](titolo_film)
+    - Vorrei info su [Star Wars: L'impero colpisce ancora](titolo_film)
+    - Mi parli di [The Matrix](titolo_film)
+    - Raccontami di [Il buono, il brutto, il cattivo](titolo_film)
+    - Ho sentito parlare di [La vita è bella](titolo_film)
+    - Dammi informazioni su [Interstellar](titolo_film)
+    - Parlami di [Joker](titolo_film)
+    - Vorrei sapere la trama di [Avengers: Age of Ultron](titolo_film)
+    - Mi racconti di [La città incantata](titolo_film)
+    - Dammi dettagli sul film [Il gladiatore](titolo_film)
+    - Voglio info su [L'alba del pianeta delle scimmie](titolo_film)
+    - Cosa mi dici di [Shutter Island](titolo_film)
+    - Parlami di [Il Padrino](titolo_film)
+    - Vorrei info su [Ritorno al futuro](titolo_film)
+    - Dimmi qualcosa su [Blade Runner 2049](titolo_film)
+    - Ho bisogno di dettagli su [Fight Club](titolo_film)
+    - Cerco informazioni su [Saving Private Ryan](titolo_film)
+    - Cosa puoi dirmi di [Il Cavaliere Oscuro](titolo_film)
+    - Vorrei la trama di [Avatar](titolo_film)
+    - Dammi informazioni su [La forma dell'acqua](titolo_film)
+    - Parlami di [La La Land](titolo_film)
+    - Mi interessa sapere di [C'era una volta in America](titolo_film)
+    - Raccontami di [Guardiani della Galassia Vol. 2](titolo_film)
+    - Ho sentito di [Il nome della rosa](titolo_film)
+    - Potresti dirmi di [Il favoloso mondo di Amélie](titolo_film)
 
 
 - intent: cerca_film_genere
@@ -285,6 +285,7 @@ nlu:
     - Consigli per una serie TV [animazione](genere)?
     - Dammi una bella serie TV di [azione](genere)
     - Sai suggerirmi una serie TV di [guerra](genere)?
+
 - intent: inform_film
   examples: |
     - È un film
@@ -293,6 +294,7 @@ nlu:
     - Film al cinema
     - Film in uscita
     - Si tratta di un film
+
 - intent: inform_serie
   examples: |
     - È una serie
@@ -302,18 +304,45 @@ nlu:
     - TV
     - È una serie tv
     - Si tratta di una serie
+
 - intent: cerca_film_titolo2
   examples: |
-    - Vorrei alcune informazioni su un film
-    - Dammi dettagli su un film
-    - Informazioni su un film
-    - vorrei alcune informazioni su un film
+    - Mi puoi dire qualcosa su un film?
+    - Ho bisogno di informazioni su un film
+    - Raccontami di un film
+    - Sai qualcosa su questo film?
+    - Posso sapere di più su un film?
+    - Voglio sapere tutto su un film
+    - Puoi aiutarmi con informazioni su un film?
+    - Cosa sai di un certo film?
+    - Dimmi di più su questo film
+    - Ho bisogno di dettagli su un film
+    - Hai dati su un film?
+    - Sai dirmi qualcosa su un certo film?
+    - Puoi fornirmi dettagli su un film?
+    - Parliamo di un film
+    - Ho delle domande su un film
+    - Potresti darmi informazioni su un film?
+    - Ti chiedo informazioni su un film
+    - Voglio sapere di un film
+    - Dammi tutte le informazioni su un film
+    - Mi servono dettagli su un film
+    - Qual è la trama di un film?
+    - Sai di cosa parla un certo film?
+    - Raccontami la storia di un film
+    - Quali sono i dettagli di un film?
+    - Cosa puoi dirmi su un film?
+    - Ti voglio chiedere di un film
+    - Hai informazioni utili su un film?
+    - Sai parlarmi di un film?
+
 - intent: inform
   examples: |
     - vorrei info su [titanic](titolo_film)
     - dammi dettagli su [inception](titolo_film)
     - [Re Leone](titolo_film)
     - [Il Padrino](titolo_film)
+
 - intent: affirm
   examples: |
     - sì
@@ -323,6 +352,13 @@ nlu:
     - confermo
     - yeah
     - yes
+    - assolutamente
+    - decisamente
+    - esattamente
+    - giusto
+    - ovviamente
+    - sicuramente
+
 - intent: deny
   examples: |
     - no
@@ -330,3 +366,8 @@ nlu:
     - no grazie
     - preferirei di no
     - non credo
+    - non credo proprio
+    - non credo sia così
+    - NO
+    - no, grazie
+    - no, non credo
