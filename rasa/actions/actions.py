@@ -575,10 +575,11 @@ class ActionAskRewiewsSeries(Action):
 
         return []
 
+
 class ValidateFormFilm(FormValidationAction):
     def name(self) -> Text:
         return "validate_form_film"
-    # validate il titolo del film con l'intent titolo_film_form  dall'entità titolo_film_form
+
     def validate_titolo_film_form(
         self,
         slot_value: Any,
@@ -586,23 +587,36 @@ class ValidateFormFilm(FormValidationAction):
         tracker: Tracker,
         domain: DomainDict
     ) -> Dict[Text, Any]:
-        # Verifica se l'utente ha fornito un titolo
+        last_intent = tracker.latest_message.get("intent", {}).get("name")
+
+        # 1) Se Rasa non capisce o l’utente dice qualcosa di nonsense:
+        if last_intent in ["out_of_scope", "nlu_fallback"]:
+            dispatcher.utter_message(
+                text="Non ho capito il titolo del film. Per favore riscrivi correttamente il titolo.")
+            return {"titolo_film_form": None}
+
+        # 2) Se lo slot è vuoto o composto da soli spazi:
         if not slot_value or len(slot_value.strip()) == 0:
             dispatcher.utter_message(text="Non ho capito il titolo del film, puoi ripetere?")
             return {"titolo_film_form": None}
 
-        # Se il valore è valido, lo restituisci
+        # 3) Altrimenti accettiamo il titolo
         return {"titolo_film_form": slot_value}
+
     def validate_anno_form(
-            self,
-            slot_value: Any,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any],
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
-        # Controlla l’intent dell’ultimo messaggio
         last_intent = tracker.latest_message.get("intent", {}).get("name")
         dispatcher.utter_message(text=f"[DEBUG] L'intent è: {last_intent}. Slot_value: {slot_value}")
+
+        # Se siamo in fallback/out_of_scope, restiamo nel form e chiediamo di ripetere:
+        if last_intent in ["out_of_scope", "nlu_fallback"]:
+            dispatcher.utter_message(text="Non ho capito se vuoi l'anno o no. Rispondi 'sì' oppure 'no'.")
+            return {"anno_form": None}
 
         if last_intent == "affirm":
             dispatcher.utter_message(text="Ok, mostrerò anche l'anno.")
@@ -612,21 +626,28 @@ class ValidateFormFilm(FormValidationAction):
             dispatcher.utter_message(text="Ok, niente anno.")
             return {"anno_form": "NO"}
 
-        # Se qui arrivi, vuol dire che l'utente non ha detto né 'sì' né 'no'
+        # Se qui arrivi, vuol dire che l’utente non ha detto né 'sì' né 'no',
+        # e non è un fallback out_of_scope, ma comunque non abbiamo un valore utile
         if not slot_value:
             dispatcher.utter_message(text="Devi specificare se vuoi l'anno. Scrivi 'sì' se lo vuoi, 'no' se non lo vuoi.")
             return {"anno_form": None}
 
+        # Se per qualche ragione slot_value esiste, lo teniamo
+        return {"anno_form": slot_value}
+
     def validate_genere_form(
-            self,
-            slot_value: Any,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any],
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
-        # Controlla l’intent dell’ultimo messaggio
         last_intent = tracker.latest_message.get("intent", {}).get("name")
         dispatcher.utter_message(text=f"[DEBUG] L'intent è: {last_intent}. Slot_value: {slot_value}")
+
+        if last_intent in ["out_of_scope", "nlu_fallback"]:
+            dispatcher.utter_message(text="Non ho capito se vuoi il genere. Rispondi 'sì' oppure 'no'.")
+            return {"genere_form": None}
 
         if last_intent == "affirm":
             dispatcher.utter_message(text="Ok, mostrerò anche il genere.")
@@ -636,14 +657,12 @@ class ValidateFormFilm(FormValidationAction):
             dispatcher.utter_message(text="Ok, niente genere.")
             return {"genere_form": "NO"}
 
-        # Se qui arrivi, vuol dire che l'utente non ha detto né 'sì' né 'no'
         if not slot_value:
             dispatcher.utter_message(
                 text="Devi specificare se vuoi il genere. Scrivi 'sì' se lo vuoi, 'no' se non lo vuoi.")
             return {"genere_form": None}
 
         return {"genere_form": slot_value}
-
 
 class ActionProvideFilmDetails(Action):
     def name(self) -> Text:
