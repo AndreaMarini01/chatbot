@@ -31,6 +31,7 @@ entities:
 - inform_film
 - inform_serie
 - genere_form
+- anno_form
 slots:
   titolo_film:
     type: text
@@ -73,8 +74,15 @@ slots:
     influence_conversation: true
     mappings:
     - type: from_text
-      intent: affirm
 
+  anno_form:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: form_film
+            requested_slot: anno_form
   context_ricerca:
     type: text
     influence_conversation: false
@@ -90,7 +98,7 @@ forms:
   form_film:
     required_slots:
     - titolo_film
-    - anno
+    - anno_form
     - genere_form
 
 responses:
@@ -112,12 +120,14 @@ responses:
   - text: ok ecco le informazioni
   utter_ask_continue:
   - text: Vuoi sapere altro?
-  utter_ask_anno:
-  - text: Vuoi sapere anche l'anno di uscita?
+#  utter_ask_anno:
+#  - text: Vuoi sapere anche l'anno di uscita?
+  utter_ask_anno_form:
+    - text: Vuoi sapere anche l'anno di uscita?
   utter_ask_genere_form:
   - text: Vuoi sapere anche il genere del film?
   utter_film_form:
-  - text: eccoti le informazioni {titolo_film}, {anno}
+  - text: eccoti le informazioni sul film
 
 
 actions:

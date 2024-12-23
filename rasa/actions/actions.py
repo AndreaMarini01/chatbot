@@ -591,7 +591,7 @@ class ValidateFormFilm(FormValidationAction):
             return {"titolo_film": None}
         return {"titolo_film": slot_value}
 
-    def validate_anno(
+    def validate_anno_form(
             self,
             slot_value: Any,
             dispatcher: CollectingDispatcher,
@@ -603,19 +603,19 @@ class ValidateFormFilm(FormValidationAction):
         dispatcher.utter_message(text=f"[DEBUG] L'intent è: {last_intent}. Slot_value: {slot_value}")
 
         if last_intent == "affirm":
-            dispatcher.utter_message(text="Ok, mostrerò anche l'anno di uscita.")
-            return {"anno": "Sì"}
+            dispatcher.utter_message(text="Ok, mostrerò anche l'anno.")
+            return {"anno_form": "Sì"}
 
         if last_intent == "deny":
             dispatcher.utter_message(text="Ok, niente anno.")
-            return {"anno": None}
+            return {"anno_form": "NO"}
 
         # Se qui arrivi, vuol dire che l'utente non ha detto né 'sì' né 'no'
         if not slot_value:
-            dispatcher.utter_message(text="Non ho capito se vuoi sapere l'anno, puoi ripetere?")
-            return {"anno": None}
+            dispatcher.utter_message(text="Non ho capito se vuoi l' anno, puoi ripetere?")
+            return {"anno_form": "NO"}
 
-        return {"anno": slot_value}
+        return {"anno_form": slot_value}
 
     def validate_genere_form(
             self,
@@ -630,18 +630,18 @@ class ValidateFormFilm(FormValidationAction):
 
         if last_intent == "affirm":
             dispatcher.utter_message(text="Ok, mostrerò anche il genere.")
-            return {"genere": "Sì"}
+            return {"genere_form": "Sì"}
 
         if last_intent == "deny":
             dispatcher.utter_message(text="Ok, niente genere.")
-            return {"genere": None}
+            return {"genere_form": "NO"}
 
         # Se qui arrivi, vuol dire che l'utente non ha detto né 'sì' né 'no'
         if not slot_value:
-            dispatcher.utter_message(text="Non ho capito se vuoi sapere l'anno, puoi ripetere?")
-            return {"genere": None}
+            dispatcher.utter_message(text="Non ho capito se vuoi il genere, puoi ripetere?")
+            return {"genere_form": "NO"}
 
-        return {"genere": slot_value}
+        return {"genere_form": slot_value}
 
 
 class ActionProvideFilmDetails(Action):
@@ -657,8 +657,8 @@ class ActionProvideFilmDetails(Action):
 
         titolo = tracker.get_slot("titolo_film")
         anno_choice = tracker.get_slot(
-            "anno")  # può essere "Sì", None, o un numero se in futuro l'utente inserisce un anno
-        genere_coiche = tracker.get_slot("genere")
+            "anno_form")  # può essere "Sì", None, o un numero se in futuro l'utente inserisce un anno
+        genere_coiche = tracker.get_slot("genere_form")
 
         # Per esempio:
         search_data = search_movie_by_title(titolo)
@@ -692,12 +692,12 @@ class ActionProvideFilmDetails(Action):
             dispatcher.utter_message(
                 text=f"Ecco i dettagli per '{titolo}':\nTrama: {trama}\nAnno di uscita: {anno_uscita} \nGenere: {genere}"
             )
-        elif anno_choice == "Sì" and genere_coiche == None:
+        elif anno_choice == "Sì" and genere_coiche == "NO":
             # L'utente vuole l'anno
             dispatcher.utter_message(
                 text=f"Ecco i dettagli per '{titolo}':\nTrama: {trama}\nAnno di uscita: {anno_uscita}"
             )
-        elif anno_choice == None and genere_coiche == "Sì":
+        elif anno_choice == "NO" and genere_coiche == "Sì":
             # L'utente vuole l'anno
             dispatcher.utter_message(
                 text=f"Ecco i dettagli per '{titolo}':\nTrama: {trama}\nGenere: {genere}"
@@ -724,6 +724,7 @@ class ActionResetSlots(Action):
             "genere_form",
             "attore",
             "anno",
+            "anno_form",
             "context_ricerca",
             "tipo_contenuto",
         ]
