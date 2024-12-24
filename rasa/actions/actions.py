@@ -672,8 +672,7 @@ class ActionProvideFilmDetails(Action):
     ) -> List[EventType]:
 
         titolo = tracker.get_slot("titolo_film_form")
-        anno_choice = tracker.get_slot(
-            "anno_form")  # può essere "Sì", None, o un numero se in futuro l'utente inserisce un anno
+        anno_choice = tracker.get_slot("anno_form")  # può essere "Sì", None, o un numero se in futuro l'utente inserisce un anno
         genere_coiche = tracker.get_slot("genere_form")
 
         # Per esempio:
@@ -693,35 +692,41 @@ class ActionProvideFilmDetails(Action):
 
         details_data = get_movie_details(movie_id)
 
-
         trama = details_data.get("overview", "Nessuna trama trovata.")
         anno_uscita = details_data.get("release_date", "sconosciuto")
-        genere=details_data.get("genres", "sconosciuto")
+        genere = details_data.get("genres", "sconosciuto")
 
         # genere è una lista di dizionari, quindi per ottenere il nome del genere, possiamo usare una list comprehension
         genere = ", ".join([g["name"] for g in genere])
-        # Se anno_choice == "Sì", allora includi l'anno. Altrimenti no.
-        # O, se un giorno 'anno' fosse un numero, lo gestisci qui.
 
-        if anno_choice == "Sì" and genere_coiche == "Sì" :
-            # L'utente vuole l'anno
+        # Creazione del messaggio con formattazione professionale
+        if anno_choice == "Sì" and genere_coiche == "Sì":
+            # L'utente vuole l'anno e il genere
             dispatcher.utter_message(
-                text=f"Ecco i dettagli per '{titolo}':\n 📝 Trama: {trama}\nAnno di uscita: {anno_uscita} \nGenere: {genere}"
+                text=f"🎬 **Dettagli del film**: *{titolo}*\n\n"
+                     f"📝 **Trama**: {trama}\n"
+                     f"📅 **Anno di uscita**: {anno_uscita}\n"
+                     f"🎭 **Genere**: {genere}"
             )
         elif anno_choice == "Sì" and genere_coiche == "NO":
-            # L'utente vuole l'anno
+            # L'utente vuole solo l'anno
             dispatcher.utter_message(
-                text=f"Ecco i dettagli per '{titolo}':\n 📝 Trama: {trama}\nAnno di uscita: {anno_uscita}"
+                text=f"🎬 **Dettagli del film**: *{titolo}*\n\n"
+                     f"📝 **Trama**: {trama}\n"
+                     f"📅 **Anno di uscita**: {anno_uscita}"
             )
         elif anno_choice == "NO" and genere_coiche == "Sì":
-            # L'utente vuole l'anno
+            # L'utente vuole solo il genere
             dispatcher.utter_message(
-                text=f"Ecco i dettagli per '{titolo}':\n 📝 Trama: {trama}\nGenere: {genere}"
+                text=f"🎬 **Dettagli del film**: *{titolo}*\n\n"
+                     f"📝 **Trama**: {trama}\n"
+                     f"🎭 **Genere**: {genere}"
             )
         else:
-            # L'utente NON vuole l'anno
+            # L'utente non vuole né l'anno né il genere
             dispatcher.utter_message(
-                text=f"Ecco i dettagli per '{titolo}':\n 📝 Trama: {trama}"
+                text=f"🎬 **Dettagli del film**: *{titolo}*\n\n"
+                     f"📝 **Trama**: {trama}"
             )
 
         return []
