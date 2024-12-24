@@ -74,3 +74,8 @@ stories:
       - intent: cerca_serieTV_genere
       - action: TV_by_genre
 
+  - story: Reset degli slot al saluto
+    steps:
+      - intent: greet
+      - action: action_reset_slots
+      - action: utter_greet

@@ -6,6 +6,16 @@ nlu:
     - Salve
     - Ehilà
     - Buongiorno
+    - Cosa posso fare in questo bot?
+    - Quali possibili comandi ci sono?
+    - Start
+    - /start
+    - reset
+    - restart
+    - help
+    - aiuto
+    - info
+
 - intent: goodbye
   examples: |
     - Ciao, a presto
@@ -39,13 +49,16 @@ nlu:
     - Ho bisogno di dettagli su [Fight Club](titolo_film)
     - Cerco informazioni su [Saving Private Ryan](titolo_film)
     - Cosa puoi dirmi di [Il Cavaliere Oscuro](titolo_film)
-    - Vorrei la trama di [Avatar](titolo_film)
     - Dammi informazioni su [La forma dell'acqua](titolo_film)
     - Parlami di [La La Land](titolo_film)
     - Mi interessa sapere di [C'era una volta in America](titolo_film)
     - Raccontami di [Guardiani della Galassia Vol. 2](titolo_film)
     - Ho sentito di [Il nome della rosa](titolo_film)
     - Potresti dirmi di [Il favoloso mondo di Amélie](titolo_film)
+    - Vorrei sapere la trama di [Il Gladiatore](titolo_film)
+    - Mi racconti di [Il Signore degli Anelli: Il ritorno del re](titolo_film)
+    - Dammi dettagli sul film [Il Re Leone](titolo_film)
+    - Voglio info su [Il Signore degli Anelli: La Compagnia dell'Anello](titolo_film)
 
 
 - intent: cerca_film_genere
@@ -79,6 +92,7 @@ nlu:
     - Ci sono novità interessanti al cinema?
     - Mi puoi dire quali film sono usciti da poco?
     - Dammi una lista dei film recenti
+
 - intent: dove_guardare
   examples: |
     - Dove posso vedere questo film in streaming?
@@ -135,7 +149,7 @@ nlu:
 - intent: recensioni_utenti
   examples: |
     - Cosa ne pensano gli utenti del film [Inception](titolo_film)
-    - Quali sono le recensioni di quel film? [Titanic](titolo_film)
+    - Quali sono le recensioni di quel film [Titanic](titolo_film) ?
     - Quali sono le recensioni di quel film
     - Mi dici cosa ne pensano di [Avatar](titolo_film)?
     - Recensioni su [La vita è bella](titolo_film)
@@ -254,6 +268,7 @@ nlu:
     - Che opinioni hanno gli utenti su [Hannibal](titolo_serieTV)?
     - Come valutano gli utenti [Mr. Robot](titolo_serieTV)?
     - Opinioni degli utenti su [Penny Dreadful](titolo_serieTV)?
+
 - intent: popolarità_serieTV
   examples: |
     - Quali sono le serie TV più popolari?
@@ -306,6 +321,10 @@ nlu:
     - Film al cinema
     - Film in uscita
     - Si tratta di un film
+    - si è un film 
+    - film
+    - FILM
+    - è un film
 
 - intent: inform_serie
   examples: |
@@ -316,6 +335,10 @@ nlu:
     - TV
     - È una serie tv
     - Si tratta di una serie
+    - si è una serie
+    - serie
+    - SERIE
+    - è una serie
 
 - intent: cerca_film_titolo2
   examples: |
@@ -352,7 +375,6 @@ nlu:
   examples: |
     - vorrei info su [titanic](titolo_film)
     - dammi dettagli su [inception](titolo_film)
-    - [Re Leone](titolo_film)
     - [Il Padrino](titolo_film)
 
 - intent: affirm
@@ -477,11 +499,13 @@ nlu:
     - [The Conjuring](titolo_film_form)
     - [Gone Girl](titolo_film_form)
     - [The Incredibles](titolo_film_form)
+    - [The Dark Knight](titolo_film_form)
     - [The Shining](titolo_film_form)
     - [Psycho](titolo_film_form)
     - [Reservoir Dogs](titolo_film_form)
     - [The Truman Show](titolo_film_form)
     - [Casino Royale](titolo_film_form)
+    - [Il re leone](titolo_film_form)
     - [Skyfall](titolo_film_form)
     - [Spectre](titolo_film_form)
     - [Mission: Impossible - Fallout](titolo_film_form)
@@ -494,6 +518,7 @@ nlu:
     - [The Equalizer](titolo_film_form)
     - [io vi troverò](titolo_film_form)
     - [re leone](titolo_film_form)
+    - [il pianeta del tesoro](titolo_film_form)
 
 
 - intent: out_of_scope

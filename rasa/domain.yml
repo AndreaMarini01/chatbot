@@ -119,7 +119,40 @@ forms:
 
 responses:
   utter_greet:
-  - text: Ciao! Sono la tua guida cinematografica. Come posso aiutarti oggi?
+      - text: |
+          👋 Benvenuto! Ecco alcune cose che puoi fare con questo bot:
+
+          🎥 **Film**:
+
+          1️⃣ Cerca un film per titolo: *Esempio*: 'Dammi dettagli sul film Forrest Gump'
+
+          2️⃣ Richiedi i top film per genere: *Esempio*: 'Consigliami un film drammatico'
+
+          3️⃣ Trova i film più recenti: *Esempio*: ' Film recenti?'
+
+          4️⃣ Richiedi recensioni di un film: *Esempio*: ' Cosa ne pensano gli utenti del film Inception'
+
+          5️⃣ Trova dove guardare un film: *Esempio*: 'Dove posso vedere Avatar?'
+
+          📺 **Serie TV**:
+
+          6️⃣ Cerca una serie TV per titolo: *Esempio*: 'Trova informazioni sulla serie Breaking Bad'
+
+          7️⃣ Richiedi le migliori serie per genere: *Esempio*: 'Consigliami una serie tv di azione'
+
+          8️⃣ Scopri le serie TV recenti: *Esempio*: 'Serie TV appena uscite'
+
+          9️⃣ Richiedi recensioni di una serie TV: *Esempio*: 'Cosa ne pensano gli utenti di breaking bad? '
+            
+           ️⃣0️⃣ Trovare le serie tv più popolari: *Esempio*: 'Serie tv più popolari? '
+
+          ❓ **Assistenza**:
+
+          🔄 Richiedi aiuto o reset: *Esempio*: 'help' o 'reset'
+
+          🤖 Cosa vuoi fare?
+  
+
   utter_goodbye:
   - text: A presto!
   utter_ask_titolo_film_form:
@@ -148,12 +181,12 @@ responses:
     - text: "Non sono sicuro di aver capito. Puoi ripetere o spiegare meglio la tua richiesta?"
   utter_fallback:
     - text: "Mi dispiace, non ho capito. Puoi ripetere la tua richiesta?"
-    - text: "Scusa, non ho capito. Puoi riformulare la tua domanda?"
   utter_out_of_scope:
-    - text: "Non ho capito cosa intendi. Potresti ripetere? sono nell'out of scope"
+    - text: "Non ho capito cosa intendi. Potresti ripetere?"
 
 
 actions:
+- action_show_menu
 - action_movie_details
 - action_search_by_genre
 - action_recent_releases

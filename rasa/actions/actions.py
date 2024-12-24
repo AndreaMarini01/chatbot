@@ -611,7 +611,6 @@ class ValidateFormFilm(FormValidationAction):
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
         last_intent = tracker.latest_message.get("intent", {}).get("name")
-        dispatcher.utter_message(text=f"[DEBUG] L'intent è: {last_intent}. Slot_value: {slot_value}")
 
         # Se siamo in fallback/out_of_scope, restiamo nel form e chiediamo di ripetere:
         if last_intent in ["out_of_scope", "nlu_fallback"]:
@@ -619,7 +618,6 @@ class ValidateFormFilm(FormValidationAction):
             return {"anno_form": None}
 
         if last_intent == "affirm":
-            dispatcher.utter_message(text="Ok, mostrerò anche l'anno.")
             return {"anno_form": "Sì"}
 
         if last_intent == "deny":
@@ -643,14 +641,12 @@ class ValidateFormFilm(FormValidationAction):
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
         last_intent = tracker.latest_message.get("intent", {}).get("name")
-        dispatcher.utter_message(text=f"[DEBUG] L'intent è: {last_intent}. Slot_value: {slot_value}")
 
         if last_intent in ["out_of_scope", "nlu_fallback"]:
             dispatcher.utter_message(text="Non ho capito se vuoi il genere. Rispondi 'sì' oppure 'no'.")
             return {"genere_form": None}
 
         if last_intent == "affirm":
-            dispatcher.utter_message(text="Ok, mostrerò anche il genere.")
             return {"genere_form": "Sì"}
 
         if last_intent == "deny":
@@ -710,22 +706,22 @@ class ActionProvideFilmDetails(Action):
         if anno_choice == "Sì" and genere_coiche == "Sì" :
             # L'utente vuole l'anno
             dispatcher.utter_message(
-                text=f"Ecco i dettagli per '{titolo}':\nTrama: {trama}\nAnno di uscita: {anno_uscita} \nGenere: {genere}"
+                text=f"Ecco i dettagli per '{titolo}':\n 📝 Trama: {trama}\nAnno di uscita: {anno_uscita} \nGenere: {genere}"
             )
         elif anno_choice == "Sì" and genere_coiche == "NO":
             # L'utente vuole l'anno
             dispatcher.utter_message(
-                text=f"Ecco i dettagli per '{titolo}':\nTrama: {trama}\nAnno di uscita: {anno_uscita}"
+                text=f"Ecco i dettagli per '{titolo}':\n 📝 Trama: {trama}\nAnno di uscita: {anno_uscita}"
             )
         elif anno_choice == "NO" and genere_coiche == "Sì":
             # L'utente vuole l'anno
             dispatcher.utter_message(
-                text=f"Ecco i dettagli per '{titolo}':\nTrama: {trama}\nGenere: {genere}"
+                text=f"Ecco i dettagli per '{titolo}':\n 📝 Trama: {trama}\nGenere: {genere}"
             )
         else:
             # L'utente NON vuole l'anno
             dispatcher.utter_message(
-                text=f"Ecco i dettagli per '{titolo}':\nTrama: {trama}"
+                text=f"Ecco i dettagli per '{titolo}':\n 📝 Trama: {trama}"
             )
 
         return []
@@ -754,11 +750,3 @@ class ActionResetSlots(Action):
         return [SlotSet(slot, None) for slot in slots_to_reset]
 
 
-
-class ActionFallback(Action):
-    def name(self) -> str:
-        return "action_fallback"
-
-    def run(self, dispatcher: CollectingDispatcher, tracker, domain):
-        dispatcher.utter_message(text="Mi dispiace, non sono riuscito a capire la tua richiesta. Per favore riprova.")
-        return []

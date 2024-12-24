@@ -72,3 +72,9 @@ rules:
     steps:
       - intent: out_of_scope
       - action: utter_out_of_scope
+
+#  - rule: Reset degli slot al saluto
+#    steps:
+#      - intent: greet
+#      - action: action_reset_slots
+#      - action: utter_greet
