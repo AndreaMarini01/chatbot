@@ -2,11 +2,13 @@ version: '3.1'
 intents:
 - Richiesta_film_form
 - SerieTV_recenti
+- affirm
 - cerca_film_genere
 - cerca_film_titolo
 - cerca_film_titolo2
 - cerca_serieTV_genere
 - cerca_serieTV_titolo
+- deny
 - dove_guardare
 - film_appena_usciti
 - goodbye
@@ -20,8 +22,7 @@ intents:
 - popolarità_serieTV
 - recensioni_utenti
 - recensioni_utenti_serieTV
-- affirm
-- deny
+- start
 - titolo_film_form
 entities:
 - titolo_film
@@ -35,7 +36,6 @@ entities:
 - anno_form
 - titolo_film_form
 - out_of_scope
-
 slots:
   titolo_film:
     type: text
@@ -45,18 +45,15 @@ slots:
       entity: titolo_film
     - type: from_entity
       entity: titolo_serieTV
-
   titolo_film_form:
     type: text
     influence_conversation: true
     mappings:
-      - type: from_entity
-        entity: titolo_film_form
-        conditions:
-          - active_loop: form_film
-            requested_slot: titolo_film_form
-
-
+    - type: from_entity
+      entity: titolo_film_form
+      conditions:
+      - active_loop: form_film
+        requested_slot: titolo_film_form
   titolo_serieTV:
     type: text
     influence_conversation: true
@@ -75,10 +72,10 @@ slots:
     type: text
     influence_conversation: true
     mappings:
-      - type: from_text
-        conditions:
-          - active_loop: form_film
-            requested_slot: genere_form
+    - type: from_text
+      conditions:
+      - active_loop: form_film
+        requested_slot: genere_form
   attore:
     type: text
     influence_conversation: true
@@ -90,15 +87,14 @@ slots:
     influence_conversation: true
     mappings:
     - type: from_text
-
   anno_form:
     type: text
     influence_conversation: true
     mappings:
-      - type: from_text
-        conditions:
-          - active_loop: form_film
-            requested_slot: anno_form
+    - type: from_text
+      conditions:
+      - active_loop: form_film
+        requested_slot: anno_form
   context_ricerca:
     type: text
     influence_conversation: false
@@ -109,53 +105,32 @@ slots:
     influence_conversation: false
     mappings:
     - type: from_text
-
 forms:
   form_film:
     required_slots:
     - titolo_film_form
     - anno_form
     - genere_form
-
 responses:
   utter_greet:
-    - text: |
-        👋 **Benvenuto!** Ecco alcune cose che puoi fare con questo bot:
-
-        🎥 **Film**:
-
-        1️⃣ *Cerca un film per titolo*: *Esempio*: 'Dammi dettagli sul film Forrest Gump'
-
-        2️⃣ *Richiedi i top film per genere*: *Esempio*: 'Consigliami un film drammatico'
-
-        3️⃣ *Trova i film più recenti*: *Esempio*: 'Film recenti?'
-
-        4️⃣ *Richiedi recensioni di un film*: *Esempio*: 'Cosa ne pensano gli utenti del film Inception'
-
-        5️⃣ *Trova dove guardare un film*: *Esempio*: 'Dove posso vedere Avatar?'
-
-        6️⃣ *Trovare i film più popolari*: *Esempio*: 'Film più popolari?'
-
-        📺 **Serie TV**:
-
-        7️⃣ *Cerca una serie TV per titolo*: *Esempio*: 'Trova informazioni sulla serie Breaking Bad'
-
-        8️⃣ *Richiedi le migliori serie per genere*: *Esempio*: 'Consigliami una serie tv di azione'
-
-        9️⃣ *Scopri le serie TV recenti*: *Esempio*: 'Serie TV appena uscite'
-
-        🔟 *Richiedi recensioni di una serie TV*: *Esempio*: 'Cosa ne pensano gli utenti di Breaking Bad?'
-
-        1️⃣1️⃣ *Trovare le serie TV più popolari*: *Esempio*: 'Serie TV più popolari?'
-
-        ❓ **Assistenza**:
-
-        🔄 *Richiedi aiuto o reset*: *Esempio*: 'help' o 'reset'
-
-        🤖 **Cosa vuoi fare?**
-  
-  
-
+  - text: |
+      👋 **Benvenuto!** Ecco alcune cose che puoi fare con questo bot:
+      🎥 **Film**:
+      1️⃣ *Cerca un film per titolo*: *Esempio*: 'Dammi dettagli sul film Forrest Gump'
+      2️⃣ *Richiedi i top film per genere*: *Esempio*: 'Consigliami un film drammatico'
+      3️⃣ *Trova i film più recenti*: *Esempio*: 'Film recenti?'
+      4️⃣ *Richiedi recensioni di un film*: *Esempio*: 'Cosa ne pensano gli utenti del film Inception'
+      5️⃣ *Trova dove guardare un film*: *Esempio*: 'Dove posso vedere Avatar?'
+      6️⃣ *Trovare i film più popolari*: *Esempio*: 'Film più popolari?'
+      📺 **Serie TV**:
+      7️⃣ *Cerca una serie TV per titolo*: *Esempio*: 'Trova informazioni sulla serie Breaking Bad'
+      8️⃣ *Richiedi le migliori serie per genere*: *Esempio*: 'Consigliami una serie tv di azione'
+      9️⃣ *Scopri le serie TV recenti*: *Esempio*: 'Serie TV appena uscite'
+      🔟 *Richiedi recensioni di una serie TV*: *Esempio*: 'Cosa ne pensano gli utenti di Breaking Bad?'
+      1️⃣1️⃣ *Trovare le serie TV più popolari*: *Esempio*: 'Serie TV più popolari?'
+      ❓ **Assistenza**:
+      🔄 *Richiedi aiuto o reset*: *Esempio*: 'help' o 'reset'
+      🤖 **Cosa vuoi fare?**
   utter_goodbye:
   - text: A presto!
   utter_ask_titolo_film_form:
@@ -172,23 +147,21 @@ responses:
   - text: ok ecco le informazioni
   utter_ask_continue:
   - text: Vuoi sapere altro?
-#  utter_ask_anno:
-#  - text: Vuoi sapere anche l'anno di uscita?
   utter_ask_anno_form:
-    - text: Vuoi sapere anche l'anno di uscita?
+  - text: Vuoi sapere anche l'anno di uscita?
   utter_ask_genere_form:
   - text: Vuoi sapere anche il genere del film?
   utter_film_form:
   - text: eccoti le informazioni sul film
   utter_default:
-    - text: "Non sono sicuro di aver capito. Puoi ripetere o spiegare meglio la tua richiesta?"
+  - text: Non sono sicuro di aver capito. Puoi ripetere o spiegare meglio la tua richiesta?
   utter_fallback:
-    - text: "Mi dispiace, non ho capito. Puoi ripetere la tua richiesta?"
+  - text: Mi dispiace, non ho capito. Puoi ripetere la tua richiesta?
   utter_out_of_scope:
-    - text: "Non ho capito cosa intendi. Potresti ripetere?"
-
-
+  - text: Non ho capito cosa intendi. Potresti ripetere?
 actions:
+- action_reset_slots
+- utter_greet
 - action_show_menu
 - action_movie_details
 - action_search_by_genre
@@ -209,5 +182,7 @@ actions:
 - utter_submit
 - utter_film_form
 - action_provide_film_details
-- action_reset_slots
 - action_fallback
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

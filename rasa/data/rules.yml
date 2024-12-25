@@ -73,6 +73,11 @@ rules:
       - intent: out_of_scope
       - action: utter_out_of_scope
 
+#  - rule: Risposta iniziale con /start
+#    steps:
+#      - intent: greet
+#      - action: utter_greet
+
 #  - rule: Reset degli slot al saluto
 #    steps:
 #      - intent: greet

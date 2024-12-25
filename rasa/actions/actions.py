@@ -751,7 +751,5 @@ class ActionResetSlots(Action):
             "tipo_contenuto",
         ]
 
-        # Resetta ogni slot
         return [SlotSet(slot, None) for slot in slots_to_reset]
-
 
