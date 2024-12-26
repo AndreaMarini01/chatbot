@@ -81,6 +81,16 @@ stories:
       - action: action_reset_slots
       - action: utter_greet
 
+  - story: Attivazione e gestione form film
+    steps:
+      - intent: cerca_film_titolo2
+      - action: action_reset_slots
+      - action: form_film
+      - active_loop: form_film
+      - active_loop: null
+      - action: action_provide_film_details
+      - action: action_reset_slots
+
   - story: Avvio del bot
     steps:
       - intent: start

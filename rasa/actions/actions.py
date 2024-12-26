@@ -1,7 +1,7 @@
 from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet, FormValidation, EventType
+from rasa_sdk.events import SlotSet, FormValidation, EventType, ActiveLoop
 from rasa_sdk.types import DomainDict
 
 from .constants import MOVIES_GENRE_MAP, api_key, TV_GENRE_MAP
@@ -659,6 +659,7 @@ class ValidateFormFilm(FormValidationAction):
             return {"genere_form": None}
 
         return {"genere_form": slot_value}
+
 
 class ActionProvideFilmDetails(Action):
     def name(self) -> Text:
