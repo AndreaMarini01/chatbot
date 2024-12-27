@@ -24,6 +24,7 @@ intents:
 - recensioni_utenti_serieTV
 - start
 - titolo_film_form
+- titolo_film_image_form
 - image
 entities:
 - titolo_film
@@ -117,7 +118,7 @@ slots:
       conditions:
       - active_loop: form_locandina
         requested_slot: titolo_film_image_form
-  anno__image_form:
+  anno_image_form:
     type: text
     influence_conversation: true
     mappings:
@@ -149,6 +150,7 @@ responses:
         5️⃣ Richiedi recensioni di un film: Esempio: 'Cosa ne pensano gli utenti del film Inception'
         6️⃣ Trova dove guardare un film: Esempio: 'Dove posso vedere Avatar?'
         7️⃣ Trovare i film più popolari: Esempio: 'Film più popolari?'
+        8️⃣ Richiedi la locandina di un film: Esempio: 'Fammi vedere la locandina di un Film'
 
         📺 Serie TV:
         8️⃣ Cerca una serie TV per titolo: Esempio: 'Trova informazioni sulla serie Breaking Bad'
@@ -186,7 +188,7 @@ responses:
   utter_ask_titolo_film_image_form:
   - text: Di quale film vorresti avere la locandina?
   utter_ask_anno_image_form:
-  - text: In che anno è uscito il film di cui vuoi vedere la locandina?
+  - text: Vuoi sapere anche l'anno di uscita?
   utter_image_film_form:
   - text: Ecco la locandina del film
   utter_default:
@@ -220,6 +222,7 @@ actions:
 - action_provide_film_details
 - action_provide_film_image
 - action_fallback
+- validate_form_locandina
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

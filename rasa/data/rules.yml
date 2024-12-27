@@ -83,13 +83,13 @@ rules:
 #      - intent: greet
 #      - action: action_reset_slots
 #      - action: utter_greet# Regola locandina film
-  - rule: Attivazione Form immagine
-    steps:
-      - intent: image  # Quando l'utente fa una richiesta di immagine
-      - action: action_reset_slots  # Resetta gli slot prima di iniziare il form
-      - action: form_locandina  # Avvia il form immagine
-      - active_loop: form_locandina
-      - action: action_listen  # Il form rimane attivo
+  # - rule: Attivazione Form immagine
+  #   steps:
+  #     - intent: image  # Quando l'utente fa una richiesta di immagine
+  #     - action: action_reset_slots  # Resetta gli slot prima di iniziare il form
+  #     - action: form_locandina  # Avvia il form immagine
+  #     - active_loop: form_locandina
+  #     - action: action_listen  # Il form rimane attivo
 
   # - rule: Fine form immagine
   #   condition:
@@ -99,9 +99,10 @@ rules:
   #     - active_loop: null  # Termina il form
   #     - action: action_provide_film_image  # Esegui l'azione per ottenere l'immagine del film
   #     - action: action_reset_slots  # Resetta gli slot dopo il completamento
+  
   - rule: Fine form immagine
     condition:
-      - active_loop: form_locandina  # La condizione è che il form è attivo
+      - active_loop: form_locandina
     steps:
-      - action: action_get_film_image  # Esegui l'azione per ottenere l'immagine del film
-      - action: action_reset_slots  # Resetta gli slot dopo il completamento
+      - action: action_provide_film_image
+      - action: action_reset_slots 

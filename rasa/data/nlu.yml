@@ -532,7 +532,73 @@ nlu:
     - [io vi troverò](titolo_film_form)
     - [re leone](titolo_film_form)
     - [il pianeta del tesoro](titolo_film_form)
-    
+
+- intent: titolo_film_image_form
+  examples: |
+    - Voglio vedere un'immagine di [Inception](titolo_film_image_form)
+    - Mostrami un'immagine di [Titanic](titolo_film_image_form)
+    - Puoi inviarmi l'immagine di [Il Signore degli Anelli: La Compagnia dell'Anello](titolo_film_image_form)?
+    - Mi mandi l'immagine di [Il Padrino](titolo_film_image_form)?
+    - Ho bisogno dell'immagine di [La vita è bella](titolo_film_image_form)
+    - Mandami un'immagine di [Interstellar](titolo_film_image_form)
+    - Mostrami la copertina del film [Joker](titolo_film_image_form)
+    - Dammi l'immagine di [Forrest Gump](titolo_film_image_form)
+    - Puoi farmi vedere l'immagine di [La La Land](titolo_film_image_form)?
+    - Voglio vedere un'immagine di [Pulp Fiction](titolo_film_image_form)
+    - Mostrami un'immagine di [Gladiatore](titolo_film_image_form)
+    - Mandami l'immagine di [The Matrix](titolo_film_image_form)
+    - Fammi vedere un'immagine di [Avatar](titolo_film_image_form)
+    - Voglio vedere l'immagine di [Schindler's List](titolo_film_image_form)
+    - Puoi farmi vedere l'immagine di [Star Wars: A New Hope](titolo_film_image_form)?
+    - Mostrami l'immagine di [The Shawshank Redemption](titolo_film_image_form)
+    - Mandami un'immagine di [Fight Club](titolo_film_image_form)
+    - Mostrami un'immagine di [The Silence of the Lambs](titolo_film_image_form)
+    - Voglio vedere l'immagine di [The Lion King](titolo_film_image_form)
+    - Puoi inviarmi l'immagine di [Back to the Future](titolo_film_image_form)?
+    - Fammi vedere l'immagine di [The Avengers](titolo_film_image_form)
+    - Mostrami un'immagine di [The Hobbit: An Unexpected Journey](titolo_film_image_form)
+    - Voglio vedere un'immagine di [Jurassic Park](titolo_film_image_form)
+    - Mi mandi l'immagine di [Terminator 2: Judgment Day](titolo_film_image_form)?
+    - Puoi farmi vedere l'immagine di [Eternal Sunshine of the Spotless Mind](titolo_film_image_form)?
+    - Mandami un'immagine di [The Wolf of Wall Street](titolo_film_image_form)
+    - Voglio vedere la copertina del film [The Social Network](titolo_film_image_form)
+    - Mostrami l'immagine di [The Princess Bride](titolo_film_image_form)
+    - Fammi vedere un'immagine di [Moonlight](titolo_film_image_form)
+    - Mandami un'immagine di [Her](titolo_film_image_form)
+    - Puoi farmi vedere l'immagine di [The Green Mile](titolo_film_image_form)?
+    - Mostrami l'immagine di [The Departed](titolo_film_image_form)
+    - Voglio vedere un'immagine di [Coco](titolo_film_image_form)
+    - Mandami l'immagine di [Toy Story](titolo_film_image_form)
+    - Fammi vedere l'immagine di [Pirates of the Caribbean: The Curse of the Black Pearl](titolo_film_image_form)
+    - Voglio vedere l'immagine di [The Greatest Showman](titolo_film_image_form)
+    - Puoi inviarmi l'immagine di [The Pursuit of Happyness](titolo_film_image_form)?
+    - Mostrami l'immagine di [Frozen](titolo_film_image_form)
+    - Fammi vedere un'immagine di [Guardians of the Galaxy](titolo_film_image_form)
+    - Voglio vedere la copertina del film [Spider-Man: No Way Home](titolo_film_image_form)
+    - Mandami un'immagine di [The Conjuring](titolo_film_image_form)
+    - Fammi vedere l'immagine di [Gone Girl](titolo_film_image_form)
+    - Mostrami un'immagine di [The Incredibles](titolo_film_image_form)
+    - Voglio vedere l'immagine di [The Dark Knight](titolo_film_image_form)
+    - Fammi vedere l'immagine di [The Shining](titolo_film_image_form)
+    - Mandami un'immagine di [Psycho](titolo_film_image_form)
+    - Voglio vedere l'immagine di [Reservoir Dogs](titolo_film_image_form)
+    - Fammi vedere un'immagine di [The Truman Show](titolo_film_image_form)
+    - Puoi inviarmi l'immagine di [Casino Royale](titolo_film_image_form)?
+    - Mandami un'immagine di [Il re leone](titolo_film_image_form)
+    - Voglio vedere l'immagine di [Skyfall](titolo_film_image_form)
+    - Mostrami un'immagine di [Spectre](titolo_film_image_form)
+    - Fammi vedere l'immagine di [Mission: Impossible - Fallout](titolo_film_image_form)
+    - Mostrami un'immagine di [James Bond: GoldenEye](titolo_film_image_form)
+    - Voglio vedere l'immagine di [John Wick](titolo_film_image_form)
+    - Puoi inviarmi l'immagine di [Kingsman: The Secret Service](titolo_film_image_form)?
+    - Mandami un'immagine di [The Bourne Identity](titolo_film_image_form)
+    - Fammi vedere l'immagine di [The Transporter](titolo_film_image_form)
+    - Mostrami l'immagine di [Sherlock Holmes](titolo_film_image_form)
+    - Voglio vedere l'immagine di [The Equalizer](titolo_film_image_form)
+    - Mandami un'immagine di [io vi troverò](titolo_film_image_form)
+    - Puoi inviarmi l'immagine di [re leone](titolo_film_image_form)?
+    - Voglio vedere l'immagine di [il pianeta del tesoro](titolo_film_image_form)
+
 - intent: out_of_scope
   examples: |
     - asf234f234
