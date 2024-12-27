@@ -20,6 +20,7 @@ from .tmdb_utils import (
 )
 
 
+
 class ActionMovieDetails(Action):
     """
     Azione per recuperare i dettagli di un film dato il titolo.
