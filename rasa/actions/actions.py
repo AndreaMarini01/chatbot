@@ -751,6 +751,8 @@ class ActionResetSlots(Action):
             "anno_form",
             "context_ricerca",
             "tipo_contenuto",
+            "titolo_film_image_form",
+            "anno_image_form",
         ]
 
         return [SlotSet(slot, None) for slot in slots_to_reset]
@@ -758,7 +760,7 @@ class ActionResetSlots(Action):
 
 class ActionGetImageFilm(Action):
     def name(self) -> Text:
-        return "action_get_film_image"
+        return "action_provide_film_image"
     
     def run(self,
             dispatcher: CollectingDispatcher,
@@ -766,11 +768,12 @@ class ActionGetImageFilm(Action):
             domain: Dict[Text, Any]
     ) -> List[EventType]:
         
-        titolo = tracker.get_slot("titolo_film")
+        titolo = tracker.get_slot("titolo_film_image_form")
+        anno = tracker.get_slot("anno_image_form")
         
         # Se il titolo non è stato fornito
         if not titolo:
-            dispatcher.utter_message(text="Per favore, fornisci un titolo di film.")
+            dispatcher.utter_message(text="Per favore, fornisci il titolo di un film.")
             return []
         
         # Effettua la ricerca del film
@@ -778,12 +781,17 @@ class ActionGetImageFilm(Action):
         results = search_data.get("results", [])
         
         if not results:
-            dispatcher.utter_message(text=f"_Non ho trovato nessun film con questo titolo: *{titolo}*._")
+            dispatcher.utter_message(text=f"_Non ho trovato nessun film con il titolo *{titolo}*._")
             return []
         
         # Ottieni il primo risultato
         movie = results[0]
         poster_path = movie.get("poster_path")
+        
+        # Se l'anno è stato richiesto, invialo insieme all'immagine
+        if anno:
+            release_year = movie.get("release_date", "").split("-")[0]  # Estrai l'anno
+            dispatcher.utter_message(text=f"Il film *{titolo}* è uscito nel {release_year}.")
         
         if poster_path:
             # Costruisci l'URL completo per l'immagine

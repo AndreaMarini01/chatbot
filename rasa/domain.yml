@@ -25,7 +25,6 @@ intents:
 - start
 - titolo_film_form
 - image
-
 entities:
 - titolo_film
 - genere
@@ -36,8 +35,9 @@ entities:
 - inform_serie
 - genere_form
 - anno_form
-- image_form
 - titolo_film_form
+- titolo_film_image_form
+- anno_image_form
 - out_of_scope
 slots:
   titolo_film:
@@ -103,21 +103,28 @@ slots:
     influence_conversation: false
     mappings:
     - type: from_text
-
   tipo_contenuto:
     type: text
     influence_conversation: false
     mappings:
     - type: from_text
-
-  image_form:
+  titolo_film_image_form:
     type: text
     influence_conversation: true
     mappings:
-      - type: from_text
-        conditions:
-          - active_loop: form_immagine
-
+    - type: from_entity
+      entity: titolo_film_image_form
+      conditions:
+      - active_loop: form_locandina
+        requested_slot: titolo_film_image_form
+  anno__image_form:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: form_locandina
+        requested_slot: anno_image_form
 forms:
   form_film:
     required_slots:
@@ -125,11 +132,10 @@ forms:
     - anno_form
     - genere_form
 
-form:
-  form_immagine:
+  form_locandina:
     required_slots:
-    - titolo_film
-
+    - titolo_film_image_form
+    - anno_image_form
 responses:
   utter_greet:
     - text: |
@@ -177,10 +183,13 @@ responses:
   - text: Vuoi sapere anche il genere del film?
   utter_film_form:
   - text: eccoti le informazioni sul film
-  utter_ask_film_immagine:
-  - text: Vuoi vedere l'immagine del film?
-  utter_submit_film_immagine:
-  - text: ecco l'immagine del film  utter_default:
+  utter_ask_titolo_film_image_form:
+  - text: Di quale film vorresti avere la locandina?
+  utter_ask_anno_image_form:
+  - text: In che anno è uscito il film di cui vuoi vedere la locandina?
+  utter_image_film_form:
+  - text: Ecco la locandina del film
+  utter_default:
   - text: Non sono sicuro di aver capito. Puoi ripetere o spiegare meglio la tua richiesta?
   utter_fallback:
   - text: Mi dispiace, non ho capito. Puoi ripetere la tua richiesta?
@@ -209,9 +218,8 @@ actions:
 - utter_submit
 - utter_film_form
 - action_provide_film_details
+- action_provide_film_image
 - action_fallback
 session_config:
   session_expiration_time: 60
-  carry_over_slots
-- action_get_film_image
-- form_immagine_to_new_session: true
+  carry_over_slots_to_new_session: true

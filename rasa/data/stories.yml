@@ -97,3 +97,12 @@ stories:
       - action: action_reset_slots
       - action: utter_greet
 
+  - story: Attivazione e gestione form locandina
+    steps:
+      - intent: image
+      - action: action_reset_slots  # Reset dei slot prima di iniziare
+      - action: form_locandina  # Attiva il form
+      - active_loop: form_locandina
+      - action: action_listen  # Il form è attivo finché l'utente non fornisce tutte le informazioni
+      #- action: action_provide_film_image  # Azione che fornisce l'immagine una volta completato il form
+      #- action: action_reset_slots  # Reset dei slot dopo che il form è stato completato
