@@ -1,7 +1,7 @@
 from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet, FormValidation, EventType
+from rasa_sdk.events import SlotSet, FormValidation, EventType, ActiveLoop
 from rasa_sdk.types import DomainDict
 
 from .constants import MOVIES_GENRE_MAP, api_key, TV_GENRE_MAP
@@ -18,6 +18,7 @@ from .tmdb_utils import (
     get_favourite,
     search_TV_latest, get_favourite_tv, get_tv_by_genre
 )
+
 
 
 class ActionMovieDetails(Action):
@@ -46,14 +47,14 @@ class ActionMovieDetails(Action):
 
         results = search_data.get("results", [])
         if not results:
-            dispatcher.utter_message(text=f"_Non ho trovato nessun film con questo titolo: *{title}*._")
+            dispatcher.utter_message(text=f"Non ho trovato nessun film con questo titolo: {title}.")
             return []
 
         movie = results[0]
         movie_id = movie.get("id")
 
         if not movie_id:
-            dispatcher.utter_message(text="_Non sono riuscito a recuperare l'ID del film._")
+            dispatcher.utter_message(text="Non sono riuscito a recuperare l'ID del film.")
             return []
 
         details_data = get_movie_details(movie_id)
@@ -65,9 +66,9 @@ class ActionMovieDetails(Action):
         truncated_overview = overview[:500] + "..." if len(overview) > 500 else overview
 
         message = (
-            f"🎬 *{movie_title}*\n\n"
-            f"📅 _Data di uscita:_ {release_date}\n\n"
-            f"📝 *Trama:*\n{truncated_overview}"
+            f"🎬 {movie_title}\n\n"
+            f"📅 Data di uscita: {release_date}\n\n"
+            f"📝 Trama:\n{truncated_overview}"
         )
 
         dispatcher.utter_message(text=message)
@@ -90,11 +91,11 @@ class ActionRecentReleases(Action):
         results = data.get("results", [])
 
         if not results:
-            dispatcher.utter_message(text="_Non ho trovato film recentemente usciti._")
+            dispatcher.utter_message(text="Non ho trovato film recentemente usciti.")
             return []
 
         # Titolo del messaggio
-        messaggio = "🎬 *Film recentemente in sala:*\n"
+        messaggio = "🎬 Film recentemente in sala:\n"
         for movie in results[:5]:
             title = movie.get("title", "Titolo non disponibile")
             release_date = movie.get("release_date", "Data non disponibile")
@@ -104,7 +105,7 @@ class ActionRecentReleases(Action):
             truncated_overview = overview[:300] + "..." if len(overview) > 300 else overview
 
             messaggio += (
-                f"\n• *{title}*"
+                f"\n• {title}"
                 f"\n📅 Uscita: {release_date}"
                 f"\n📝 {truncated_overview}\n"
             )
@@ -127,22 +128,22 @@ class ActionMoviesByGenre(Action):
 
         genere = tracker.get_slot("genere")
         if not genere:
-            dispatcher.utter_message(text="_Non ho capito il genere che cerchi. Puoi ripetere?_")
+            dispatcher.utter_message(text="Non ho capito il genere che cerchi. Puoi ripetere?")
             return []
 
         genre_id = MOVIES_GENRE_MAP.get(genere.lower())
         if not genre_id:
-            dispatcher.utter_message(text=f"_Non conosco il genere *{genere}*, prova con un altro._")
+            dispatcher.utter_message(text=f"Non conosco il genere {genere}, prova con un altro.")
             return []
 
         data = get_movies_by_genre(genre_id)
         results = data.get("results", [])
 
         if not results:
-            dispatcher.utter_message(text=f"_Non ho trovato film del genere *{genere}*._")
+            dispatcher.utter_message(text=f"Non ho trovato film del genere {genere}.")
             return []
 
-        messaggio = f"🎬 *Ecco alcuni film del genere {genere}:*\n"
+        messaggio = f"🎬 Ecco alcuni film del genere {genere}:\n"
         for movie in results[:5]:
             title = movie.get("title", "Titolo non disponibile")
             overview = movie.get("overview", "Trama non disponibile")
@@ -150,7 +151,7 @@ class ActionMoviesByGenre(Action):
             truncated_overview = overview[:300] + "..." if len(overview) > 300 else overview
 
             messaggio += (
-                f"\n• *{title}*\n"
+                f"\n• {title}\n"
                 f"📝 {truncated_overview}\n"
             )
 
@@ -173,32 +174,32 @@ class ActionWhereToWatch(Action):
         title = tracker.get_slot("titolo_film")
 
         if not title:
-            dispatcher.utter_message(text="_Non ho capito il titolo del film, puoi ripetere?_")
+            dispatcher.utter_message(text="Non ho capito il titolo del film, puoi ripetere?")
             return []
 
         if not api_key:
-            dispatcher.utter_message(text="_Manca la chiave API. Non posso recuperare i dettagli del film._")
+            dispatcher.utter_message(text="Manca la chiave API. Non posso recuperare i dettagli del film.")
             return []
 
         search_data = search_movie_by_title(title)
 
         results = search_data.get("results", [])
         if not results:
-            dispatcher.utter_message(text=f"_Non ho trovato nessun film con questo titolo: *{title}*._")
+            dispatcher.utter_message(text=f"Non ho trovato nessun film con questo titolo: {title}.")
             return []
 
         movie = results[0]
         movie_id = movie.get("id")
 
         if not movie_id:
-            dispatcher.utter_message(text="_Non sono riuscito a recuperare l'ID del film._")
+            dispatcher.utter_message(text="Non sono riuscito a recuperare l'ID del film.")
             return []
 
         providers_data = get_movie_watch_providers(movie_id)
         providers = providers_data.get("results", {}).get("IT", dict())
 
         if not providers:
-            dispatcher.utter_message(text="_Non ho trovato informazioni sui provider per questo film._")
+            dispatcher.utter_message(text="Non ho trovato informazioni sui provider per questo film.")
             return []
 
         flatrate_providers = providers.get("flatrate", [])
@@ -206,25 +207,25 @@ class ActionWhereToWatch(Action):
         buy_providers = providers.get("buy", [])
 
         if not flatrate_providers and not rent_providers and not buy_providers:
-            dispatcher.utter_message(text="_Non ho trovato informazioni sui provider per questo film._")
+            dispatcher.utter_message(text="Non ho trovato informazioni sui provider per questo film.")
             return []
 
-        messaggio = f"🎬 *🇮🇹 Dove guardare {movie.get('title', 'il film')}*:\n"
+        messaggio = f"🎬 🇮🇹 Dove guardare {movie.get('title', 'il film')}:\n"
 
         if flatrate_providers:
-            messaggio += "\n📺 *Incluso in abbonamento:*"
+            messaggio += "\n📺 Incluso in abbonamento:"
             for provider in flatrate_providers:
                 provider_name = provider.get("provider_name", "Provider sconosciuto")
                 messaggio += f"\n• {provider_name}"
 
         if rent_providers:
-            messaggio += "\n\n📺 *In noleggio:*"
+            messaggio += "\n\n📺 In noleggio:"
             for provider in rent_providers:
                 provider_name = provider.get("provider_name", "Provider sconosciuto")
                 messaggio += f"\n• {provider_name}"
 
         if buy_providers:
-            messaggio += "\n\n📺 *In vendita:*"
+            messaggio += "\n\n📺 In vendita:"
             for provider in buy_providers:
                 provider_name = provider.get("provider_name", "Provider sconosciuto")
                 messaggio += f"\n• {provider_name}"
@@ -247,24 +248,24 @@ class MovieReviews(Action):
         titolo = tracker.get_slot("titolo_film")
 
         if not titolo:
-            dispatcher.utter_message(text="_Non ho capito il titolo del film, puoi ripetere?_")
+            dispatcher.utter_message(text="Non ho capito il titolo del film, puoi ripetere?")
             return []
 
         if not api_key:
-            dispatcher.utter_message(text="_Manca la chiave API. Non posso recuperare le recensioni._")
+            dispatcher.utter_message(text="Manca la chiave API. Non posso recuperare le recensioni.")
             return []
 
         search_data = search_movie_by_title(titolo)
         results = search_data.get("results", [])
         if not results:
-            dispatcher.utter_message(text=f"_Non ho trovato alcun film con il titolo *{titolo}*._")
+            dispatcher.utter_message(text=f"Non ho trovato alcun film con il titolo {titolo}.")
             return []
 
         movie = results[0]
         movie_id = movie.get("id")
 
         if not movie_id:
-            dispatcher.utter_message(text="_Non sono riuscito a recuperare l'ID del film._")
+            dispatcher.utter_message(text="Non sono riuscito a recuperare l'ID del film.")
             return []
 
         reviews_data = get_movie_reviews(movie_id)
@@ -272,7 +273,7 @@ class MovieReviews(Action):
 
         if reviews:
             # Titolo del messaggio
-            dispatcher.utter_message(text=f"🎬 *Recensioni per {movie.get('title', 'il film')}*:")
+            dispatcher.utter_message(text=f"🎬 Recensioni per {movie.get('title', 'il film')}:")
 
             # Mostriamo fino a 5 recensioni
             for review in reviews[:5]:
@@ -285,12 +286,12 @@ class MovieReviews(Action):
                     truncated_content += "..."
 
                 message = (
-                    f"\n👤 *Autore:* {author}\n"
-                    f"📝 *Recensione:*\n{truncated_content}\n"
+                    f"\n👤 Autore: {author}\n"
+                    f"📝 Recensione:\n{truncated_content}\n"
                 )
                 dispatcher.utter_message(text=message)
         else:
-            dispatcher.utter_message(text="_Non sono disponibili recensioni per questo film._")
+            dispatcher.utter_message(text="Non sono disponibili recensioni per questo film.")
 
         return []
 
@@ -313,14 +314,14 @@ class PopularMovies(Action):
         print(movies)
 
         if not movies:
-            dispatcher.utter_message(text="_Non ho trovato film popolari al momento._")
+            dispatcher.utter_message(text="Non ho trovato film popolari al momento.")
             return []
 
-        response = "🎬 *Ecco i film più popolari:*\n"
+        response = "🎬 Ecco i film più popolari:\n"
         for idx, movie in enumerate(movies[:5], start=1):
             title = movie.get("title", "Titolo non disponibile")
             release_date = movie.get("release_date", "Data di uscita non disponibile")
-            response += f"\n{idx}. *{title}*\n📅 Uscita: {release_date}\n"
+            response += f"\n{idx}. {title}\n📅 Uscita: {release_date}\n"
 
         dispatcher.utter_message(text=response)
 
@@ -346,25 +347,25 @@ class ActionTvDetails(Action):
         title = tracker.get_slot("titolo_serieTV")
 
         if not title:
-            dispatcher.utter_message(text="_Non ho capito il titolo della serie tv, puoi ripetere?_")
+            dispatcher.utter_message(text="Non ho capito il titolo della serie tv, puoi ripetere?")
             return []
 
         if not api_key:
-            dispatcher.utter_message(text="_Manca la chiave API. Non posso recuperare i dettagli del film._")
+            dispatcher.utter_message(text="Manca la chiave API. Non posso recuperare i dettagli del film.")
             return []
 
         search_data = search_TV_by_title(title)
 
         results = search_data.get("results", [])
         if not results:
-            dispatcher.utter_message(text=f"_Non ho trovato nessuna serie TV con questo titolo: *{title}*._")
+            dispatcher.utter_message(text=f"Non ho trovato nessuna serie TV con questo titolo: {title}.")
             return []
 
         serie_tv = results[0]
         series_id = serie_tv.get("id")
 
         if not series_id:
-            dispatcher.utter_message(text="_Non sono riuscito a recuperare l'ID della SerieTV._")
+            dispatcher.utter_message(text="Non sono riuscito a recuperare l'ID della SerieTV.")
             return []
 
         details_data = get_TV_details(series_id)
@@ -375,9 +376,9 @@ class ActionTvDetails(Action):
         truncated_overview = overview[:500] + "..." if len(overview) > 500 else overview
 
         message = (
-            f"🎬 *{serie_tv_title}*\n\n"
-            f"📅 _Data di uscita:_ {release_date}\n\n"
-            f"📝 *Trama:*\n{truncated_overview}"
+            f"🎬 {serie_tv_title}\n\n"
+            f"📅 Data di uscita: {release_date}\n\n"
+            f"📝 Trama:\n{truncated_overview}"
         )
 
         dispatcher.utter_message(text=message)
@@ -399,11 +400,11 @@ class ActionTVRecentReleases(Action):
         results = data.get("results", [])
 
         if not results:
-            dispatcher.utter_message(text="_Non ho nessuna serie tv uscita di  recentemente")
+            dispatcher.utter_message(text="Non ho nessuna serie tv uscita di  recentemente")
             return []
 
         # Titolo del messaggio
-        messaggio = "🎬 *Serie tv recente*\n"
+        messaggio = "🎬 Serie tv recenten"
         for serie in results[:5]:
             title = serie.get("name", "Titolo non disponibile")
             release_date = serie.get("first_air_date", "Data non disponibile")
@@ -413,7 +414,7 @@ class ActionTVRecentReleases(Action):
             truncated_overview = overview[:300] + "..." if len(overview) > 300 else overview
 
             messaggio += (
-                f"\n• *{title}*"
+                f"\n• {title}"
                 f"\n📅 Uscita: {release_date}"
                 f"\n📝 {truncated_overview}\n"
             )
@@ -439,14 +440,14 @@ class ActionPopularTv(Action):
         series = popular_data.get("results", [])
 
         if not series:
-            dispatcher.utter_message(text="_Non ho trovato serie tv popolari al momento._")
+            dispatcher.utter_message(text="Non ho trovato serie tv popolari al momento.")
             return []
 
-        response = "🎬 *Ecco le serie tv più popolari:*\n"
+        response = "🎬 Ecco le serie tv più popolari:\n"
         for idx, movie in enumerate(series[:5], start=1):
             title = movie.get("name", "Titolo non disponibile")
             release_date = movie.get("first_air_date", "Data di uscita non disponibile")
-            response += f"\n{idx}. *{title}*\n📅 Uscita: {release_date}\n"
+            response += f"\n{idx}. {title}\n📅 Uscita: {release_date}\n"
 
         dispatcher.utter_message(text=response)
 
@@ -466,22 +467,22 @@ class ActionTvByGenre(Action):
 
         genere = tracker.get_slot("genere")
         if not genere:
-            dispatcher.utter_message(text="_Non ho capito il genere che cerchi. Puoi ripetere?_")
+            dispatcher.utter_message(text="Non ho capito il genere che cerchi. Puoi ripetere?")
             return []
 
         genre_id = TV_GENRE_MAP.get(genere.lower())
         if not genre_id:
-            dispatcher.utter_message(text=f"_Non conosco il genere *{genere}*, prova con un altro._")
+            dispatcher.utter_message(text=f"Non conosco il genere{genere}, prova con un altro.")
             return []
 
         data = get_tv_by_genre(genre_id)
         results = data.get("results", [])
 
         if not results:
-            dispatcher.utter_message(text=f"_Non ho trovato serie del genere *{genere}*._")
+            dispatcher.utter_message(text=f"Non ho trovato serie del genere {genere}.")
             return []
 
-        messaggio = f"🎬 *Ecco alcune serie  del genere {genere}:*\n"
+        messaggio = f"🎬 Ecco alcune serie  del genere {genere}:\n"
         for movie in results[:5]:
             title = movie.get("name", "Titolo non disponibile")
             overview = movie.get("first_air_date", "Trama non disponibile")
@@ -489,7 +490,7 @@ class ActionTvByGenre(Action):
             truncated_overview = overview[:300] + "..." if len(overview) > 300 else overview
 
             messaggio += (
-                f"\n• *{title}*\n"
+                f"\n• {title}\n"
                 f"📝 {truncated_overview}\n"
             )
 
@@ -528,24 +529,24 @@ class ActionAskRewiewsSeries(Action):
         titolo = tracker.get_slot("titolo_serieTV")
 
         if not titolo:
-            dispatcher.utter_message(text="_Non ho capito il titolo della serie tv, puoi ripetere?_")
+            dispatcher.utter_message(text="Non ho capito il titolo della serie tv, puoi ripetere?")
             return []
         
         if not api_key:
-            dispatcher.utter_message(text="_Manca la chiave API. Non posso recuperare le recensioni._")
+            dispatcher.utter_message(text="Manca la chiave API. Non posso recuperare le recensioni.")
             return []
         
         search_data = search_TV_by_title(titolo)
         results = search_data.get("results", [])
         if not results:
-            dispatcher.utter_message(text=f"_Non ho trovato alcuna serie tv con il titolo *{titolo}*._")
+            dispatcher.utter_message(text=f"Non ho trovato alcuna serie tv con il titolo {titolo}.")
             return []
         
         serie_tv = results[0]
         series_id = serie_tv.get("id")
 
         if not series_id:
-            dispatcher.utter_message(text="_Non sono riuscito a recuperare l'ID della serie tv._")
+            dispatcher.utter_message(text="Non sono riuscito a recuperare l'ID della serie tv.")
             return []
         
         reviews_data = get_series_reviews(series_id)
@@ -553,7 +554,7 @@ class ActionAskRewiewsSeries(Action):
 
         if reviews:
             # Titolo del messaggio
-            dispatcher.utter_message(text=f"🎬 *Recensioni per {serie_tv.get('name', 'la serie tv')}*:")
+            dispatcher.utter_message(text=f"🎬 Recensioni per {serie_tv.get('name', 'la serie tv')}:")
 
             # Mostriamo fino a 5 recensioni
             for review in reviews[:5]:
@@ -566,80 +567,97 @@ class ActionAskRewiewsSeries(Action):
                     truncated_content += "..."
 
                 message = (
-                    f"\n👤 *Autore:* {author}\n"
-                    f"📝 *Recensione:*\n{truncated_content}\n"
+                    f"\n👤 Autore: {author}\n"
+                    f"📝 Recensione:\n{truncated_content}\n"
                 )
                 dispatcher.utter_message(text=message)
         else:   
-            dispatcher.utter_message(text="_Non sono disponibili recensioni per questa serie tv._")
+            dispatcher.utter_message(text="Non sono disponibili recensioni per questa serie tv.")
 
         return []
+
 
 class ValidateFormFilm(FormValidationAction):
     def name(self) -> Text:
         return "validate_form_film"
 
-    def validate_titolo_film(
+    def validate_titolo_film_form(
         self,
         slot_value: Any,
         dispatcher: CollectingDispatcher,
         tracker: Tracker,
         domain: DomainDict
     ) -> Dict[Text, Any]:
-        if not slot_value:
+        last_intent = tracker.latest_message.get("intent", {}).get("name")
+
+        # 1) Se Rasa non capisce o l’utente dice qualcosa di nonsense:
+        if last_intent in ["out_of_scope", "nlu_fallback"]:
+            dispatcher.utter_message(
+                text="Non ho capito il titolo del film. Per favore riscrivi correttamente il titolo.")
+            return {"titolo_film_form": None}
+
+        # 2) Se lo slot è vuoto o composto da soli spazi:
+        if not slot_value or len(slot_value.strip()) == 0:
             dispatcher.utter_message(text="Non ho capito il titolo del film, puoi ripetere?")
-            return {"titolo_film": None}
-        return {"titolo_film": slot_value}
+            return {"titolo_film_form": None}
+
+        # 3) Altrimenti accettiamo il titolo
+        return {"titolo_film_form": slot_value}
 
     def validate_anno_form(
-            self,
-            slot_value: Any,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any],
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
-        # Controlla l’intent dell’ultimo messaggio
         last_intent = tracker.latest_message.get("intent", {}).get("name")
-        dispatcher.utter_message(text=f"[DEBUG] L'intent è: {last_intent}. Slot_value: {slot_value}")
+
+        # Se siamo in fallback/out_of_scope, restiamo nel form e chiediamo di ripetere:
+        if last_intent in ["out_of_scope", "nlu_fallback"]:
+            dispatcher.utter_message(text="Non ho capito se vuoi l'anno o no. Rispondi 'sì' oppure 'no'.")
+            return {"anno_form": None}
 
         if last_intent == "affirm":
-            dispatcher.utter_message(text="Ok, mostrerò anche l'anno.")
             return {"anno_form": "Sì"}
 
         if last_intent == "deny":
             dispatcher.utter_message(text="Ok, niente anno.")
             return {"anno_form": "NO"}
 
-        # Se qui arrivi, vuol dire che l'utente non ha detto né 'sì' né 'no'
+        # Se qui arrivi, vuol dire che l’utente non ha detto né 'sì' né 'no',
+        # e non è un fallback out_of_scope, ma comunque non abbiamo un valore utile
         if not slot_value:
-            dispatcher.utter_message(text="Non ho capito se vuoi l' anno, puoi ripetere?")
-            return {"anno_form": "NO"}
+            dispatcher.utter_message(text="Devi specificare se vuoi l'anno. Scrivi 'sì' se lo vuoi, 'no' se non lo vuoi.")
+            return {"anno_form": None}
 
+        # Se per qualche ragione slot_value esiste, lo teniamo
         return {"anno_form": slot_value}
 
     def validate_genere_form(
-            self,
-            slot_value: Any,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any],
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
-        # Controlla l’intent dell’ultimo messaggio
         last_intent = tracker.latest_message.get("intent", {}).get("name")
-        dispatcher.utter_message(text=f"[DEBUG] L'intent è: {last_intent}. Slot_value: {slot_value}")
+
+        if last_intent in ["out_of_scope", "nlu_fallback"]:
+            dispatcher.utter_message(text="Non ho capito se vuoi il genere. Rispondi 'sì' oppure 'no'.")
+            return {"genere_form": None}
 
         if last_intent == "affirm":
-            dispatcher.utter_message(text="Ok, mostrerò anche il genere.")
             return {"genere_form": "Sì"}
 
         if last_intent == "deny":
             dispatcher.utter_message(text="Ok, niente genere.")
             return {"genere_form": "NO"}
 
-        # Se qui arrivi, vuol dire che l'utente non ha detto né 'sì' né 'no'
         if not slot_value:
-            dispatcher.utter_message(text="Non ho capito se vuoi il genere, puoi ripetere?")
-            return {"genere_form": "NO"}
+            dispatcher.utter_message(
+                text="Devi specificare se vuoi il genere. Scrivi 'sì' se lo vuoi, 'no' se non lo vuoi.")
+            return {"genere_form": None}
 
         return {"genere_form": slot_value}
 
@@ -655,9 +673,8 @@ class ActionProvideFilmDetails(Action):
             domain: Dict[Text, Any]
     ) -> List[EventType]:
 
-        titolo = tracker.get_slot("titolo_film")
-        anno_choice = tracker.get_slot(
-            "anno_form")  # può essere "Sì", None, o un numero se in futuro l'utente inserisce un anno
+        titolo = tracker.get_slot("titolo_film_form")
+        anno_choice = tracker.get_slot("anno_form")  # può essere "Sì", None, o un numero se in futuro l'utente inserisce un anno
         genere_coiche = tracker.get_slot("genere_form")
 
         # Per esempio:
@@ -665,47 +682,53 @@ class ActionProvideFilmDetails(Action):
 
         results = search_data.get("results", [])
         if not results:
-            dispatcher.utter_message(text=f"_Non ho trovato nessun film con questo titolo: *{titolo}*._")
+            dispatcher.utter_message(text=f"_Non ho trovato nessun film con questo titolo: {titolo}.")
             return []
 
         movie = results[0]
         movie_id = movie.get("id")
 
         if not movie_id:
-            dispatcher.utter_message(text="_Non sono riuscito a recuperare l'ID del film._")
+            dispatcher.utter_message(text="Non sono riuscito a recuperare l'ID del film.")
             return []
 
         details_data = get_movie_details(movie_id)
 
-
         trama = details_data.get("overview", "Nessuna trama trovata.")
         anno_uscita = details_data.get("release_date", "sconosciuto")
-        genere=details_data.get("genres", "sconosciuto")
+        genere = details_data.get("genres", "sconosciuto")
 
         # genere è una lista di dizionari, quindi per ottenere il nome del genere, possiamo usare una list comprehension
         genere = ", ".join([g["name"] for g in genere])
-        # Se anno_choice == "Sì", allora includi l'anno. Altrimenti no.
-        # O, se un giorno 'anno' fosse un numero, lo gestisci qui.
 
-        if anno_choice == "Sì" and genere_coiche == "Sì" :
-            # L'utente vuole l'anno
+        # Creazione del messaggio con formattazione professionale
+        if anno_choice == "Sì" and genere_coiche == "Sì":
+            # L'utente vuole l'anno e il genere
             dispatcher.utter_message(
-                text=f"Ecco i dettagli per '{titolo}':\nTrama: {trama}\nAnno di uscita: {anno_uscita} \nGenere: {genere}"
+                text=f"🎬 Dettagli del film: {titolo}\n\n"
+                     f"📝 Trama: {trama}\n"
+                     f"📅 Anno di uscita: {anno_uscita}\n"
+                     f"🎭 Genere: {genere}"
             )
         elif anno_choice == "Sì" and genere_coiche == "NO":
-            # L'utente vuole l'anno
+            # L'utente vuole solo l'anno
             dispatcher.utter_message(
-                text=f"Ecco i dettagli per '{titolo}':\nTrama: {trama}\nAnno di uscita: {anno_uscita}"
+                text=f"🎬 Dettagli del film: {titolo}\n\n"
+                     f"📝 Trama: {trama}\n"
+                     f"📅 Anno di uscita: {anno_uscita}"
             )
         elif anno_choice == "NO" and genere_coiche == "Sì":
-            # L'utente vuole l'anno
+            # L'utente vuole solo il genere
             dispatcher.utter_message(
-                text=f"Ecco i dettagli per '{titolo}':\nTrama: {trama}\nGenere: {genere}"
+                text=f"🎬 Dettagli del film: {titolo}\n\n"
+                     f"📝 Trama: {trama}\n"
+                     f"🎭 Genere: {genere}"
             )
         else:
-            # L'utente NON vuole l'anno
+            # L'utente non vuole né l'anno né il genere
             dispatcher.utter_message(
-                text=f"Ecco i dettagli per '{titolo}':\nTrama: {trama}"
+                text=f"🎬 Dettagli del film: {titolo}\n\n"
+                     f"📝 Trama: {trama}"
             )
 
         return []
@@ -719,6 +742,7 @@ class ActionResetSlots(Action):
         # Slot da resettare
         slots_to_reset = [
             "titolo_film",
+            "titolo_film_form",
             "titolo_serieTV",
             "genere",
             "genere_form",
@@ -729,8 +753,8 @@ class ActionResetSlots(Action):
             "tipo_contenuto",
         ]
 
-        # Resetta ogni slot
         return [SlotSet(slot, None) for slot in slots_to_reset]
+
 
 class ActionGetImageFilm(Action):
     def name(self) -> Text:

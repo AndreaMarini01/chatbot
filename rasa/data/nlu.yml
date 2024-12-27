@@ -6,14 +6,27 @@ nlu:
     - Salve
     - Ehilà
     - Buongiorno
+    - Cosa posso fare in questo bot?
+    - Quali possibili comandi ci sono?
+    - help
+    - aiuto
+    - info
+
+- intent: start
+  examples: |
+    - /start
+    - /starc
+    - Start
+    - /START
+    - /sTaRt
+    - 
+
 - intent: goodbye
   examples: |
     - Ciao, a presto
     - Devo andare, grazie
     - Grazie, ci sentiamo dopo
     - Arrivederci
-    
-
 - intent: cerca_film_titolo
   examples: |
     - Dammi informazioni su [Titanic](titolo_film)
@@ -39,15 +52,16 @@ nlu:
     - Ho bisogno di dettagli su [Fight Club](titolo_film)
     - Cerco informazioni su [Saving Private Ryan](titolo_film)
     - Cosa puoi dirmi di [Il Cavaliere Oscuro](titolo_film)
-    - Vorrei la trama di [Avatar](titolo_film)
     - Dammi informazioni su [La forma dell'acqua](titolo_film)
     - Parlami di [La La Land](titolo_film)
     - Mi interessa sapere di [C'era una volta in America](titolo_film)
     - Raccontami di [Guardiani della Galassia Vol. 2](titolo_film)
     - Ho sentito di [Il nome della rosa](titolo_film)
     - Potresti dirmi di [Il favoloso mondo di Amélie](titolo_film)
-
-
+    - Vorrei sapere la trama di [Il Gladiatore](titolo_film)
+    - Mi racconti di [Il Signore degli Anelli: Il ritorno del re](titolo_film)
+    - Dammi dettagli sul film [Il Re Leone](titolo_film)
+    - Voglio info su [Il Signore degli Anelli: La Compagnia dell'Anello](titolo_film)
 - intent: cerca_film_genere
   examples: |
     - Consigliami un film di [azione](genere)
@@ -130,12 +144,10 @@ nlu:
     - Devo pagare per vedere [Avatar](titolo_film) online o è incluso in qualche servizio?
     - È in streaming legale da qualche parte [Harry Potter e la pietra filosofale](titolo_film)?
     - Dove posso trovare [Il Padrino](titolo_film) in streaming legale?
-    
-
 - intent: recensioni_utenti
   examples: |
     - Cosa ne pensano gli utenti del film [Inception](titolo_film)
-    - Quali sono le recensioni di quel film? [Titanic](titolo_film)
+    - Quali sono le recensioni di quel film [Titanic](titolo_film) ?
     - Quali sono le recensioni di quel film
     - Mi dici cosa ne pensano di [Avatar](titolo_film)?
     - Recensioni su [La vita è bella](titolo_film)
@@ -151,10 +163,6 @@ nlu:
     - Ci sono opinioni su [L'uomo che sussurrava ai cavalli](titolo_film)?
     - Che dicono di [Coco](titolo_film)?
     - Hai informazioni sul gradimento di [Non ci resta che piangere](titolo_film)?
-    
-    
-    
-
 - intent: popolarità_film
   examples: |
     - Quali sono i film più popolari?
@@ -162,20 +170,28 @@ nlu:
     - Film più amati
     - Film più gettonati
     - Film più popolari
+    - I film più apprezzati
+    - Mostrami i film più popolari di questo mese
+    - Quali film stanno facendo più successo?
+    - I film più popolari al momento
+    - Quali sono i film più seguiti in questo periodo?
+    - I film che tutti stanno guardando
+    - Film di tendenza
 - intent: SerieTV_recenti
   examples: |
-    - Quali serie TV sono uscite di recente
+    - Quali serie TV sono uscite di recente?
     - Serie TV recenti?
     - Serie TV nuove
     - Serie TV appena uscite?
     - Novità serie TV?
     - Nuove serie TV
-    - Dimmi alcune delle serie tv appena uscite?
-    - Quali sono le serie tv più recenti
-    
-    
-    
-
+    - Dimmi alcune delle serie TV appena uscite
+    - Quali sono le serie TV più recenti?
+    - Quali serie TV stanno andando in onda ora?
+    - Serie TV che sono state rilasciate recentemente
+    - Novità nel mondo delle serie TV
+    - Serie TV che sono appena uscite
+    - Cosa c'è di nuovo nelle serie TV?
 - intent: cerca_serieTV_titolo
   examples: |
     - Dammi dettagli sulla serie [Breaking Bad](titolo_serieTV)
@@ -208,8 +224,6 @@ nlu:
     - Dimmi qualcosa su [Hannibal](titolo_serieTV)
     - Potresti dirmi di [Mr. Robot](titolo_serieTV)
     - Raccontami di [Penny Dreadful](titolo_serieTV)
-    
-
 - intent: recensioni_utenti_serieTV
   examples: |
     - Cosa ne pensano gli utenti di [Breaking Bad](titolo_serieTV)?
@@ -285,7 +299,6 @@ nlu:
     - Consigli per una serie TV [animazione](genere)?
     - Dammi una bella serie TV di [azione](genere)
     - Sai suggerirmi una serie TV di [guerra](genere)?
-
 - intent: inform_film
   examples: |
     - È un film
@@ -294,7 +307,10 @@ nlu:
     - Film al cinema
     - Film in uscita
     - Si tratta di un film
-
+    - si è un film
+    - film
+    - FILM
+    - è un film
 - intent: inform_serie
   examples: |
     - È una serie
@@ -304,7 +320,10 @@ nlu:
     - TV
     - È una serie tv
     - Si tratta di una serie
-
+    - si è una serie
+    - serie
+    - SERIE
+    - è una serie
 - intent: cerca_film_titolo2
   examples: |
     - Mi puoi dire qualcosa su un film?
@@ -335,14 +354,11 @@ nlu:
     - Ti voglio chiedere di un film
     - Hai informazioni utili su un film?
     - Sai parlarmi di un film?
-
 - intent: inform
   examples: |
     - vorrei info su [titanic](titolo_film)
     - dammi dettagli su [inception](titolo_film)
-    - [Re Leone](titolo_film)
     - [Il Padrino](titolo_film)
-
 - intent: affirm
   examples: |
     - sì
@@ -358,7 +374,27 @@ nlu:
     - giusto
     - ovviamente
     - sicuramente
-
+    - proprio così
+    - assolutamente sì
+    - senza dubbio
+    - ben detto
+    - esatto, proprio così
+    - è giusto
+    - ok
+    - va bene
+    - ok, va bene
+    - sono d'accordo
+    - tutto chiaro
+    - non c'è problema
+    - senza problemi
+    - affermativo
+    - giustissimo
+    - perfetto
+    - perfettamente
+    - totalmente
+    - non c'è dubbio
+    - proprio quello che pensavo
+    - sono d'accordissimo
 - intent: deny
   examples: |
     - no
@@ -388,3 +424,111 @@ nlu:
     - Puoi inviarmi la locandina di [titolo del film]?
     - Voglio vedere il poster o la locandina di [titolo del film]
     - Mostrami il film e la sua immagine
+    - non è il caso
+    - assolutamente no
+    - nemmeno per sogno
+    - non sono d'accordo
+    - mi dispiace, ma no
+    - non mi sembra
+    - non credo sia possibile
+    - non penso proprio
+    - non è quello che voglio
+    - non è esattamente quello che intendevo
+    - non ci sto
+    - non mi va
+    - no, non è così
+    - non è il momento giusto
+    - no, non è vero
+    - no, non lo penso
+    - no, non sono sicuro
+    - meglio di no
+    - purtroppo no
+    - non proprio
+    - decisamente no
+    - no, niente da fare
+    - no, non voglio
+    - non sono sicuro
+    - mi dispiace, ma non posso
+- intent: titolo_film_form
+  examples: |
+    - [Inception](titolo_film_form)
+    - [Titanic](titolo_film_form)
+    - [Il Signore degli Anelli: La Compagnia dell'Anello](titolo_film_form)
+    - [Il Padrino](titolo_film_form)
+    - [La vita è bella](titolo_film_form)
+    - [Interstellar](titolo_film_form)
+    - [Joker](titolo_film_form)
+    - [Forrest Gump](titolo_film_form)
+    - [La La Land](titolo_film_form)
+    - [Pulp Fiction](titolo_film_form)
+    - [Gladiatore](titolo_film_form)
+    - [The Matrix](titolo_film_form)
+    - [Avatar](titolo_film_form)
+    - [Schindler's List](titolo_film_form)
+    - [Star Wars: A New Hope](titolo_film_form)
+    - [The Shawshank Redemption](titolo_film_form)
+    - [Fight Club](titolo_film_form)
+    - [The Silence of the Lambs](titolo_film_form)
+    - [The Lion King](titolo_film_form)
+    - [Back to the Future](titolo_film_form)
+    - [The Avengers](titolo_film_form)
+    - [The Hobbit: An Unexpected Journey](titolo_film_form)
+    - [Jurassic Park](titolo_film_form)
+    - [Terminator 2: Judgment Day](titolo_film_form)
+    - [Eternal Sunshine of the Spotless Mind](titolo_film_form)
+    - [The Wolf of Wall Street](titolo_film_form)
+    - [The Social Network](titolo_film_form)
+    - [The Princess Bride](titolo_film_form)
+    - [Moonlight](titolo_film_form)
+    - [Her](titolo_film_form)
+    - [The Green Mile](titolo_film_form)
+    - [The Departed](titolo_film_form)
+    - [Coco](titolo_film_form)
+    - [Toy Story](titolo_film_form)
+    - [Pirates of the Caribbean: The Curse of the Black Pearl](titolo_film_form)
+    - [The Greatest Showman](titolo_film_form)
+    - [The Pursuit of Happyness](titolo_film_form)
+    - [Frozen](titolo_film_form)
+    - [Guardians of the Galaxy](titolo_film_form)
+    - [Spider-Man: No Way Home](titolo_film_form)
+    - [The Conjuring](titolo_film_form)
+    - [Gone Girl](titolo_film_form)
+    - [The Incredibles](titolo_film_form)
+    - [The Dark Knight](titolo_film_form)
+    - [The Shining](titolo_film_form)
+    - [Psycho](titolo_film_form)
+    - [Reservoir Dogs](titolo_film_form)
+    - [The Truman Show](titolo_film_form)
+    - [Casino Royale](titolo_film_form)
+    - [Il re leone](titolo_film_form)
+    - [Skyfall](titolo_film_form)
+    - [Spectre](titolo_film_form)
+    - [Mission: Impossible - Fallout](titolo_film_form)
+    - [James Bond: GoldenEye](titolo_film_form)
+    - [John Wick](titolo_film_form)
+    - [Kingsman: The Secret Service](titolo_film_form)
+    - [The Bourne Identity](titolo_film_form)
+    - [The Transporter](titolo_film_form)
+    - [Sherlock Holmes](titolo_film_form)
+    - [The Equalizer](titolo_film_form)
+    - [io vi troverò](titolo_film_form)
+    - [re leone](titolo_film_form)
+    - [il pianeta del tesoro](titolo_film_form)
+- intent: out_of_scope
+  examples: |
+    - asf234f234
+    - wibble wobble
+    - iewhuewruherwuhewhuewehwuhre
+    - jdlkfj
+    - fhdui fhdui
+    - xoxo
+    - 3j3j3j
+    - 3j3j3j3j
+    - hi0hiewjiewijewihjoewijoerwjierwjiekjijewrje
+    - ???????????????????????????
+    - sofoearfwefiwenriwnrienriwonreiwornewiornowe
+    - nnnnnnnnnnnn
+    - non capisco
+    - aijfrweoihjrtiwoehriweriowejhrewo
+    - 4848783924089342083924839420839420382490382490234890
+    - 7849533uieowfhjdbsh230u9erfhjuih0u9hpuewq
