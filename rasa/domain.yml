@@ -133,7 +133,7 @@ responses:
         1️⃣2️⃣ Trovare le serie TV più popolari: Esempio: 'Serie TV più popolari?'
 
         ❓ Assistenza:
-        🔄 Richiedi aiuto o reset: Esempio: 'help' o 'reset'
+        🔄 Richiedi aiuto Esempio: 'help'.
 
         🤖 Cosa vuoi fare?
   utter_goodbye:
