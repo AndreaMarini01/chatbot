@@ -806,7 +806,7 @@ class ValidateFormLocandina(FormValidationAction):
     def name(self) -> str:
         return "validate_form_locandina"
 
-    def validate_titolo_film__image_form(
+    def validate_titolo_film_image_form(
         self,
         slot_value: Any,
         dispatcher: CollectingDispatcher,
@@ -815,21 +815,24 @@ class ValidateFormLocandina(FormValidationAction):
     ) -> Dict[Text, Any]:
         last_intent = tracker.latest_message.get("intent", {}).get("name")
 
-        # 1) Se Rasa non capisce o l’utente dice qualcosa di nonsense (fallback/out_of_scope):
+        # Se Rasa non capisce o l’utente dice qualcosa di nonsense (fallback/out_of_scope):
         if last_intent in ["out_of_scope", "nlu_fallback"]:
             dispatcher.utter_message(
-                text="Non ho capito il titolo del film. Per favore riscrivi correttamente il titolo.")
+                text="Non ho capito il titolo del film. Per favore riscrivi correttamente il titolo."
+            )
             return {"titolo_film_image_form": None}
 
-        # 2) Se lo slot è vuoto o composto da soli spazi:
+        # Se lo slot è vuoto o composto da soli spazi:
         if not slot_value or len(slot_value.strip()) == 0:
-            dispatcher.utter_message(text="Non ho capito il titolo del film, puoi ripetere?")
+            dispatcher.utter_message(
+                text="Non ho capito il titolo del film, puoi ripetere?"
+            )
             return {"titolo_film_image_form": None}
 
-        # 3) Se il valore sembra valido, lo accettiamo:
+        # Se il valore sembra valido, lo accettiamo:
         return {"titolo_film_image_form": slot_value}
 
-    def validate_anno_Image_form(
+    def validate_anno_image_form(
         self,
         slot_value: Any,
         dispatcher: CollectingDispatcher,
@@ -838,24 +841,24 @@ class ValidateFormLocandina(FormValidationAction):
     ) -> Dict[Text, Any]:
         last_intent = tracker.latest_message.get("intent", {}).get("name")
 
-        # 1) Se siamo in fallback/out_of_scope, restiamo nel form e chiediamo di ripetere:
+        # Se siamo in fallback/out_of_scope, restiamo nel form e chiediamo di ripetere:
         if last_intent in ["out_of_scope", "nlu_fallback"]:
             dispatcher.utter_message(text="Non ho capito se vuoi l'anno o no. Rispondi 'sì' oppure 'no'.")
-            return {"anno_form": None}
+            return {"anno_image_form": None}
 
-        # 2) Se l'utente risponde "sì", accettiamo l'anno:
+        # Se l'utente risponde "sì", accettiamo l'anno:
         if last_intent == "affirm":
             return {"anno_image_form": "Sì"}
 
-        # 3) Se l'utente risponde "no", non accettiamo l'anno:
+        # Se l'utente risponde "no", non accettiamo l'anno:
         if last_intent == "deny":
             dispatcher.utter_message(text="Ok, niente anno.")
             return {"anno_image_form": "NO"}
 
-        # 4) Se lo slot è vuoto o l'utente non ha fornito una risposta chiara:
+        # Se lo slot è vuoto o l'utente non ha fornito una risposta chiara:
         if not slot_value:
             dispatcher.utter_message(text="Devi specificare se vuoi l'anno. Scrivi 'sì' se lo vuoi, 'no' se non lo vuoi.")
             return {"anno_image_form": None}
 
-        # 5) Se per qualche motivo il valore esiste, lo accettiamo:
+        # Se per qualche motivo il valore esiste, lo accettiamo:
         return {"anno_image_form": slot_value}

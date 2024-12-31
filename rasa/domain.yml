@@ -139,30 +139,31 @@ forms:
     - anno_image_form
 responses:
   utter_greet:
-    - text: |
-        👋 Benvenuto! Ecco alcune cose che puoi fare con questo bot:
-        
-        🎥 Film:
-        1️⃣ Cerca un film per titolo: Esempio: 'Dammi dettagli sul film Forrest Gump'
-        2️⃣ Richiedi di ricercare un film chiedendo specificatamente quali informazioni si vogliano: Esempio: 'Dammi informazioni su un film'
-        3️⃣ Richiedi i top film per genere: Esempio: 'Consigliami un film drammatico'
-        4️⃣ Trova i film più recenti: Esempio: 'Film recenti?'
-        5️⃣ Richiedi recensioni di un film: Esempio: 'Cosa ne pensano gli utenti del film Inception'
-        6️⃣ Trova dove guardare un film: Esempio: 'Dove posso vedere Avatar?'
-        7️⃣ Trovare i film più popolari: Esempio: 'Film più popolari?'
-        8️⃣ Richiedi la locandina di un film: Esempio: 'Fammi vedere la locandina di un Film'
+  - text: |
+      👋 Benvenuto! Ecco alcune cose che puoi fare con questo bot:
 
-        📺 Serie TV:
-        8️⃣ Cerca una serie TV per titolo: Esempio: 'Trova informazioni sulla serie Breaking Bad'
-        9️⃣ Richiedi le migliori serie per genere: Esempio: 'Consigliami una serie tv di azione'
-        🔟 Scopri le serie TV recenti: Esempio: 'Serie TV appena uscite'
-        1️⃣1️⃣ Richiedi recensioni di una serie TV: Esempio: 'Cosa ne pensano gli utenti di Breaking Bad?'
-        1️⃣2️⃣ Trovare le serie TV più popolari: Esempio: 'Serie TV più popolari?'
+      🎥 Film:
+      1️⃣ Cerca un film per titolo: Esempio: 'Dammi dettagli sul film Forrest Gump'
+      2️⃣ Richiedi di ricercare un film chiedendo specificatamente quali informazioni si vogliano: Esempio: 'Dammi informazioni su un film'
+      3️⃣ Richiedi i top film per genere: Esempio: 'Consigliami un film drammatico'
+      4️⃣ Trova i film più recenti: Esempio: 'Film recenti?'
+      5️⃣ Richiedi recensioni di un film: Esempio: 'Cosa ne pensano gli utenti del film Inception'
+      6️⃣ Trova dove guardare un film: Esempio: 'Dove posso vedere Avatar?'
+      7️⃣ Trovare i film più popolari: Esempio: 'Film più popolari?'
+      8️⃣ Richiedi la locandina di un film: Esempio: 'Fammi vedere la locandina di un Film'
 
-        ❓ Assistenza:
-        🔄 Richiedi aiuto Esempio: 'help'.
+      📺 Serie TV:
+      9️⃣ Cerca una serie TV per titolo: Esempio: 'Trova informazioni sulla serie Breaking Bad'
+      🔟 Richiedi le migliori serie per genere: Esempio: 'Consigliami una serie tv di azione'
+      1️⃣1️⃣ Scopri le serie TV recenti: Esempio: 'Serie TV appena uscite'
+      1️⃣2️⃣ Richiedi recensioni di una serie TV: Esempio: 'Cosa ne pensano gli utenti di Breaking Bad?'
+      1️⃣3️⃣ Trovare le serie TV più popolari: Esempio: 'Serie TV più popolari?'
 
-        🤖 Cosa vuoi fare?
+      ❓ Assistenza:
+      🔄 Richiedi aiuto Esempio: 'help'.
+
+      🤖 Cosa vuoi fare?
+
   utter_goodbye:
   - text: A presto!
   utter_ask_titolo_film_form:
