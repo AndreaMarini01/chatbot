@@ -751,7 +751,111 @@ class ActionResetSlots(Action):
             "anno_form",
             "context_ricerca",
             "tipo_contenuto",
+            "titolo_film_image_form",
+            "anno_image_form",
         ]
 
         return [SlotSet(slot, None) for slot in slots_to_reset]
 
+
+class ActionGetImageFilm(Action):
+    def name(self) -> Text:
+        return "action_provide_film_image"
+    
+    async def run(self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]
+    ) -> List[EventType]:
+        
+        titolo = tracker.get_slot("titolo_film_image_form")
+        anno = tracker.get_slot("anno_image_form")
+        
+        # Se il titolo non è stato fornito
+        if not titolo:
+            dispatcher.utter_message(text="Per favore, fornisci il titolo di un film.")
+            return []
+        
+        # Effettua la ricerca del film
+        search_data = search_movie_by_title(titolo)
+        results = search_data.get("results", [])
+        
+        if not results:
+            dispatcher.utter_message(text=f"_Non ho trovato nessun film con il titolo *{titolo}*._")
+            return []
+        
+        # Ottieni il primo risultato
+        movie = results[0]
+        poster_path = movie.get("poster_path")
+        
+        # Se l'anno è stato richiesto, invialo insieme all'immagine
+        if anno:
+            release_year = movie.get("release_date", "").split("-")[0]  # Estrai l'anno
+            dispatcher.utter_message(text=f"Il film *{titolo}* è uscito nel {release_year}.")
+        
+        if poster_path:
+            # Costruisci l'URL completo per l'immagine
+            image_url = f"https://image.tmdb.org/t/p/w500{poster_path}"
+            # Invia l'immagine tramite Telegram
+            dispatcher.utter_message(image=image_url)
+            return []
+        else:
+            dispatcher.utter_message(text="Non ho trovato l'immagine del film.")
+            return []
+class ValidateFormLocandina(FormValidationAction):
+    def name(self) -> str:
+        return "validate_form_locandina"
+
+    def validate_titolo_film__image_form(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        last_intent = tracker.latest_message.get("intent", {}).get("name")
+
+        # 1) Se Rasa non capisce o l’utente dice qualcosa di nonsense (fallback/out_of_scope):
+        if last_intent in ["out_of_scope", "nlu_fallback"]:
+            dispatcher.utter_message(
+                text="Non ho capito il titolo del film. Per favore riscrivi correttamente il titolo.")
+            return {"titolo_film_image_form": None}
+
+        # 2) Se lo slot è vuoto o composto da soli spazi:
+        if not slot_value or len(slot_value.strip()) == 0:
+            dispatcher.utter_message(text="Non ho capito il titolo del film, puoi ripetere?")
+            return {"titolo_film_image_form": None}
+
+        # 3) Se il valore sembra valido, lo accettiamo:
+        return {"titolo_film_image_form": slot_value}
+
+    def validate_anno_Image_form(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        last_intent = tracker.latest_message.get("intent", {}).get("name")
+
+        # 1) Se siamo in fallback/out_of_scope, restiamo nel form e chiediamo di ripetere:
+        if last_intent in ["out_of_scope", "nlu_fallback"]:
+            dispatcher.utter_message(text="Non ho capito se vuoi l'anno o no. Rispondi 'sì' oppure 'no'.")
+            return {"anno_form": None}
+
+        # 2) Se l'utente risponde "sì", accettiamo l'anno:
+        if last_intent == "affirm":
+            return {"anno_image_form": "Sì"}
+
+        # 3) Se l'utente risponde "no", non accettiamo l'anno:
+        if last_intent == "deny":
+            dispatcher.utter_message(text="Ok, niente anno.")
+            return {"anno_image_form": "NO"}
+
+        # 4) Se lo slot è vuoto o l'utente non ha fornito una risposta chiara:
+        if not slot_value:
+            dispatcher.utter_message(text="Devi specificare se vuoi l'anno. Scrivi 'sì' se lo vuoi, 'no' se non lo vuoi.")
+            return {"anno_image_form": None}
+
+        # 5) Se per qualche motivo il valore esiste, lo accettiamo:
+        return {"anno_image_form": slot_value}

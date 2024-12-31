@@ -24,6 +24,8 @@ intents:
 - recensioni_utenti_serieTV
 - start
 - titolo_film_form
+- titolo_film_image_form
+- image
 entities:
 - titolo_film
 - genere
@@ -35,6 +37,8 @@ entities:
 - genere_form
 - anno_form
 - titolo_film_form
+- titolo_film_image_form
+- anno_image_form
 - out_of_scope
 slots:
   titolo_film:
@@ -105,12 +109,34 @@ slots:
     influence_conversation: false
     mappings:
     - type: from_text
+  titolo_film_image_form:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_entity
+      entity: titolo_film_image_form
+      conditions:
+      - active_loop: form_locandina
+        requested_slot: titolo_film_image_form
+  anno_image_form:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: form_locandina
+        requested_slot: anno_image_form
 forms:
   form_film:
     required_slots:
     - titolo_film_form
     - anno_form
     - genere_form
+
+  form_locandina:
+    required_slots:
+    - titolo_film_image_form
+    - anno_image_form
 responses:
   utter_greet:
     - text: |
@@ -124,6 +150,7 @@ responses:
         5️⃣ Richiedi recensioni di un film: Esempio: 'Cosa ne pensano gli utenti del film Inception'
         6️⃣ Trova dove guardare un film: Esempio: 'Dove posso vedere Avatar?'
         7️⃣ Trovare i film più popolari: Esempio: 'Film più popolari?'
+        8️⃣ Richiedi la locandina di un film: Esempio: 'Fammi vedere la locandina di un Film'
 
         📺 Serie TV:
         8️⃣ Cerca una serie TV per titolo: Esempio: 'Trova informazioni sulla serie Breaking Bad'
@@ -158,6 +185,12 @@ responses:
   - text: Vuoi sapere anche il genere del film?
   utter_film_form:
   - text: eccoti le informazioni sul film
+  utter_ask_titolo_film_image_form:
+  - text: Di quale film vorresti avere la locandina?
+  utter_ask_anno_image_form:
+  - text: Vuoi sapere anche l'anno di uscita?
+  utter_image_film_form:
+  - text: Ecco la locandina del film
   utter_default:
   - text: Non sono sicuro di aver capito. Puoi ripetere o spiegare meglio la tua richiesta?
   utter_fallback:
@@ -187,7 +220,9 @@ actions:
 - utter_submit
 - utter_film_form
 - action_provide_film_details
+- action_provide_film_image
 - action_fallback
+- validate_form_locandina
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

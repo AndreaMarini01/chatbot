@@ -27,6 +27,7 @@ nlu:
     - Devo andare, grazie
     - Grazie, ci sentiamo dopo
     - Arrivederci
+    
 - intent: cerca_film_titolo
   examples: |
     - Dammi informazioni su [Titanic](titolo_film)
@@ -62,6 +63,7 @@ nlu:
     - Mi racconti di [Il Signore degli Anelli: Il ritorno del re](titolo_film)
     - Dammi dettagli sul film [Il Re Leone](titolo_film)
     - Voglio info su [Il Signore degli Anelli: La Compagnia dell'Anello](titolo_film)
+
 - intent: cerca_film_genere
   examples: |
     - Consigliami un film di [azione](genere)
@@ -78,6 +80,7 @@ nlu:
     - Un film di [fantasy](genere), per favore
     - Vorrei qualcosa di [western](genere), sai aiutarmi?
     - Mi consiglieresti un bel film [musical](genere)?
+
 - intent: film_appena_usciti
   examples: |
     - Quali film sono appena usciti?
@@ -93,6 +96,7 @@ nlu:
     - Ci sono novità interessanti al cinema?
     - Mi puoi dire quali film sono usciti da poco?
     - Dammi una lista dei film recenti
+
 - intent: dove_guardare
   examples: |
     - Dove posso vedere questo film in streaming?
@@ -144,6 +148,7 @@ nlu:
     - Devo pagare per vedere [Avatar](titolo_film) online o è incluso in qualche servizio?
     - È in streaming legale da qualche parte [Harry Potter e la pietra filosofale](titolo_film)?
     - Dove posso trovare [Il Padrino](titolo_film) in streaming legale?
+
 - intent: recensioni_utenti
   examples: |
     - Cosa ne pensano gli utenti del film [Inception](titolo_film)
@@ -163,6 +168,7 @@ nlu:
     - Ci sono opinioni su [L'uomo che sussurrava ai cavalli](titolo_film)?
     - Che dicono di [Coco](titolo_film)?
     - Hai informazioni sul gradimento di [Non ci resta che piangere](titolo_film)?
+
 - intent: popolarità_film
   examples: |
     - Quali sono i film più popolari?
@@ -177,6 +183,7 @@ nlu:
     - Quali sono i film più seguiti in questo periodo?
     - I film che tutti stanno guardando
     - Film di tendenza
+
 - intent: SerieTV_recenti
   examples: |
     - Quali serie TV sono uscite di recente?
@@ -192,6 +199,7 @@ nlu:
     - Novità nel mondo delle serie TV
     - Serie TV che sono appena uscite
     - Cosa c'è di nuovo nelle serie TV?
+
 - intent: cerca_serieTV_titolo
   examples: |
     - Dammi dettagli sulla serie [Breaking Bad](titolo_serieTV)
@@ -224,6 +232,7 @@ nlu:
     - Dimmi qualcosa su [Hannibal](titolo_serieTV)
     - Potresti dirmi di [Mr. Robot](titolo_serieTV)
     - Raccontami di [Penny Dreadful](titolo_serieTV)
+
 - intent: recensioni_utenti_serieTV
   examples: |
     - Cosa ne pensano gli utenti di [Breaking Bad](titolo_serieTV)?
@@ -256,6 +265,7 @@ nlu:
     - Che opinioni hanno gli utenti su [Hannibal](titolo_serieTV)?
     - Come valutano gli utenti [Mr. Robot](titolo_serieTV)?
     - Opinioni degli utenti su [Penny Dreadful](titolo_serieTV)?
+
 - intent: popolarità_serieTV
   examples: |
     - Quali sono le serie TV più popolari?
@@ -277,6 +287,7 @@ nlu:
     - Le serie TV che stanno avendo più successo
     - Quali sono le serie TV che tutti guardano?
     - Quali sono le serie TV del momento?
+
 - intent: cerca_serieTV_genere
   examples: |
     - Consigliami una serie TV di [azione](genere)
@@ -299,6 +310,7 @@ nlu:
     - Consigli per una serie TV [animazione](genere)?
     - Dammi una bella serie TV di [azione](genere)
     - Sai suggerirmi una serie TV di [guerra](genere)?
+
 - intent: inform_film
   examples: |
     - È un film
@@ -311,6 +323,7 @@ nlu:
     - film
     - FILM
     - è un film
+
 - intent: inform_serie
   examples: |
     - È una serie
@@ -324,6 +337,7 @@ nlu:
     - serie
     - SERIE
     - è una serie
+
 - intent: cerca_film_titolo2
   examples: |
     - Mi puoi dire qualcosa su un film?
@@ -354,11 +368,13 @@ nlu:
     - Ti voglio chiedere di un film
     - Hai informazioni utili su un film?
     - Sai parlarmi di un film?
+
 - intent: inform
   examples: |
     - vorrei info su [titanic](titolo_film)
     - dammi dettagli su [inception](titolo_film)
     - [Il Padrino](titolo_film)
+
 - intent: affirm
   examples: |
     - sì
@@ -395,6 +411,7 @@ nlu:
     - non c'è dubbio
     - proprio quello che pensavo
     - sono d'accordissimo
+
 - intent: deny
   examples: |
     - no
@@ -432,6 +449,24 @@ nlu:
     - no, non voglio
     - non sono sicuro
     - mi dispiace, ma non posso
+
+- intent: image
+  examples: |
+    - Vorrei vedere la locandina di un film
+    - Mostrami l'immagine del film
+    - Hai una foto del film?
+    - Voglio vedere il poster di un film
+    - Puoi mostrarmi l'immagine di questo film?
+    - Mostrami il poster di un film
+    - Mi puoi mandare l'immagine del film?
+    - Vorrei vedere l'immagine del film chiamato qualcosa
+    - Mostrami l'immagine o il poster di un film
+    - Puoi cercare l'immagine del film?
+    - Mandami il poster del film
+    - Puoi inviarmi la locandina del film?
+    - Voglio vedere il poster o la locandina del film
+    - Mostrami il film e la sua immagine
+
 - intent: titolo_film_form
   examples: |
     - [Inception](titolo_film_form)
@@ -497,6 +532,73 @@ nlu:
     - [io vi troverò](titolo_film_form)
     - [re leone](titolo_film_form)
     - [il pianeta del tesoro](titolo_film_form)
+
+- intent: titolo_film_image_form
+  examples: |
+    - Voglio vedere un'immagine di [Inception](titolo_film_image_form)
+    - Mostrami un'immagine di [Titanic](titolo_film_image_form)
+    - Puoi inviarmi l'immagine di [Il Signore degli Anelli: La Compagnia dell'Anello](titolo_film_image_form)?
+    - Mi mandi l'immagine di [Il Padrino](titolo_film_image_form)?
+    - Ho bisogno dell'immagine di [La vita è bella](titolo_film_image_form)
+    - Mandami un'immagine di [Interstellar](titolo_film_image_form)
+    - Mostrami la copertina del film [Joker](titolo_film_image_form)
+    - Dammi l'immagine di [Forrest Gump](titolo_film_image_form)
+    - Puoi farmi vedere l'immagine di [La La Land](titolo_film_image_form)?
+    - Voglio vedere un'immagine di [Pulp Fiction](titolo_film_image_form)
+    - Mostrami un'immagine di [Gladiatore](titolo_film_image_form)
+    - Mandami l'immagine di [The Matrix](titolo_film_image_form)
+    - Fammi vedere un'immagine di [Avatar](titolo_film_image_form)
+    - Voglio vedere l'immagine di [Schindler's List](titolo_film_image_form)
+    - Puoi farmi vedere l'immagine di [Star Wars: A New Hope](titolo_film_image_form)?
+    - Mostrami l'immagine di [The Shawshank Redemption](titolo_film_image_form)
+    - Mandami un'immagine di [Fight Club](titolo_film_image_form)
+    - Mostrami un'immagine di [The Silence of the Lambs](titolo_film_image_form)
+    - Voglio vedere l'immagine di [The Lion King](titolo_film_image_form)
+    - Puoi inviarmi l'immagine di [Back to the Future](titolo_film_image_form)?
+    - Fammi vedere l'immagine di [The Avengers](titolo_film_image_form)
+    - Mostrami un'immagine di [The Hobbit: An Unexpected Journey](titolo_film_image_form)
+    - Voglio vedere un'immagine di [Jurassic Park](titolo_film_image_form)
+    - Mi mandi l'immagine di [Terminator 2: Judgment Day](titolo_film_image_form)?
+    - Puoi farmi vedere l'immagine di [Eternal Sunshine of the Spotless Mind](titolo_film_image_form)?
+    - Mandami un'immagine di [The Wolf of Wall Street](titolo_film_image_form)
+    - Voglio vedere la copertina del film [The Social Network](titolo_film_image_form)
+    - Mostrami l'immagine di [The Princess Bride](titolo_film_image_form)
+    - Fammi vedere un'immagine di [Moonlight](titolo_film_image_form)
+    - Mandami un'immagine di [Her](titolo_film_image_form)
+    - Puoi farmi vedere l'immagine di [The Green Mile](titolo_film_image_form)?
+    - Mostrami l'immagine di [The Departed](titolo_film_image_form)
+    - Voglio vedere un'immagine di [Coco](titolo_film_image_form)
+    - Mandami l'immagine di [Toy Story](titolo_film_image_form)
+    - Fammi vedere l'immagine di [Pirates of the Caribbean: The Curse of the Black Pearl](titolo_film_image_form)
+    - Voglio vedere l'immagine di [The Greatest Showman](titolo_film_image_form)
+    - Puoi inviarmi l'immagine di [The Pursuit of Happyness](titolo_film_image_form)?
+    - Mostrami l'immagine di [Frozen](titolo_film_image_form)
+    - Fammi vedere un'immagine di [Guardians of the Galaxy](titolo_film_image_form)
+    - Voglio vedere la copertina del film [Spider-Man: No Way Home](titolo_film_image_form)
+    - Mandami un'immagine di [The Conjuring](titolo_film_image_form)
+    - Fammi vedere l'immagine di [Gone Girl](titolo_film_image_form)
+    - Mostrami un'immagine di [The Incredibles](titolo_film_image_form)
+    - Voglio vedere l'immagine di [The Dark Knight](titolo_film_image_form)
+    - Fammi vedere l'immagine di [The Shining](titolo_film_image_form)
+    - Mandami un'immagine di [Psycho](titolo_film_image_form)
+    - Voglio vedere l'immagine di [Reservoir Dogs](titolo_film_image_form)
+    - Fammi vedere un'immagine di [The Truman Show](titolo_film_image_form)
+    - Puoi inviarmi l'immagine di [Casino Royale](titolo_film_image_form)?
+    - Mandami un'immagine di [Il re leone](titolo_film_image_form)
+    - Voglio vedere l'immagine di [Skyfall](titolo_film_image_form)
+    - Mostrami un'immagine di [Spectre](titolo_film_image_form)
+    - Fammi vedere l'immagine di [Mission: Impossible - Fallout](titolo_film_image_form)
+    - Mostrami un'immagine di [James Bond: GoldenEye](titolo_film_image_form)
+    - Voglio vedere l'immagine di [John Wick](titolo_film_image_form)
+    - Puoi inviarmi l'immagine di [Kingsman: The Secret Service](titolo_film_image_form)?
+    - Mandami un'immagine di [The Bourne Identity](titolo_film_image_form)
+    - Fammi vedere l'immagine di [The Transporter](titolo_film_image_form)
+    - Mostrami l'immagine di [Sherlock Holmes](titolo_film_image_form)
+    - Voglio vedere l'immagine di [The Equalizer](titolo_film_image_form)
+    - Mandami un'immagine di [io vi troverò](titolo_film_image_form)
+    - Puoi inviarmi l'immagine di [re leone](titolo_film_image_form)?
+    - Voglio vedere l'immagine di [il pianeta del tesoro](titolo_film_image_form)
+
 - intent: out_of_scope
   examples: |
     - asf234f234
